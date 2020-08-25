@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import Navbar from './components/layout/Navbar'
-import Routes from './components/routing/Routes'
-import Landing from './views/Landing'
+import React, { Fragment } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Navbar from './components/layout/Navbar';
+import Routes from './components/routing/Routes';
+import Landing from './views/Landing';
 
 const App = () => {
   return (
@@ -15,7 +15,7 @@ const App = () => {
         </Switch>
       </Fragment>
     </Router>
-  )
-}
+  );
+};
 
-export default App
+export default App;

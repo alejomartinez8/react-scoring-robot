@@ -1,13 +1,12 @@
-import React, { Fragment } from 'react'
-import EventItem from './EventItem'
+import React, { Fragment } from 'react';
+import EventItem from '../../components/events/EventItem';
 
 const Events = () => {
   const events = [
     {
       id: 'sri2019',
       name: 'SRI2019',
-      imgURL:
-        'https://pygmalion.tech/wp-content/uploads/2019/08/Logo-horizontal.png',
+      imgURL: 'https://pygmalion.tech/wp-content/uploads/2019/08/Logo-horizontal.png',
       description: 'Semana de la Robótica y la Innovación 2019'
     },
     {
@@ -16,7 +15,7 @@ const Events = () => {
       imgURL: '',
       description: 'Semana de la Robótica 2020'
     }
-  ]
+  ];
 
   return (
     <Fragment>
@@ -29,7 +28,7 @@ const Events = () => {
         )}
       </div>
     </Fragment>
-  )
-}
+  );
+};
 
-export default Events
+export default Events;

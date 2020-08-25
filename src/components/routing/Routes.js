@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Events from '../src/views/events/Events';
+import Events from '../../views/events/Events';
 
 const Routes = () => {
   return (
