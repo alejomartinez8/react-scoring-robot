@@ -25,11 +25,9 @@ const Navbar = () => {
 
   const guestLinks = (
     <Fragment>
-      <li className='nav-item mr-sm-2'>
-        <Link to='login'>
-          <i className='fas fa-sign-in-alt' /> {'  '}
-          <span>Ingreso</span>
-        </Link>
+      <li>
+        <Link to='register'>Registro</Link>
+        <Link to='login'>Ingreso</Link>
       </li>
     </Fragment>
   );
@@ -40,7 +38,7 @@ const Navbar = () => {
         <i className='fas fa-trophy'></i>
         <span> Competencias</span>
       </Link>
-      <ul>
+      <ul className='mb-0'>
         <li>
           <Link to='/events'>
             <i class='fas fa-calendar-alt'></i> {'  '}
