@@ -1,17 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({ login, isAuthenticated }) => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
+
+  const { email, password } = formData;
+
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    login(email, password);
+  };
+
+  if (isAuthenticated) {
+    return <Redirect to='/events' />;
+  }
+
   return (
     <div className='container-fluid px-3'>
       <div className='row min-vh-100'>
         <div className='col-md-5 col-lg-6 col-xl-4 px-lg-5 d-flex align-items-center'>
           <div className='w-100 py-5'>
             <div className='text-center'>
-              <i className='fas fa-trophy mb-4'></i>
               <h1 className='display-4 mb-3'>Ingreso</h1>
             </div>
 
-            <form>
+            <form className='form' onSubmit={handleSubmit}>
               <div className='form-group'>
                 <label htmlFor='email'>Email</label>
                 <input
@@ -19,6 +37,8 @@ const Login = () => {
                   type='email'
                   placeholder='name@example.com'
                   name='email'
+                  value={email}
+                  onChange={handleChange}
                   required
                 ></input>
               </div>
@@ -39,6 +59,8 @@ const Login = () => {
                   type='password'
                   placeholder='Contraseña'
                   name='password'
+                  value={password}
+                  onChange={handleChange}
                   required
                 ></input>
               </div>

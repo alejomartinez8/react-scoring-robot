@@ -7,7 +7,6 @@ const Register = () => {
         <div className='col-md-5 col-lg-6 col-xl-4 px-lg-5 d-flex align-items-center'>
           <div className='w-100 py-5'>
             <div className='text-center'>
-              <i className='fas fa-trophy mb-4'></i>
               <h1 className='display-4 mb-3'>Registro</h1>
               <p className='text-muted'>Bienvenido a la Plataforma de Scoring Robot Pygmalion</p>
             </div>

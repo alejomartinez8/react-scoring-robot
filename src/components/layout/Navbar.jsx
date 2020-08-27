@@ -35,13 +35,14 @@ const Navbar = () => {
   return (
     <nav className='navbar navbar-dark bg-dark'>
       <Link className='navbar-brand mb-0 h1' to='/'>
-        <i className='fas fa-trophy'></i>
-        <span> Competencias</span>
+        {/* <i className='fas fa-trophy'></i> */}
+        <i className='fas fa-robot'></i>
+        <span> Scoring-Robot</span>
       </Link>
       <ul className='mb-0'>
         <li>
           <Link to='/events'>
-            <i class='fas fa-calendar-alt'></i> {'  '}
+            <i className='fas fa-calendar-alt'></i> {'  '}
             <span>Eventos</span>
           </Link>
         </li>
