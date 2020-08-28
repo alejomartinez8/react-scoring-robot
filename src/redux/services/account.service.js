@@ -1,37 +1,32 @@
 import axios from 'axios';
 
+const config = {
+  apiUrl: 'http://localhost:5050'
+};
+
 export const accountService = {
   login
 };
 
-function login(email, password) {
-  const requesOptions = {
+async function login(email, password) {
+  const options = {
+    method: 'post',
+    url: `${config.apiUrl}/accounts/authenticate`,
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password })
+    data: JSON.stringify({ email, password })
   };
 
-  return axios
-    .post(`${config.apiUrl}/accounts/authenticate`)
-    .then(handleResponse)
-    .then((user) => {
-      localStorage.setItem('user', JSON.stringify(user));
-      return user;
-    });
+  return axios(options).then(handleResponse).catch(handleError);
 }
 
 function handleResponse(response) {
-  return response.text().then((text) => {
-    const data = text && JSON.parse(text);
-    if (!response.ok) {
-      if (response.status === 401) {
-        // auto logout if 401 response returned from api
-        console.log('logout');
-      }
+  return response.data;
+}
 
-      const error = (data && data.messagge) || response.statusText;
-      return Promise.reject(error);
-    }
-
-    return data;
-  });
+function handleError(error) {
+  if (error.response.status === 401) {
+    console.log('logout');
+  }
+  const _error = (error.response.data && error.response.data.message) || error.response.status;
+  return Promise.reject(_error);
 }

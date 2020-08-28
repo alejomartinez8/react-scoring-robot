@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { login } from '../../redux/actions/account.actions';
+import Alert from '../../components/layout/Alert';
 
 const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -28,7 +32,7 @@ const Login = ({ login, isAuthenticated }) => {
             <div className='text-center'>
               <h1 className='display-4 mb-3'>Ingreso</h1>
             </div>
-
+            <Alert />
             <form className='form' onSubmit={handleSubmit}>
               <div className='form-group'>
                 <label htmlFor='email'>Email</label>
@@ -83,4 +87,13 @@ const Login = ({ login, isAuthenticated }) => {
   );
 };
 
-export default Login;
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.authentication.isAuthenticated
+});
+
+export default connect(mapStateToProps, { login })(Login);

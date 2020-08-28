@@ -1,19 +1,17 @@
 import { accountTypes } from '../types/account.types';
 
 const initialState = {
-  user: JSON.parse(localStorage.getItem('user')),
-  isAuthenticated: null,
+  user: null,
+  isAuthenticated: false,
   loading: true
 };
 
 export function authentication(state = initialState, action) {
-  const { type, payload } = action;
-  switch (type) {
+  switch (action.type) {
     case accountTypes.LOGIN_SUCCESS:
-      localStorage.setItem('token', payload.token);
       return {
         ...state,
-        ...payload,
+        user: action.user,
         isAuthenticated: true,
         loading: false
       };
