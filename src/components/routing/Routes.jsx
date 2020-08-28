@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Events from '../../pages/events/Events';
-import Login from '../../pages/accounts/Login';
-import Register from '../../pages/accounts/Register';
-import ForgotPassword from '../../pages/accounts/ForgotPassword';
-import ResetPassword from '../../pages/accounts/ResetPassword';
+import Login from '../../pages/users/Login';
+import Register from '../../pages/users/Register';
+import ForgotPassword from '../../pages/users/ForgotPassword';
+import ResetPassword from '../../pages/users/ResetPassword';
 
 const Routes = () => {
   return (

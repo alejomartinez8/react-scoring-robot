@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { login } from '../../redux/actions/account.actions';
+import { login } from '../../redux/actions/user.actions';
 import Alert from '../../components/layout/Alert';
 
-const Login = ({ login, isAuth }) => {
+const Login = ({ isAuth, login }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -46,18 +46,8 @@ const Login = ({ login, isAuth }) => {
                   required
                 ></input>
               </div>
-
               <div className='form-group mb-4'>
-                <div className='row'>
-                  <div className='col'>
-                    <label htmlFor='password'>Constraseña</label>
-                  </div>
-                  <div className='col-auto'>
-                    <a className='form-text small text-muted' href='/forgot-password'>
-                      Olvidaste constraseña
-                    </a>
-                  </div>
-                </div>
+                <label htmlFor='password'>Constraseña</label>
                 <input
                   className='form-control'
                   type='password'
@@ -67,6 +57,13 @@ const Login = ({ login, isAuth }) => {
                   onChange={handleChange}
                   required
                 ></input>
+                <div className='row'>
+                  <div className='col-auto'>
+                    <a className='form-text small text-muted' href='/forgot-password'>
+                      Olvidaste constraseña
+                    </a>
+                  </div>
+                </div>
               </div>
 
               <button className='btn btn-lg btn-block btn-primary mb-3'>Ingresar</button>
@@ -88,8 +85,8 @@ const Login = ({ login, isAuth }) => {
 };
 
 Login.propTypes = {
-  login: PropTypes.func.isRequired,
-  isAuth: PropTypes.bool.isRequired
+  isAuth: PropTypes.bool.isRequired,
+  login: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({

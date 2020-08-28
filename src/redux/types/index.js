@@ -1,2 +1,2 @@
 export * from './alert.types';
-export * from './account.types';
+export * from './user.types';

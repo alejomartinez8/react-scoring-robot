@@ -1,4 +1,4 @@
-import { accountTypes } from '../types/account.types';
+import { userTypes } from '../types/user.types';
 
 const initialState = {
   user: null,
@@ -7,14 +7,14 @@ const initialState = {
 
 export function auth(state = initialState, action) {
   switch (action.type) {
-    case accountTypes.LOGIN_SUCCESS:
+    case userTypes.LOGIN_SUCCESS:
       return {
         ...state,
         user: action.user,
         isAuth: true
       };
-    case accountTypes.LOGIN_FAIL:
-    case accountTypes.LOGOUT:
+    case userTypes.LOGIN_FAIL:
+    case userTypes.LOGOUT:
       return {
         user: null,
         isAuth: false
