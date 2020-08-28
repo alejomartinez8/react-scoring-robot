@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { login } from '../../redux/actions/account.actions';
 import Alert from '../../components/layout/Alert';
 
-const Login = ({ login, isAuthenticated }) => {
+const Login = ({ login, isAuth }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -20,7 +20,7 @@ const Login = ({ login, isAuthenticated }) => {
     login(email, password);
   };
 
-  if (isAuthenticated) {
+  if (isAuth) {
     return <Redirect to='/events' />;
   }
 
@@ -89,11 +89,11 @@ const Login = ({ login, isAuthenticated }) => {
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired
+  isAuth: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.authentication.isAuthenticated
+  isAuth: state.auth.isAuth
 });
 
 export default connect(mapStateToProps, { login })(Login);

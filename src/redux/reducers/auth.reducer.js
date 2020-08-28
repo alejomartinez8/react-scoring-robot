@@ -2,18 +2,22 @@ import { accountTypes } from '../types/account.types';
 
 const initialState = {
   user: null,
-  isAuthenticated: false,
-  loading: true
+  isAuth: false
 };
 
-export function authentication(state = initialState, action) {
+export function auth(state = initialState, action) {
   switch (action.type) {
     case accountTypes.LOGIN_SUCCESS:
       return {
         ...state,
         user: action.user,
-        isAuthenticated: true,
-        loading: false
+        isAuth: true
+      };
+    case accountTypes.LOGIN_FAIL:
+    case accountTypes.LOGOUT:
+      return {
+        user: null,
+        isAuth: false
       };
     default:
       return state;
