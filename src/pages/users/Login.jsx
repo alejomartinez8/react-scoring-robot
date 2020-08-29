@@ -3,10 +3,9 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../../redux/actions/user.actions';
-import { setAlert } from '../../redux/actions/alert.actions';
 import Alert from '../../components/layout/Alert';
 
-const Login = ({ isAuth, login, setAlert }) => {
+const Login = ({ isAuth, login, loading }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -66,14 +65,17 @@ const Login = ({ isAuth, login, setAlert }) => {
                   </div>
                 </div>
               </div>
-
-              <button className='btn btn-lg btn-block btn-primary mb-3'>Ingresar</button>
-
-              <p className='text-center'>
-                <small className='text-muted'>
-                  ¿Todavía no tienes cuenta? <a href='/register'>Registarse</a>
-                </small>
-              </p>
+              <div className='form-group'>
+                <button className='btn btn-lg btn-block btn-primary mb-3' disabled={loading}>
+                  {loading && <span className='spinner-border spinner-border-sm mr-1'></span>}
+                  Ingresar
+                </button>
+                <p className='text-center'>
+                  <small className='text-muted'>
+                    ¿Todavía no tienes cuenta? <a href='/register'>Registarse</a>
+                  </small>
+                </p>
+              </div>
             </form>
           </div>
         </div>
@@ -87,12 +89,13 @@ const Login = ({ isAuth, login, setAlert }) => {
 
 Login.propTypes = {
   isAuth: PropTypes.bool.isRequired,
-  login: PropTypes.func.isRequired,
-  setAlert: PropTypes.func.isRequired
+  loading: PropTypes.bool.isRequired,
+  login: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  isAuth: state.auth.isAuth
+  isAuth: state.auth.isAuth,
+  loading: state.auth.loading
 });
 
-export default connect(mapStateToProps, { login, setAlert })(Login);
+export default connect(mapStateToProps, { login })(Login);

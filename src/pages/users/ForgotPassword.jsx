@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { setAlert } from '../../redux/actions/alert.actions';
+import { forgotPassword } from '../../redux/actions/user.actions';
 import Alert from '../../components/layout/Alert';
 
 const initialState = {
   email: ''
 };
 
-const ForgotPassword = ({ setAlert }) => {
+const ForgotPassword = ({ loading, forgotPassword }) => {
   const [formData, setformData] = useState(initialState);
   const { email } = formData;
 
@@ -27,17 +27,15 @@ const ForgotPassword = ({ setAlert }) => {
     validationSchema
       .validate(formData)
       .then(function (data) {
-        console.log('Correo enviado a:', data);
-        setAlert(`Correo enviado ${data.email}. Revisa tu correo electrónico`, 'success');
+        forgotPassword(data.email);
       })
       .catch(function (error) {
         console.log(error.errors);
-        setAlert(error.errors, 'danger');
       });
   };
 
   return (
-    <div className='container d-flex flex-column'>
+    <div className='container d-flex flex-column my-5'>
       <div className='row justify-content-center'>
         <div className='col-md-5'>
           <div className='text-center'>
@@ -59,7 +57,9 @@ const ForgotPassword = ({ setAlert }) => {
             </div>
 
             <div className='form-group'>
-              <button className='btn btn-lg btn-block btn-primary mb-3'>Enviar</button>
+              <button className='btn btn-lg btn-block btn-primary mb-3' disabled={loading}>
+                {loading && <span className='spinner-border spinner-border-sm mr-1'></span>}Enviar
+              </button>
               <p className='text-center'>
                 <small className='text-muted'>
                   <Link to='/login'>Cancelar</Link>
@@ -74,7 +74,12 @@ const ForgotPassword = ({ setAlert }) => {
 };
 
 ForgotPassword.propTypes = {
-  setAlert: PropTypes.func.isRequired
+  loading: PropTypes.bool.isRequired,
+  forgotPassword: PropTypes.func.isRequired
 };
 
-export default connect(null, { setAlert })(ForgotPassword);
+const mapStateToProps = (state) => ({
+  loading: state.auth.loading
+});
+
+export default connect(mapStateToProps, { forgotPassword })(ForgotPassword);

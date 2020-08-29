@@ -1,24 +1,18 @@
 import { userTypes } from '../types';
 import { userServices } from '../services/';
 import { setAlert } from './alert.actions';
-import axios from 'axios';
+import setAuthToken from '../../helpers/setAuthToken';
+// import axios from 'axios';
 
 // loadUser
 export const loadUser = () => (dispatch) => {
   console.log('loadUser action');
 
-  // try {
-  //   const res = await axios.get('http://localhost:5050/users');
-  //   console.log(res);
-  //   dispatch({
-  //     type: userTypes.USER_LOADED,
-  //     payload: res.data
-  //   });
-  // } catch (error) {
-  //   dispatch({
-  //     type: userTypes.AUTH_ERROR
-  //   });
-  // }
+  if (localStorage.token) {
+    setAuthToken(localStorage.token);
+  }
+
+  dispatch({ type: userTypes.AUTH_REQUEST });
 
   userServices.loadUser().then(
     (user) => {
@@ -34,6 +28,8 @@ export const loadUser = () => (dispatch) => {
 // login
 export const login = (email, password) => (dispatch) => {
   console.log('login action');
+  dispatch({ type: userTypes.AUTH_REQUEST });
+
   userServices.login(email, password).then(
     (token) => {
       dispatch({ type: userTypes.LOGIN_SUCCESS, payload: token });
@@ -54,7 +50,8 @@ export const logout = () => (dispatch) => {
 
 // register
 export const register = (user) => (dispatch) => {
-  dispatch({ type: userTypes.REGISTER_REQUEST, user });
+  dispatch({ type: userTypes.AUTH_REQUEST });
+
   userServices.register(user).then(
     (response) => {
       console.log('register response: ', response.message);
@@ -62,8 +59,25 @@ export const register = (user) => (dispatch) => {
       dispatch(setAlert(response.message, 'success'));
     },
     (error) => {
-      console.log('regiter error: ', error.toString());
+      console.log('register error: ', error.toString());
       dispatch({ type: userTypes.REGISTER_FAIL, payload: error });
+      dispatch(setAlert(error.toString(), 'danger'));
+    }
+  );
+};
+
+//forgot-password
+export const forgotPassword = (email) => (dispatch) => {
+  dispatch({ type: userTypes.AUTH_REQUEST });
+  userServices.forgotPassword(email).then(
+    (res) => {
+      console.log('forgotPassword res: ', res.message);
+      dispatch({ type: userTypes.AUTH_REQUEST_SUCCESS });
+      dispatch(setAlert(res.message, 'success'));
+    },
+    (error) => {
+      console.log('forgotPassword error: ', error.toString());
+      dispatch({ type: userTypes.AUTH_ERROR });
       dispatch(setAlert(error.toString(), 'danger'));
     }
   );

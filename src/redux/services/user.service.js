@@ -1,23 +1,26 @@
 import axios from 'axios';
 
 const config = {
-  apiUrl: 'http://localhost:5050'
+  apiUrl: 'http://localhost:5050/users'
 };
 
 export const userServices = {
   loadUser,
   login,
-  register
+  register,
+  forgotPassword
 };
 
+// loadUser
 async function loadUser() {
-  return axios.get(`${config.apiUrl}/users/`).then(handleResponse).catch(handleError);
+  return axios.get(`${config.apiUrl}`).then(handleResponse).catch(handleError);
 }
 
+// login
 async function login(email, password) {
   const requestOptions = {
     method: 'post',
-    url: `${config.apiUrl}/users/login`,
+    url: `${config.apiUrl}/login`,
     headers: { 'Content-Type': 'application/json' },
     data: JSON.stringify({ email, password })
   };
@@ -25,22 +28,37 @@ async function login(email, password) {
   return axios(requestOptions).then(handleResponse).catch(handleError);
 }
 
-async function register(params) {
+// register
+async function register(user) {
   const requestOptions = {
     method: 'post',
-    url: `${config.apiUrl}/user/register`,
+    url: `${config.apiUrl}/register`,
     headers: { 'Content-Type': 'application/json' },
-    data: JSON.stringify(params)
+    data: JSON.stringify(user)
   };
 
   return axios(requestOptions).then(handleResponse).catch(handleError);
 }
 
+// forgotPassword
+function forgotPassword(email) {
+  const requestOptions = {
+    method: 'post',
+    url: `${config.apiUrl}/forgot-password`,
+    headers: { 'Content-Type': 'application/json' },
+    data: JSON.stringify({ email })
+  };
+
+  return axios(requestOptions).then(handleResponse).catch(handleError);
+}
+
+// handleResponse
 function handleResponse(response) {
   console.log('handleResponse: ', response);
   return response.data;
 }
 
+//handleResponse
 function handleError(error) {
   console.log('handleError: ', error.response);
   if (error.response.status === 401) {

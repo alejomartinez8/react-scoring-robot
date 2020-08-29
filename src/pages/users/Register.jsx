@@ -7,7 +7,7 @@ import { register } from '../../redux/actions/user.actions';
 import { setAlert } from '../../redux/actions/alert.actions';
 import Alert from '../../components/layout/Alert';
 
-const Register = ({ isAuth, register, setAlert }) => {
+const Register = ({ isAuth, loading, register, setAlert }) => {
   const initialState = {
     email: '',
     firstName: '',
@@ -139,7 +139,12 @@ const Register = ({ isAuth, register, setAlert }) => {
                 <label htmlFor='register-agree'> Acepto Términos y Condiciones </label>
               </div>
 
-              <button type='submit' className='btn btn-lg btn-block btn-primary mb-3'>
+              <button
+                type='submit'
+                className='btn btn-lg btn-block btn-primary mb-3'
+                disabled={loading}
+              >
+                {loading && <span className='spinner-border spinner-border-sm mr-1'></span>}
                 Registrar
               </button>
 
@@ -161,12 +166,14 @@ const Register = ({ isAuth, register, setAlert }) => {
 
 Register.propTypes = {
   isAuth: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
   register: PropTypes.func.isRequired,
   setAlert: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  isAuth: state.auth.isAuth
+  isAuth: state.auth.isAuth,
+  loading: state.auth.loading
 });
 
 export default connect(mapStateToProps, { register, setAlert })(Register);

@@ -34,7 +34,7 @@ const Navbar = ({ isAuth, logout }) => {
 
   return (
     <nav className='navbar navbar-dark bg-dark'>
-      <Link className='navbar-brand mb-0 h1' to='/'>
+      <Link className='navbar-brand' to='/'>
         <i className='fas fa-robot'></i>
         <span> Scoring-Robot</span>
       </Link>

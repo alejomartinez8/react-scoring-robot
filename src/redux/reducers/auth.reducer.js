@@ -3,7 +3,7 @@ import { userTypes } from '../types/user.types';
 const initialState = {
   token: localStorage.getItem('token'),
   isAuth: false,
-  loading: true,
+  loading: false,
   user: null
 };
 
@@ -12,7 +12,14 @@ export function auth(state = initialState, action) {
   console.log('auth.reducer action:', action);
 
   switch (type) {
+    case userTypes.AUTH_REQUEST:
+      return {
+        ...state,
+        loading: true
+      };
+
     case userTypes.USER_LOADED:
+      localStorage.setItem('token', payload.token);
       return {
         ...state,
         isAuth: true,
@@ -23,11 +30,13 @@ export function auth(state = initialState, action) {
       localStorage.setItem('token', payload.token);
       return {
         ...state,
-        ...payload,
+        token: payload.token,
         isAuth: true,
         loading: false
       };
+    case userTypes.AUTH_ERROR:
     case userTypes.LOGIN_FAIL:
+    case userTypes.REGISTER_FAIL:
     case userTypes.LOGOUT:
       localStorage.removeItem('token');
       return {
@@ -36,6 +45,13 @@ export function auth(state = initialState, action) {
         isAuth: false,
         loading: false
       };
+
+    case userTypes.AUTH_REQUEST_SUCCESS:
+      return {
+        ...state,
+        loading: false
+      };
+
     default:
       return state;
   }
