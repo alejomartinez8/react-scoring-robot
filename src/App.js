@@ -1,20 +1,24 @@
-import React, { Fragment } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Navbar from './components/layout/Navbar';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import './App.css';
+import { store } from './helpers';
+import { Provider } from 'react-redux';
+import { loadUser } from './redux/actions/user.actions';
+import setAuthToken from './helpers/setAuthToken';
 import Routes from './components/routing/Routes';
-import Landing from './pages/Landing/Landig';
 
 const App = () => {
+  useEffect(() => {
+    setAuthToken(localStorage.token);
+    store.dispatch(loadUser());
+  }, []);
+
   return (
-    <Router>
-      <Fragment>
-        <Navbar />
-        <Switch>
-          <Route exact path='/' component={Landing} />
-          <Route component={Routes} />
-        </Switch>
-      </Fragment>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <Route component={Routes} />
+      </Router>
+    </Provider>
   );
 };
 

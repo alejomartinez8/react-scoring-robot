@@ -5,14 +5,19 @@ const config = {
 };
 
 export const userServices = {
+  loadUser,
   login,
   register
 };
 
-function login(email, password) {
+async function loadUser() {
+  return axios.get(`${config.apiUrl}/users/`).then(handleResponse).catch(handleError);
+}
+
+async function login(email, password) {
   const requestOptions = {
     method: 'post',
-    url: `${config.apiUrl}/accounts/authenticate`,
+    url: `${config.apiUrl}/users/login`,
     headers: { 'Content-Type': 'application/json' },
     data: JSON.stringify({ email, password })
   };
@@ -20,10 +25,10 @@ function login(email, password) {
   return axios(requestOptions).then(handleResponse).catch(handleError);
 }
 
-function register(params) {
+async function register(params) {
   const requestOptions = {
     method: 'post',
-    url: `${config.apiUrl}/accounts/register`,
+    url: `${config.apiUrl}/user/register`,
     headers: { 'Content-Type': 'application/json' },
     data: JSON.stringify(params)
   };

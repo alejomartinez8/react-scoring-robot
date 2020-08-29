@@ -4,7 +4,6 @@ const initialSate = [];
 
 export function alert(state = initialSate, action) {
   const { type, payload } = action;
-  console.log('alert reducer: ', action);
   switch (type) {
     case alertTypes.SET_ALERT:
       return [...state, payload];

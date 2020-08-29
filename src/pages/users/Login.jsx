@@ -3,9 +3,10 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../../redux/actions/user.actions';
+import { setAlert } from '../../redux/actions/alert.actions';
 import Alert from '../../components/layout/Alert';
 
-const Login = ({ isAuth, login }) => {
+const Login = ({ isAuth, login, setAlert }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -30,9 +31,9 @@ const Login = ({ isAuth, login }) => {
         <div className='col-md-5 col-lg-6 col-xl-4 px-lg-5 d-flex align-items-center'>
           <div className='w-100 py-5'>
             <div className='text-center'>
+              <Alert />
               <h1 className='display-4 mb-3'>Ingreso</h1>
             </div>
-            <Alert />
             <form className='form' onSubmit={handleSubmit}>
               <div className='form-group'>
                 <label htmlFor='email'>Email</label>
@@ -86,11 +87,12 @@ const Login = ({ isAuth, login }) => {
 
 Login.propTypes = {
   isAuth: PropTypes.bool.isRequired,
-  login: PropTypes.func.isRequired
+  login: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth
 });
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { login, setAlert })(Login);

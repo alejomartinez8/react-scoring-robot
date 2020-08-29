@@ -3,8 +3,8 @@ import * as Yup from 'yup';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { setAlert } from '../../redux/actions/alert.actions';
 import { register } from '../../redux/actions/user.actions';
+import { setAlert } from '../../redux/actions/alert.actions';
 import Alert from '../../components/layout/Alert';
 
 const Register = ({ isAuth, register, setAlert }) => {
@@ -38,7 +38,7 @@ const Register = ({ isAuth, register, setAlert }) => {
     setformData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     validationSchema
       .validate(formData)
@@ -56,15 +56,15 @@ const Register = ({ isAuth, register, setAlert }) => {
   }
 
   return (
-    <div className='container-fluid px-3'>
-      <div className='row min-vh-100'>
+    <div className='container-fluid'>
+      <div className='row'>
         <div className='col-md-5 col-lg-6 col-xl-4 px-lg-5 d-flex align-items-center'>
           <div className='w-100 py-5'>
             <div className='text-center'>
               <h1 className='display-4 mb-3'>Registro</h1>
               <p className='text-muted'>Bienvenido a la Plataforma de Scoring Robot Pygmalion</p>
             </div>
-
+            <Alert />
             <form className='form' onSubmit={handleSubmit}>
               <div className='form-group'>
                 <label>Nombres*</label>
@@ -139,8 +139,9 @@ const Register = ({ isAuth, register, setAlert }) => {
                 <label htmlFor='register-agree'> Acepto Términos y Condiciones </label>
               </div>
 
-              <button className='btn btn-lg btn-block btn-primary mb-3'>Registrar</button>
-              <Alert />
+              <button type='submit' className='btn btn-lg btn-block btn-primary mb-3'>
+                Registrar
+              </button>
 
               <p className='text-center'>
                 <small className='text-muted text-center'>
