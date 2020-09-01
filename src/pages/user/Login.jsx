@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -59,9 +60,9 @@ const Login = ({ isAuth, login, loading }) => {
                 ></input>
                 <div className='row'>
                   <div className='col-auto'>
-                    <a className='form-text small text-muted' href='/forgot-password'>
+                    <Link className='form-text small text-muted' to='forgot-password'>
                       Olvidaste constraseña
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -72,7 +73,7 @@ const Login = ({ isAuth, login, loading }) => {
                 </button>
                 <p className='text-center'>
                   <small className='text-muted'>
-                    ¿Todavía no tienes cuenta? <a href='/register'>Registarse</a>
+                    ¿Todavía no tienes cuenta? <Link to='register'>Registarse</Link>
                   </small>
                 </p>
               </div>

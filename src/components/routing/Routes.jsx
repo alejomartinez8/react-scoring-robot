@@ -7,10 +7,7 @@ import { connect } from 'react-redux';
 import Layout from '../../pages/layout/Layout';
 import Landing from '../../pages/Landing/Landig';
 import Events from '../../pages/events/Events';
-import Login from '../../pages/users/Login';
-import Register from '../../pages/users/Register';
-import ForgotPassword from '../../pages/users/ForgotPassword';
-import ResetPassword from '../../pages/users/ResetPassword';
+import User from '../../pages/user/User';
 
 const Routes = ({ isAuth }) => {
   return (
@@ -19,10 +16,7 @@ const Routes = ({ isAuth }) => {
         <Switch>
           <Route exact path='/' component={Landing} />
           <Route exact path='/events' component={Events} />
-          <Route exact path='/login' component={Login} />
-          <Route exact path='/register' component={Register} />
-          <Route exact path='/forgot-password' component={ForgotPassword} />
-          <Route exact path='/reset-password' component={ResetPassword} />
+          <Route path='/user' component={User} />
         </Switch>
       </Layout>
     </Fragment>

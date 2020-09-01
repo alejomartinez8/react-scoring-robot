@@ -9,7 +9,6 @@ const initialState = {
 
 export function auth(state = initialState, action) {
   const { type, payload } = action;
-  console.log('auth.reducer action:', action);
 
   switch (type) {
     case userTypes.AUTH_REQUEST:

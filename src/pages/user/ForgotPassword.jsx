@@ -62,7 +62,7 @@ const ForgotPassword = ({ loading, forgotPassword }) => {
               </button>
               <p className='text-center'>
                 <small className='text-muted'>
-                  <Link to='/login'>Cancelar</Link>
+                  <Link to='login'>Cancelar</Link>
                 </small>
               </p>
             </div>

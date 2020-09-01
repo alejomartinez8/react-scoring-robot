@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -61,7 +62,7 @@ const Register = ({ isAuth, loading, register, setAlert }) => {
         <div className='col-md-5 col-lg-6 col-xl-4 px-lg-5 d-flex align-items-center'>
           <div className='w-100 py-5'>
             <div className='text-center'>
-              <h1 className='display-4 mb-3'>Registro</h1>
+              <h1 className='display-4 mb-3'>Registro Entrenadores</h1>
               <p className='text-muted'>Bienvenido a la Plataforma de Scoring Robot Pygmalion</p>
             </div>
             <Alert />
@@ -150,7 +151,7 @@ const Register = ({ isAuth, loading, register, setAlert }) => {
 
               <p className='text-center'>
                 <small className='text-muted text-center'>
-                  ¿Ya tienes cuenta? <a href='/login'>Ingresar</a>.
+                  ¿Ya tienes cuenta? <Link to='login'>Ingresar</Link>.
                 </small>
               </p>
             </form>

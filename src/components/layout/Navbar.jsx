@@ -26,8 +26,8 @@ const Navbar = ({ isAuth, logout }) => {
   const guestLinks = (
     <Fragment>
       <li>
-        <Link to='register'>Registro</Link>
-        <Link to='login'>Ingreso</Link>
+        <Link to='/user/register'>Registro</Link>
+        <Link to='/user/login'>Ingreso</Link>
       </li>
     </Fragment>
   );

@@ -6,8 +6,6 @@ import setAuthToken from '../../helpers/setAuthToken';
 
 // loadUser
 export const loadUser = () => (dispatch) => {
-  console.log('loadUser action');
-
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
@@ -18,8 +16,7 @@ export const loadUser = () => (dispatch) => {
     (user) => {
       dispatch({ type: userTypes.USER_LOADED, payload: user });
     },
-    (error) => {
-      console.log('user.actions.loadUser error:', error.toString());
+    () => {
       dispatch({ type: userTypes.AUTH_ERROR });
     }
   );
@@ -27,7 +24,6 @@ export const loadUser = () => (dispatch) => {
 
 // login
 export const login = (email, password) => (dispatch) => {
-  console.log('login action');
   dispatch({ type: userTypes.AUTH_REQUEST });
 
   userServices.login(email, password).then(
@@ -36,7 +32,6 @@ export const login = (email, password) => (dispatch) => {
       dispatch(loadUser());
     },
     (error) => {
-      console.log('user.action.login error: ', error.toString());
       dispatch({ type: userTypes.LOGIN_FAIL, payload: error });
       dispatch(setAlert(error.toString(), 'danger'));
     }
@@ -54,12 +49,10 @@ export const register = (user) => (dispatch) => {
 
   userServices.register(user).then(
     (response) => {
-      console.log('register response: ', response.message);
       dispatch({ type: userTypes.REGISTER_SUCCESS, payload: response });
       dispatch(setAlert(response.message, 'success'));
     },
     (error) => {
-      console.log('register error: ', error.toString());
       dispatch({ type: userTypes.REGISTER_FAIL, payload: error });
       dispatch(setAlert(error.toString(), 'danger'));
     }
@@ -71,14 +64,33 @@ export const forgotPassword = (email) => (dispatch) => {
   dispatch({ type: userTypes.AUTH_REQUEST });
   userServices.forgotPassword(email).then(
     (res) => {
-      console.log('forgotPassword res: ', res.message);
       dispatch({ type: userTypes.AUTH_REQUEST_SUCCESS });
       dispatch(setAlert(res.message, 'success'));
     },
     (error) => {
-      console.log('forgotPassword error: ', error.toString());
       dispatch({ type: userTypes.AUTH_ERROR });
       dispatch(setAlert(error.toString(), 'danger'));
     }
   );
+};
+
+export const resetPassword = ({ token, password, confirmPassword }) => (dispatch) => {
+  console.log('resetPassword');
+  dispatch({ type: userTypes.AUTH_REQUEST });
+
+  userServices
+    .resetPassword({ token, password, confirmPassword })
+    .then(() => {
+      dispatch({ type: userTypes.AUTH_REQUEST_SUCCESS });
+      dispatch(setAlert('Contraseña actualizada exitosamente, puede ingresar', 'success'));
+    })
+    .catch(() => {
+      dispatch({ type: userTypes.AUTH_ERROR });
+      dispatch(
+        setAlert(
+          'Token no válido, no es posible actualizar su contraseña, debes solicitar restablecer tu contraseña nuevamente',
+          'danger'
+        )
+      );
+    });
 };
