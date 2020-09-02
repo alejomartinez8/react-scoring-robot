@@ -5,8 +5,10 @@ import { connect } from 'react-redux';
 
 // Pages
 
+import PrivateRoute from './PrivateRoute';
+import User from '../../pages/users/User';
+import Profile from '../../pages/profiles/Profile';
 import Events from '../../pages/events/Events';
-import User from '../../pages/user/User';
 
 const Routes = ({ isAuth }) => {
   return (
@@ -14,6 +16,8 @@ const Routes = ({ isAuth }) => {
       <Switch>
         <Route exact path='/events' component={Events} />
         <Route path='/user' component={User} />
+        <PrivateRoute path='/profile' component={Profile} />
+        {/* <Redirect from='*' to='/' /> */}
       </Switch>
     </Fragment>
   );

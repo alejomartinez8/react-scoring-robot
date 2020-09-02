@@ -12,15 +12,18 @@ const Events = () => {
     {
       id: 'sri2020',
       name: 'SRI2020',
-      imgURL: '',
+      imgURL: 'https://pygmalion.tech/wp-content/uploads/2019/08/Logo-horizontal.png',
       description: 'Semana de la Robótica 2020'
     }
   ];
 
   return (
     <div className='container'>
-      {/* <h2 className='large text-primary'>Eventos</h2> */}
-      <div className='event'>
+      <header className='my-4'>
+        <h1 className='text-primary my-2'>Eventos</h1>
+      </header>
+
+      <div className='row'>
         {events.length > 0 ? (
           events.map((event) => <EventItem key={event.id} event={event} />)
         ) : (

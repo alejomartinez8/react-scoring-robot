@@ -33,7 +33,7 @@ const ResetPassword = ({ history, setAlert }) => {
       .catch(() => {
         setTokenStatus(TokenStatus.Invalid);
       });
-  }, []);
+  });
 
   //Get body (switch)
   const getBody = () => {
