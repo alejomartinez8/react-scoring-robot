@@ -1,29 +1,30 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Redirect } from "react-router-dom";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { login } from "../../redux/actions/user.actions";
-import Alert from "../../components/layout/Alert";
+import React, { useState } from "react"
+import { Link } from "react-router-dom"
+import { Redirect } from "react-router-dom"
+import { connect } from "react-redux"
+import PropTypes from "prop-types"
+import { login } from "../../redux/actions/user.actions"
+import Alert from "../../components/layout/Alert"
 
 const Login = ({ isAuth, login, loading }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-  });
+  })
 
-  const { email, password } = formData;
+  const { email, password } = formData
 
   const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value })
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    login(email, password);
-  };
+    e.preventDefault()
+    login(email, password)
+  }
 
   if (isAuth) {
-    return <Redirect to="/events" />;
+    console.log("Redirecto to dashboard")
+    return <Redirect to="/dashboard" />
   }
 
   return (
@@ -82,8 +83,7 @@ const Login = ({ isAuth, login, loading }) => {
                 </button>
                 <p className="text-center">
                   <small className="text-muted">
-                    ¿Todavía no tienes cuenta?{" "}
-                    <Link to="register">Registarse</Link>
+                    ¿Todavía no tienes cuenta? <Link to="register">Registarse</Link>
                   </small>
                 </p>
               </div>
@@ -95,18 +95,18 @@ const Login = ({ isAuth, login, loading }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 Login.propTypes = {
   isAuth: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   login: PropTypes.func.isRequired,
-};
+}
 
 const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth,
   loading: state.auth.loading,
-});
+})
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { login })(Login)

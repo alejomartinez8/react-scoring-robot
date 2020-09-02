@@ -4,8 +4,8 @@
     "es6": true,
     "node": true
   },
-  "plugins": ["import"],
-  "extends": "eslint:recommended",
+  "plugins": ["prettier"],
+  "extends": ["plugin:prettier/recommended"],
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module"
@@ -13,6 +13,6 @@
   "rules": {
     "no-console": "warn",
     "no-eval": "error",
-    "import/firts": "error"
+    "prettier/prettier": "error"
   }
 }

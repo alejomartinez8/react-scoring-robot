@@ -1,26 +1,26 @@
-import React, { Fragment } from "react";
-import { useState } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import React, { Fragment } from "react"
+import { useState } from "react"
+import { connect } from "react-redux"
+import PropTypes from "prop-types"
 
 const initialState = {
   institution: "",
   city: "",
   country: "",
   bio: "",
-};
+}
 
-const ProfileForm = ({ profile: { profile, loading }, history }) => {
-  const [formData, setFormData] = useState(initialState);
-  const { institution, city, country, bio } = formData;
+const UserForm = ({ profile: { profile, loading }, history }) => {
+  const [formData, setFormData] = useState(initialState)
+  const { institution, city, country, bio } = formData
 
   const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value })
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Create Profile");
-  };
+    e.preventDefault()
+    console.log("Create Profile")
+  }
 
   return (
     <Fragment>
@@ -76,18 +76,18 @@ const ProfileForm = ({ profile: { profile, loading }, history }) => {
         </div>
       </form>
     </Fragment>
-  );
-};
+  )
+}
 
 //snippet rpt
-ProfileForm.propTypes = {
+UserForm.propTypes = {
   profile: PropTypes.bool.isRequired,
-};
+}
 
 const mapStateToProps = (state) => {
   return {
     profile: state.profile,
-  };
-};
+  }
+}
 
-export default connect(mapStateToProps)(ProfileForm);
+export default connect(mapStateToProps)(UserForm)

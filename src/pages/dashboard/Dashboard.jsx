@@ -1,19 +1,11 @@
-import React, { useEffect, Fragment } from "react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { getCurrentProfile } from "../../redux/actions/profile.actions";
-import { Spinner } from "../../components/layout/Spinner";
+import React, { useEffect, Fragment } from "react"
+import { Link } from "react-router-dom"
+import { connect } from "react-redux"
+import PropTypes from "prop-types"
+import { Spinner } from "../../components/layout/Spinner"
 
-const Dashboard = ({
-  getCurrentProfile,
-  auth: { user },
-  profile: { profile, loading },
-}) => {
-  useEffect(() => {
-    getCurrentProfile();
-  }, [getCurrentProfile]);
-  return loading && profile === null ? (
+const Dashboard = ({ auth: { user, loading } }) => {
+  return loading && user === null ? (
     <Spinner />
   ) : (
     <Fragment>
@@ -21,7 +13,7 @@ const Dashboard = ({
       <p>
         <i className="fas fa-use"></i>Bienvenido {user && user.name}
       </p>
-      {profile !== null ? (
+      {user !== null ? (
         <Fragment></Fragment>
       ) : (
         <Fragment>
@@ -35,18 +27,16 @@ const Dashboard = ({
         </Fragment>
       )}
     </Fragment>
-  );
-};
+  )
+}
 
 Dashboard.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired,
-};
+}
 
 const mapSateToProps = (state) => ({
   auth: state.auth,
-  profile: state.profile,
-});
+})
 
-export default connect(mapSateToProps, { getCurrentProfile })(Dashboard);
+export default connect(mapSateToProps)(Dashboard)
