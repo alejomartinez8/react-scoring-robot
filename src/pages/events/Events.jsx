@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import EventItem from '../../components/events/EventItem';
 
 const Events = () => {
@@ -18,10 +18,8 @@ const Events = () => {
   ];
 
   return (
-    <div className='container'>
-      <header className='my-4'>
-        <h1 className='text-primary my-2'>Eventos</h1>
-      </header>
+    <Fragment>
+      <h1 className='large text-primary'>Eventos</h1>
 
       <div className='row'>
         {events.length > 0 ? (
@@ -30,7 +28,7 @@ const Events = () => {
           <h4>Todavía no hay eventos</h4>
         )}
       </div>
-    </div>
+    </Fragment>
   );
 };
 

@@ -8,10 +8,10 @@ const Navbar = ({ isAuth, logout }) => {
   const authLinks = (
     <Fragment>
       <li>
-        <Link to='/profile'>
+        <Link to='/dashboard'>
           <i className='fas fa-user' />
           {'  '}
-          <span className='hide-sm'> Perfil</span>
+          <span className='hide-sm'> Dashboard</span>
         </Link>
       </li>
       <li>

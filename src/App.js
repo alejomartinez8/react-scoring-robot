@@ -4,7 +4,6 @@ import './App.css';
 import { connect } from 'react-redux';
 import { loadUser } from './redux/actions/user.actions';
 import Routes from './components/routing/Routes';
-import Layout from './pages/layout/Layout';
 import Landing from './pages/landing/Landing';
 
 const App = ({ loadUser }) => {
@@ -13,12 +12,9 @@ const App = ({ loadUser }) => {
   return (
     <BrowserRouter>
       <Fragment>
-        <Layout>
-          <Switch>
-            <Route exact path='/' component={Landing} />
-            <Route component={Routes} />
-          </Switch>
-        </Layout>
+        <Switch>
+          <Route component={Routes} />
+        </Switch>
       </Fragment>
     </BrowserRouter>
   );

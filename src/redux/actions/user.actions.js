@@ -4,33 +4,23 @@ import { setAlert } from './alert.actions';
 import setAuthToken from '../../helpers/setAuthToken';
 import axios from 'axios';
 
-const config = {
-  apiUrl: 'http://localhost:5050/users'
-};
-
 // loadUser
-export const loadUser = () => async (dispatch) => {
+export const loadUser = () => (dispatch) => {
   console.log('loadUser action');
   dispatch({ type: userTypes.AUTH_REQUEST });
 
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
-  try {
-    const res = await axios.get(`${config.apiUrl}`);
-    console.log('loadUser res', res.data);
-    dispatch({ type: userTypes.USER_LOADED, payload: res.data });
-  } catch (error) {
-    dispatch({ type: userTypes.AUTH_ERROR });
-  }
-  // userServices.loadUser().then(
-  //   (user) => {
-  //     dispatch({ type: userTypes.USER_LOADED, payload: user });
-  //   },
-  //   (error) => {
-  //     dispatch({ type: userTypes.AUTH_ERROR });
-  //   }
-  // );
+
+  userServices.loadUser().then(
+    (user) => {
+      dispatch({ type: userTypes.USER_LOADED, payload: user });
+    },
+    (error) => {
+      dispatch({ type: userTypes.AUTH_ERROR });
+    }
+  );
 };
 
 // login
