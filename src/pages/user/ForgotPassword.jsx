@@ -10,7 +10,7 @@ const initialState = {
   email: ''
 };
 
-const ForgotPassword = ({ loading, forgotPassword }) => {
+const ForgotPassword = ({ loading, forgotPassword, history }) => {
   const [formData, setformData] = useState(initialState);
   const { email } = formData;
 
