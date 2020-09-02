@@ -1,10 +1,9 @@
-import React, { Fragment } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import './App.css';
-import { connect } from 'react-redux';
-import { loadUser } from './redux/actions/user.actions';
-import Routes from './components/routing/Routes';
-import Landing from './pages/landing/Landing';
+import React, { Fragment } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import "./App.css";
+import { connect } from "react-redux";
+import { loadUser } from "./redux/actions/user.actions";
+import Routes from "./components/routing/Routes";
 
 const App = ({ loadUser }) => {
   loadUser();
@@ -13,6 +12,7 @@ const App = ({ loadUser }) => {
     <BrowserRouter>
       <Fragment>
         <Switch>
+          <Route exact path="/" component={Landing} />
           <Route component={Routes} />
         </Switch>
       </Fragment>

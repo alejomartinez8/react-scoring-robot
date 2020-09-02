@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import * as Yup from 'yup';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { forgotPassword } from '../../redux/actions/user.actions';
-import Alert from '../../components/layout/Alert';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import * as Yup from "yup";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { forgotPassword } from "../../redux/actions/user.actions";
+import Alert from "../../components/layout/Alert";
 
 const initialState = {
-  email: ''
+  email: "",
 };
 
 const ForgotPassword = ({ loading, forgotPassword, history }) => {
@@ -15,7 +15,7 @@ const ForgotPassword = ({ loading, forgotPassword, history }) => {
   const { email } = formData;
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().email('Email es inválido').required('Email requerido')
+    email: Yup.string().email("Email es inválido").required("Email requerido"),
   });
 
   const handleChange = (e) => {
@@ -35,34 +35,40 @@ const ForgotPassword = ({ loading, forgotPassword, history }) => {
   };
 
   return (
-    <div className='container d-flex flex-column my-5'>
-      <div className='row justify-content-center'>
-        <div className='col-md-5'>
-          <div className='text-center'>
-            <h1 className='display-4 mb-3'>Recuperar Contraseña</h1>
+    <div className="container d-flex flex-column my-5">
+      <div className="row justify-content-center">
+        <div className="col-md-5">
+          <div className="text-center">
+            <h1 className="display-4 mb-3">Recuperar Contraseña</h1>
           </div>
           <Alert />
           <form onSubmit={handleSubmit}>
-            <div className='form-group'>
-              <label htmlFor='email'>Email</label>
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
               <input
-                className='form-control'
-                type='email'
-                placeholder='name@example.com'
-                name='email'
+                className="form-control"
+                type="email"
+                placeholder="name@example.com"
+                name="email"
                 value={email}
                 onChange={handleChange}
                 required
               ></input>
             </div>
 
-            <div className='form-group'>
-              <button className='btn btn-lg btn-block btn-primary mb-3' disabled={loading}>
-                {loading && <span className='spinner-border spinner-border-sm mr-1'></span>}Enviar
+            <div className="form-group">
+              <button
+                className="btn btn-lg btn-block btn-primary mb-3"
+                disabled={loading}
+              >
+                {loading && (
+                  <span className="spinner-border spinner-border-sm mr-1"></span>
+                )}
+                Enviar
               </button>
-              <p className='text-center'>
-                <small className='text-muted'>
-                  <Link to='login'>Cancelar</Link>
+              <p className="text-center">
+                <small className="text-muted">
+                  <Link to="login">Cancelar</Link>
                 </small>
               </p>
             </div>
@@ -75,11 +81,11 @@ const ForgotPassword = ({ loading, forgotPassword, history }) => {
 
 ForgotPassword.propTypes = {
   loading: PropTypes.bool.isRequired,
-  forgotPassword: PropTypes.func.isRequired
+  forgotPassword: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  loading: state.auth.loading
+  loading: state.auth.loading,
 });
 
 export default connect(mapStateToProps, { forgotPassword })(ForgotPassword);

@@ -1,10 +1,10 @@
-import { profileTypes } from '../types/profile.types';
+import { profileTypes } from "../types/profile.types";
 
 const initalState = {
   profile: null,
   profiles: [],
   loading: true,
-  error: {}
+  error: {},
 };
 
 export function profile(state = initalState, action) {
@@ -15,7 +15,7 @@ export function profile(state = initalState, action) {
       return {
         ...state,
         profile: payload,
-        loading: false
+        loading: false,
       };
 
     case profileTypes.PROFILE_ERROR:
@@ -23,7 +23,7 @@ export function profile(state = initalState, action) {
         ...state,
         error: payload,
         loading: false,
-        profile: null
+        profile: null,
       };
 
     case profileTypes.CLEAR_PROFILE:
@@ -31,7 +31,7 @@ export function profile(state = initalState, action) {
         ...state,
         profile: null,
         profiles: [],
-        loading: false
+        loading: false,
       };
     default:
       return state;

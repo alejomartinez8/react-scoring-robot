@@ -1,8 +1,8 @@
-import axios from 'axios';
-import { logout } from '../actions/user.actions';
+import axios from "axios";
+import { logout } from "../actions/user.actions";
 
 const config = {
-  apiUrl: 'http://localhost:5050/users'
+  apiUrl: "http://localhost:5050/users",
 };
 
 export const userServices = {
@@ -12,7 +12,7 @@ export const userServices = {
   verifyEmail,
   forgotPassword,
   validateResetToken,
-  resetPassword
+  resetPassword,
 };
 
 // loadUser
@@ -23,10 +23,10 @@ async function loadUser() {
 // login
 async function login(email, password) {
   const requestOptions = {
-    method: 'post',
+    method: "post",
     url: `${config.apiUrl}/login`,
-    headers: { 'Content-Type': 'application/json' },
-    data: JSON.stringify({ email, password })
+    headers: { "Content-Type": "application/json" },
+    data: JSON.stringify({ email, password }),
   };
 
   return axios(requestOptions).then(handleResponse).catch(handleError);
@@ -35,10 +35,10 @@ async function login(email, password) {
 // register
 async function register(user) {
   const requestOptions = {
-    method: 'post',
+    method: "post",
     url: `${config.apiUrl}/register`,
-    headers: { 'Content-Type': 'application/json' },
-    data: JSON.stringify(user)
+    headers: { "Content-Type": "application/json" },
+    data: JSON.stringify(user),
   };
 
   return axios(requestOptions).then(handleResponse).catch(handleError);
@@ -47,10 +47,10 @@ async function register(user) {
 // verifyEmail
 function verifyEmail(token) {
   const requestOptions = {
-    method: 'post',
+    method: "post",
     url: `${config.apiUrl}/verify-email`,
-    headers: { 'Content-Type': 'application/json' },
-    data: JSON.stringify({ token })
+    headers: { "Content-Type": "application/json" },
+    data: JSON.stringify({ token }),
   };
 
   return axios(requestOptions).then(handleResponse).catch(handleError);
@@ -59,10 +59,10 @@ function verifyEmail(token) {
 // forgotPassword
 function forgotPassword(email) {
   const requestOptions = {
-    method: 'post',
+    method: "post",
     url: `${config.apiUrl}/forgot-password`,
-    headers: { 'Content-Type': 'application/json' },
-    data: JSON.stringify({ email })
+    headers: { "Content-Type": "application/json" },
+    data: JSON.stringify({ email }),
   };
 
   return axios(requestOptions).then(handleResponse).catch(handleError);
@@ -71,10 +71,10 @@ function forgotPassword(email) {
 // validate reset token
 function validateResetToken(token) {
   const requestOptions = {
-    method: 'post',
+    method: "post",
     url: `${config.apiUrl}/validate-reset-token`,
-    headers: { 'Content-Type': 'application/json' },
-    data: JSON.stringify({ token })
+    headers: { "Content-Type": "application/json" },
+    data: JSON.stringify({ token }),
   };
 
   return axios(requestOptions).then(handleResponse).catch(handleError);
@@ -83,10 +83,10 @@ function validateResetToken(token) {
 // reset password
 async function resetPassword({ token, password, confirmPassword }) {
   const requestOptions = {
-    method: 'post',
+    method: "post",
     url: `${config.apiUrl}/reset-password`,
-    headers: { 'Content-Type': 'application/json' },
-    data: JSON.stringify({ token, password, confirmPassword })
+    headers: { "Content-Type": "application/json" },
+    data: JSON.stringify({ token, password, confirmPassword }),
   };
 
   return axios(requestOptions).then(handleResponse).catch(handleError);
@@ -94,16 +94,18 @@ async function resetPassword({ token, password, confirmPassword }) {
 
 // handleResponse
 function handleResponse(response) {
-  console.log('handleResponse: ', response);
+  console.log("handleResponse: ", response);
   return response.data;
 }
 
-//handleResponse
+//handleError
 function handleError(error) {
-  console.log('handleError: ', error.response);
+  console.log("handleError: ", error.response);
   if (error.response.status === 401) {
     logout();
   }
-  const _error = (error.response.data && error.response.data.message) || error.response.status;
+  const _error =
+    (error.response.data && error.response.data.message) ||
+    error.response.status;
   return Promise.reject(_error);
 }

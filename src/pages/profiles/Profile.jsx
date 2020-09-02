@@ -1,14 +1,14 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 const Profile = ({ user, match }) => {
   const { path } = match;
   return (
-    <div className='container'>
-      <div className='card shadow mb-4'></div>
-      <h1 className='text-primary my-2'>Perfil</h1>
+    <div className="container">
+      <div className="card shadow mb-4"></div>
+      <h1 className="text-primary my-2">Perfil</h1>
       <p>
         <strong>Nombre: </strong> {user.firstName} {user.lastName}
         <br />
@@ -16,7 +16,7 @@ const Profile = ({ user, match }) => {
         <br />
         <strong>Role: </strong> {user.role}
       </p>
-      <Link className='btn btn-primary' to={`${path}/update`}>
+      <Link className="btn btn-primary" to={`${path}/update`}>
         Actualizar
       </Link>
     </div>
@@ -24,11 +24,11 @@ const Profile = ({ user, match }) => {
 };
 
 Profile.propTypes = {
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  user: state.auth.user
+  user: state.auth.user,
 });
 
 export default connect(mapStateToProps)(Profile);

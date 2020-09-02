@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import Navbar from '../../components/layout/Navbar';
+import React, { Fragment } from "react";
+import Navbar from "../../components/layout/Navbar";
 
 const Layout = (props) => {
   return (

@@ -1,4 +1,4 @@
-import { alertTypes } from '../types/alert.types';
+import { alertTypes } from "../types/alert.types";
 
 const initialSate = [];
 
