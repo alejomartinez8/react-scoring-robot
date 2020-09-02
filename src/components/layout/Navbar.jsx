@@ -1,17 +1,17 @@
-import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { logout } from "../../redux/actions/user.actions";
+import React, { Fragment } from "react"
+import { Link } from "react-router-dom"
+import { connect } from "react-redux"
+import PropTypes from "prop-types"
+import { logout } from "../../redux/actions/user.actions"
 
 const Navbar = ({ isAuth, logout }) => {
   const authLinks = (
     <Fragment>
       <li>
-        <Link to="/dashboard">
+        <Link to="/profile">
           <i className="fas fa-user" />
           {"  "}
-          <span className="hide-sm"> Dashboard</span>
+          <span className="hide-sm"> Perfil</span>
         </Link>
       </li>
       <li>
@@ -21,7 +21,7 @@ const Navbar = ({ isAuth, logout }) => {
         </a>
       </li>
     </Fragment>
-  );
+  )
 
   const guestLinks = (
     <Fragment>
@@ -30,7 +30,7 @@ const Navbar = ({ isAuth, logout }) => {
         <Link to="/user/login">Ingreso</Link>
       </li>
     </Fragment>
-  );
+  )
 
   return (
     <nav className="navbar navbar-dark bg-dark">
@@ -48,15 +48,15 @@ const Navbar = ({ isAuth, logout }) => {
         {isAuth ? authLinks : guestLinks}
       </ul>
     </nav>
-  );
-};
+  )
+}
 
 Navbar.propTypes = {
   isAuth: PropTypes.bool.isRequired,
-};
+}
 
 const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth,
-});
+})
 
-export default connect(mapStateToProps, { logout })(Navbar);
+export default connect(mapStateToProps, { logout })(Navbar)

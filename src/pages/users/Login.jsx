@@ -23,7 +23,6 @@ const Login = ({ isAuth, login, loading }) => {
   }
 
   if (isAuth) {
-    console.log("Redirecto to dashboard")
     return <Redirect to="/dashboard" />
   }
 

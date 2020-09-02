@@ -19,7 +19,6 @@ export function auth(state = initialState, action) {
       }
 
     case userTypes.USER_LOADED:
-      console.log("USER_LOADED")
       return {
         ...state,
         isAuth: true,

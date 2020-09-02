@@ -9,9 +9,9 @@ import PrivateRoute from "./PrivateRoute"
 import Layout from "../../pages/layout/Layout"
 import Landing from "../../pages/landing/Landing"
 import User from "../../pages/users/User"
+import Profile from "../../pages/profiles/Profile"
 import Dashboard from "../../pages/dashboard/Dashboard"
 import Events from "../../pages/events/Events"
-import UserForm from "../../pages/profiles/UserForm"
 
 const Routes = ({ isAuth }) => {
   return (
@@ -23,7 +23,7 @@ const Routes = ({ isAuth }) => {
             <Route exact path="/" component={Events} />
             <Route exact path="/events" component={Events} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
-            <PrivateRoute path="/create-profile" component={UserForm} />
+            <PrivateRoute path="/profile" component={Profile} />
           </Switch>
         </div>
       ) : (
