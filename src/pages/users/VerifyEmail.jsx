@@ -1,54 +1,30 @@
-import React, { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import React, { useEffect } from "react"
 import queryString from "query-string"
 import { userServices } from "../../redux/services"
+import { connect } from "react-redux"
+import { setAlert } from "../../redux/actions/alert.actions"
+import Alert from "../../components/layout/Alert"
 
-const VerifyEmail = ({ history }) => {
-  const EmailStatus = {
-    Verifying: "Verifying",
-    Sucess: "Succes",
-    Failed: "Failed",
-  }
-
-  const [emailStatus, SetEmailStatus] = useState(EmailStatus.Verifying)
-
+const VerifyEmail = ({ setAlert, history }) => {
   useEffect(() => {
     const { token } = queryString.parse(history.location.search)
 
     //remove token from url
-    history.replace(history.location.pathname)
+    // history.replace(history.location.pathname)
 
-    userServices.verifyEmail(token).then(
-      (res) => {
-        SetEmailStatus(EmailStatus.Success)
+    userServices
+      .verifyEmail(token)
+      .then((res) => {
+        console.log(res)
+        setAlert(res.message, "success")
         history.push("login")
-      },
-      () => {
-        SetEmailStatus(EmailStatus.Failed)
-      }
-    )
+      })
+      .catch((error) => {
+        console.log(error)
+        setAlert("Verificación no válida", "danger")
+      })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  const getBody = () => {
-    switch (emailStatus) {
-      case EmailStatus.Success:
-        return (
-          <div className={`alert alert-success`}>
-            Correo validado puedes ingresar <Link to="login">Aquí</Link>
-          </div>
-        )
-      case EmailStatus.Failed:
-        return (
-          <div className={`alert alert-danger`}>
-            Token no válido vuelve a solicitarlo nuevamente aquí{" "}
-            <Link to="forgot-password">Aquí</Link>
-          </div>
-        )
-      default:
-        return <div>Verificando...</div>
-    }
-  }
 
   return (
     <div className="container d-flex flex-column ">
@@ -56,7 +32,8 @@ const VerifyEmail = ({ history }) => {
         <div className="col-md-5">
           <div className="text-center">
             <h3 className="m-3">Verificar Email</h3>
-            <div>{getBody()}</div>
+            Verificando...
+            <Alert />
           </div>
         </div>
       </div>
@@ -64,4 +41,4 @@ const VerifyEmail = ({ history }) => {
   )
 }
 
-export default VerifyEmail
+export default connect(null, { setAlert })(VerifyEmail)

@@ -11,7 +11,7 @@ const ProfileDetail = ({ auth: { user, loading }, match }) => {
     <Spinner />
   ) : (
     <div className="card shadow">
-      <div className="card-header border-primary">
+      <div className="card-header">
         <h2 className="card-title">
           {user.firstName} {user.lastName}
         </h2>

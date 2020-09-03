@@ -3,7 +3,7 @@ import { userServices } from "../services/"
 import { setAlert } from "./alert.actions"
 import setAuthToken from "../../helpers/setAuthToken"
 
-// loadUser
+// load user action
 export const loadUser = () => (dispatch) => {
   if (localStorage.token) {
     setAuthToken(localStorage.token)
@@ -11,68 +11,69 @@ export const loadUser = () => (dispatch) => {
 
   dispatch({ type: userTypes.AUTH_REQUEST })
 
-  userServices.loadUser().then(
-    (user) => {
+  userServices
+    .loadUser()
+    .then((user) => {
       dispatch({ type: userTypes.USER_LOADED, payload: user })
-    },
-    () => {
-      dispatch({ type: userTypes.AUTH_ERROR })
-    }
-  )
+    })
+    .catch((error) => {
+      dispatch({ type: userTypes.AUTH_ERROR, payload: error })
+    })
 }
 
-// login
+// login action
 export const login = (email, password) => (dispatch) => {
   dispatch({ type: userTypes.AUTH_REQUEST })
 
-  userServices.login(email, password).then(
-    (token) => {
+  userServices
+    .login(email, password)
+    .then((token) => {
       dispatch({ type: userTypes.LOGIN_SUCCESS, payload: token })
       dispatch(loadUser())
-    },
-    (error) => {
+    })
+    .catch((error) => {
       dispatch({ type: userTypes.LOGIN_FAIL, payload: error })
       dispatch(setAlert(error.toString(), "danger"))
-    }
-  )
+    })
 }
 
-// logout
+// logout action
 export const logout = () => (dispatch) => {
   dispatch({ type: userTypes.LOGOUT })
 }
 
-// register
+// register action
 export const register = (user) => (dispatch) => {
   dispatch({ type: userTypes.AUTH_REQUEST })
 
-  userServices.register(user).then(
-    (response) => {
-      dispatch({ type: userTypes.REGISTER_SUCCESS, payload: response })
-      dispatch(setAlert(response.message, "success"))
-    },
-    (error) => {
+  userServices
+    .register(user)
+    .then((res) => {
+      dispatch({ type: userTypes.AUTH_REQUEST_SUCCESS, payload: res })
+      dispatch(setAlert(res.message, "success"))
+    })
+    .catch((error) => {
       dispatch({ type: userTypes.REGISTER_FAIL, payload: error })
       dispatch(setAlert(error.toString(), "danger"))
-    }
-  )
+    })
 }
 
-//forgot-password
+// forgot password action send an email
 export const forgotPassword = (email) => (dispatch) => {
   dispatch({ type: userTypes.AUTH_REQUEST })
-  userServices.forgotPassword(email).then(
-    (res) => {
+  userServices
+    .forgotPassword(email)
+    .then((res) => {
       dispatch({ type: userTypes.AUTH_REQUEST_SUCCESS })
       dispatch(setAlert(res.message, "success"))
-    },
-    (error) => {
+    })
+    .catch((error) => {
       dispatch({ type: userTypes.AUTH_ERROR })
       dispatch(setAlert(error.toString(), "danger"))
-    }
-  )
+    })
 }
 
+// reset password action
 export const resetPassword = ({ token, password, confirmPassword }) => (
   dispatch
 ) => {
@@ -81,19 +82,31 @@ export const resetPassword = ({ token, password, confirmPassword }) => (
 
   userServices
     .resetPassword({ token, password, confirmPassword })
-    .then(() => {
+    .then((res) => {
       dispatch({ type: userTypes.AUTH_REQUEST_SUCCESS })
       dispatch(
         setAlert("Contraseña actualizada exitosamente, puede ingresar", "success")
       )
     })
-    .catch(() => {
-      dispatch({ type: userTypes.AUTH_ERROR })
+    .catch((error) => {
+      dispatch({ type: userTypes.AUTH_ERROR, payload: error })
       dispatch(
         setAlert(
           "Token no válido, no es posible actualizar su contraseña, debes solicitar restablecer tu contraseña nuevamente",
           "danger"
         )
       )
+    })
+}
+
+// update user action
+export const update = (id, params) => {
+  userServices
+    .update(id, params)
+    .then((user) => {
+      console.log(user)
+    })
+    .catch((error) => {
+      console.log(error)
     })
 }

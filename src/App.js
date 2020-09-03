@@ -6,7 +6,9 @@ import { loadUser } from "./redux/actions/user.actions"
 import Routes from "./components/routing/Routes"
 
 const App = ({ loadUser }) => {
-  loadUser()
+  if (localStorage.getItem("token")) {
+    loadUser()
+  }
 
   return (
     <BrowserRouter>

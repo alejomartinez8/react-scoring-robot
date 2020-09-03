@@ -3,8 +3,9 @@ import { Link } from "react-router-dom"
 import { useState } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
+import { update } from "../../redux/actions/user.actions"
 
-const ProfileUpdate = ({ auth: { user, loading }, history }) => {
+const ProfileUpdate = ({ auth: { user, loading }, update, history }) => {
   const initialState = {
     email: user.email,
     firstName: user.firstName,
@@ -36,6 +37,13 @@ const ProfileUpdate = ({ auth: { user, loading }, history }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log("Create Profile")
+    update(user.id, formData)
+      .then(() => {
+        console.log("Usuario actualizado")
+      })
+      .catch((error) => {
+        console.log("error actualizando usuario")
+      })
   }
 
   return (
@@ -184,6 +192,7 @@ const ProfileUpdate = ({ auth: { user, loading }, history }) => {
 //snippet rpt
 ProfileUpdate.propTypes = {
   auth: PropTypes.object.isRequired,
+  update: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => {
@@ -192,4 +201,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(ProfileUpdate)
+export default connect(mapStateToProps, { update })(ProfileUpdate)
