@@ -21,7 +21,7 @@ const PrivateRoute = ({
       } else {
         if (!isAuth) {
           // not logged-in, then redirect to login page with the return url
-          return <Redirect to="/users/login" />
+          return <Redirect to="/user/login" />
         }
 
         // check if route is restricted by role

@@ -1,38 +1,37 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import * as Yup from "yup";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { forgotPassword } from "../../redux/actions/user.actions";
-import Alert from "../../components/layout/Alert";
+import React, { useState } from "react"
+import { Link } from "react-router-dom"
+import * as Yup from "yup"
+import { connect } from "react-redux"
+import PropTypes from "prop-types"
+import { forgotPassword } from "../../redux/actions/user.actions"
 
 const initialState = {
   email: "",
-};
+}
 
 const ForgotPassword = ({ loading, forgotPassword, history }) => {
-  const [formData, setformData] = useState(initialState);
-  const { email } = formData;
+  const [formData, setformData] = useState(initialState)
+  const { email } = formData
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email("Email es inválido").required("Email requerido"),
-  });
+  })
 
   const handleChange = (e) => {
-    setformData({ ...formData, [e.target.name]: e.target.value });
-  };
+    setformData({ ...formData, [e.target.name]: e.target.value })
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     validationSchema
       .validate(formData)
       .then(function (data) {
-        forgotPassword(data.email);
+        forgotPassword(data.email)
       })
       .catch(function (error) {
-        console.log(error.errors);
-      });
-  };
+        console.log(error.errors)
+      })
+  }
 
   return (
     <div className="container d-flex flex-column my-5">
@@ -41,7 +40,6 @@ const ForgotPassword = ({ loading, forgotPassword, history }) => {
           <div className="text-center">
             <h1 className="display-4 mb-3">Recuperar Contraseña</h1>
           </div>
-          <Alert />
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="email">Email</label>
@@ -76,16 +74,16 @@ const ForgotPassword = ({ loading, forgotPassword, history }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 ForgotPassword.propTypes = {
   loading: PropTypes.bool.isRequired,
   forgotPassword: PropTypes.func.isRequired,
-};
+}
 
 const mapStateToProps = (state) => ({
   loading: state.auth.loading,
-});
+})
 
-export default connect(mapStateToProps, { forgotPassword })(ForgotPassword);
+export default connect(mapStateToProps, { forgotPassword })(ForgotPassword)

@@ -5,7 +5,6 @@ import { userServices } from "../../redux/services"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { setAlert } from "../../redux/actions/alert.actions"
-import Alert from "../../components/layout/Alert"
 import ResetPasswordForm from "../../components/user/ResetPasswordForm"
 
 const ResetPassword = ({ history, setAlert }) => {
@@ -62,7 +61,6 @@ const ResetPassword = ({ history, setAlert }) => {
         <div className="col-md-5">
           <div className="text-center">
             <h1 className="display-4 mb-3">Restablecer Contraseña</h1>
-            <Alert />
             {getBody()}
           </div>
         </div>

@@ -3,7 +3,6 @@ import queryString from "query-string"
 import { userServices } from "../../redux/services"
 import { connect } from "react-redux"
 import { setAlert } from "../../redux/actions/alert.actions"
-import Alert from "../../components/layout/Alert"
 
 const VerifyEmail = ({ setAlert, history }) => {
   useEffect(() => {
@@ -33,7 +32,6 @@ const VerifyEmail = ({ setAlert, history }) => {
           <div className="text-center">
             <h3 className="m-3">Verificar Email</h3>
             Verificando...
-            <Alert />
           </div>
         </div>
       </div>

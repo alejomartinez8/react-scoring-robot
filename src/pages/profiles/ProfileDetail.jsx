@@ -3,9 +3,15 @@ import { Link } from "react-router-dom"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { Spinner } from "../../components/layout/Spinner"
+import { deleteUser } from "../../redux/actions/user.actions"
 
-const ProfileDetail = ({ auth: { user, loading }, match }) => {
+const ProfileDetail = ({ auth: { user, loading }, deleteUser, match }) => {
   const { path } = match
+
+  const onDelete = () => {
+    console.log("Delete User")
+    deleteUser(user.id)
+  }
 
   return loading && user === null ? (
     <Spinner />
@@ -48,8 +54,18 @@ const ProfileDetail = ({ auth: { user, loading }, match }) => {
         <Link to={`${path}/edit-profile`} className="btn btn-primary">
           <i className="fas fa-user"></i> Editar Perfil
         </Link>
-        <button className="btn btn-danger">
-          <i className="fas fa-user-minus"></i> Eliminar Cuenta
+        <button
+          onClick={onDelete}
+          type="button"
+          className="btn btn-danger m-1"
+          disabled={loading}
+        >
+          {loading ? (
+            <span className="spinner-border spinner-border-sm m-1"></span>
+          ) : (
+            <i className="fas fa-user-minus"></i>
+          )}
+          Eliminar Cuenta
         </button>
       </div>
     </div>
@@ -58,10 +74,11 @@ const ProfileDetail = ({ auth: { user, loading }, match }) => {
 
 ProfileDetail.propTypes = {
   auth: PropTypes.object.isRequired,
+  deleteUser: PropTypes.func.isRequired,
 }
 
 const mapSateToProps = (state) => ({
   auth: state.auth,
 })
 
-export default connect(mapSateToProps)(ProfileDetail)
+export default connect(mapSateToProps, { deleteUser })(ProfileDetail)

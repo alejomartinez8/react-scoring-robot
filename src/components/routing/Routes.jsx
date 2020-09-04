@@ -6,34 +6,23 @@ import { connect } from "react-redux"
 // Pages
 
 import PrivateRoute from "./PrivateRoute"
-import Layout from "../../pages/layout/Layout"
-import Landing from "../../pages/landing/Landing"
+import Alert from "../../components/layout/Alert"
 import User from "../../pages/users/User"
 import Profile from "../../pages/profiles/Profile"
 import Dashboard from "../../pages/dashboard/Dashboard"
 import Events from "../../pages/events/Events"
 
-const Routes = ({ isAuth }) => {
+const Routes = () => {
   return (
-    <Layout>
-      {isAuth ? (
-        <div className="container mt-4">
-          <Switch>
-            <Route path="/user" component={User} />
-            <Route exact path="/" component={Events} />
-            <Route exact path="/events" component={Events} />
-            <PrivateRoute path="/dashboard" component={Dashboard} />
-            <PrivateRoute path="/profile" component={Profile} />
-          </Switch>
-        </div>
-      ) : (
-        <Switch>
-          <Route exact path="/" component={Landing} />
-          <Route exact path="/events" component={Events} />
-          <Route path="/user" component={User} />
-        </Switch>
-      )}
-    </Layout>
+    <div className="container mt-4">
+      <Alert />
+      <Switch>
+        <Route exact path="/events" component={Events} />
+        <PrivateRoute path="/dashboard" component={Dashboard} />
+        <PrivateRoute path="/profile" component={Profile} />
+        <Route path="/user" component={User} />
+      </Switch>
+    </div>
   )
 }
 

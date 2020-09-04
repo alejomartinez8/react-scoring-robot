@@ -13,6 +13,8 @@ export const userServices = {
   forgotPassword,
   validateResetToken,
   resetPassword,
+  update,
+  deleteUser,
 }
 
 // loadUser
@@ -81,12 +83,33 @@ function validateResetToken(token) {
 }
 
 // reset password
-async function resetPassword({ token, password, confirmPassword }) {
+function resetPassword({ token, password, confirmPassword }) {
   const requestOptions = {
     method: "post",
     url: `${config.apiUrl}/reset-password`,
     headers: { "Content-Type": "application/json" },
     data: JSON.stringify({ token, password, confirmPassword }),
+  }
+
+  return axios(requestOptions).then(handleResponse).catch(handleError)
+}
+
+function update(id, user) {
+  const requestOptions = {
+    method: "put",
+    url: `${config.apiUrl}/${id}`,
+    headers: { "Content-Type": "application/json" },
+    data: JSON.stringify(user),
+  }
+
+  return axios(requestOptions).then(handleResponse).catch(handleError)
+}
+
+function deleteUser(id) {
+  const requestOptions = {
+    method: "delete",
+    url: `${config.apiUrl}/${id}`,
+    data: "",
   }
 
   return axios(requestOptions).then(handleResponse).catch(handleError)

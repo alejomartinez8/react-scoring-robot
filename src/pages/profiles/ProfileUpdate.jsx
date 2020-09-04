@@ -4,8 +4,10 @@ import { useState } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { update } from "../../redux/actions/user.actions"
+import { deleteUser } from "../../redux/actions/user.actions"
 
-const ProfileUpdate = ({ auth: { user, loading }, update, history }) => {
+const ProfileUpdate = ({ auth: { user, loading }, update, deleteUser }) => {
+  // inistal data to update
   const initialState = {
     email: user.email,
     firstName: user.firstName,
@@ -13,12 +15,14 @@ const ProfileUpdate = ({ auth: { user, loading }, update, history }) => {
     password: "",
     confirmPassword: "",
     institution: user.institution,
-    city: "",
-    country: "",
-    bio: "",
+    city: user.city,
+    country: user.country,
+    bio: user.bio,
   }
 
   const [formData, setFormData] = useState(initialState)
+
+  // values
   const {
     email,
     firstName,
@@ -38,12 +42,11 @@ const ProfileUpdate = ({ auth: { user, loading }, update, history }) => {
     e.preventDefault()
     console.log("Create Profile")
     update(user.id, formData)
-      .then(() => {
-        console.log("Usuario actualizado")
-      })
-      .catch((error) => {
-        console.log("error actualizando usuario")
-      })
+  }
+
+  const onDelete = () => {
+    console.log("Delete User")
+    deleteUser(user.id)
   }
 
   return (
@@ -93,32 +96,6 @@ const ProfileUpdate = ({ auth: { user, loading }, update, history }) => {
             />
           </div>
 
-          <div className="form-group mb-4">
-            <label>Contraseña*</label>
-            <input
-              type="password"
-              className="form-control"
-              placeholder="Contraseña"
-              name="password"
-              value={password}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="form-group mb-4">
-            <label>Confirmar Contraseña*</label>
-            <input
-              type="password"
-              className="form-control"
-              placeholder="Confirmar Contraseña"
-              name="confirmPassword"
-              value={confirmPassword}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
           <div className="form-group">
             <label>Institución Educativa*</label>
             <input
@@ -129,7 +106,7 @@ const ProfileUpdate = ({ auth: { user, loading }, update, history }) => {
               value={institution}
               onChange={handleChange}
               required
-            ></input>
+            />
           </div>
 
           <div className="form-group">
@@ -142,7 +119,7 @@ const ProfileUpdate = ({ auth: { user, loading }, update, history }) => {
               value={city}
               onChange={handleChange}
               required
-            ></input>
+            />
           </div>
 
           <div className="form-group">
@@ -155,7 +132,7 @@ const ProfileUpdate = ({ auth: { user, loading }, update, history }) => {
               value={country}
               onChange={handleChange}
               required
-            ></input>
+            />
           </div>
 
           <div className="form-group">
@@ -167,6 +144,31 @@ const ProfileUpdate = ({ auth: { user, loading }, update, history }) => {
               value={bio}
               onChange={handleChange}
             />
+          </div>
+          <div className="form-row">
+            <div className="form-group col-md-3">
+              <label>Contraseña</label>
+              <input
+                type="password"
+                className="form-control"
+                placeholder="Contraseña"
+                name="password"
+                value={password}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="form-group col-md-3">
+              <label>Confirmar Contraseña</label>
+              <input
+                type="password"
+                className="form-control"
+                placeholder="Confirmar Contraseña"
+                name="confirmPassword"
+                value={confirmPassword}
+                onChange={handleChange}
+              />
+            </div>
           </div>
 
           <button type="submit" className="btn btn-primary mx-1" disabled={loading}>
@@ -180,8 +182,18 @@ const ProfileUpdate = ({ auth: { user, loading }, update, history }) => {
             Cancel
           </Link>
 
-          <button className="btn btn-danger m-1">
-            <i className="fas fa-user-minus"></i> Eliminar Cuenta
+          <button
+            onClick={onDelete}
+            type="button"
+            className="btn btn-danger m-1"
+            disabled={loading}
+          >
+            {loading ? (
+              <span className="spinner-border spinner-border-sm m-1"></span>
+            ) : (
+              <i className="fas fa-user-minus"></i>
+            )}
+            Eliminar Cuenta
           </button>
         </form>
       </div>
@@ -193,6 +205,7 @@ const ProfileUpdate = ({ auth: { user, loading }, update, history }) => {
 ProfileUpdate.propTypes = {
   auth: PropTypes.object.isRequired,
   update: PropTypes.func.isRequired,
+  deleteUser: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => {
@@ -201,4 +214,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { update })(ProfileUpdate)
+export default connect(mapStateToProps, { update, deleteUser })(ProfileUpdate)

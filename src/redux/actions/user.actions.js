@@ -100,13 +100,32 @@ export const resetPassword = ({ token, password, confirmPassword }) => (
 }
 
 // update user action
-export const update = (id, params) => {
+export const update = (id, params) => (dispatch) => {
+  console.log("update user action")
+  dispatch({ type: UserTypes.AUTH_REQUEST })
+
   userServices
     .update(id, params)
     .then((user) => {
-      console.log(user)
+      dispatch({ type: UserTypes.USER_LOADED, payload: user })
     })
     .catch((error) => {
-      console.log(error)
+      dispatch({ type: UserTypes.AUTH_ERROR, error })
+    })
+}
+
+// delete user action
+export const deleteUser = (id) => (dispatch) => {
+  console.log("delete user action")
+  dispatch({ type: UserTypes.AUTH_REQUEST })
+
+  userServices
+    .deleteUser(id)
+    .then((res) => {
+      dispatch({ type: UserTypes.AUTH_REQUEST_SUCCESS, res })
+      dispatch({ type: UserTypes.LOGOUT })
+    })
+    .catch((error) => {
+      dispatch({ type: UserTypes.AUTH_ERROR, error })
     })
 }
