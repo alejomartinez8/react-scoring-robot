@@ -1,4 +1,4 @@
-import { userTypes } from "../types/user.types"
+import { UserTypes } from "../constants/UserTypes"
 
 const initialState = {
   token: localStorage.getItem("token"),
@@ -12,20 +12,20 @@ export function auth(state = initialState, action) {
   const { type, payload } = action
 
   switch (type) {
-    case userTypes.AUTH_REQUEST:
+    case UserTypes.AUTH_REQUEST:
       return {
         ...state,
         loading: true,
       }
 
-    case userTypes.USER_LOADED:
+    case UserTypes.USER_LOADED:
       return {
         ...state,
         isAuth: true,
         loading: false,
         user: payload,
       }
-    case userTypes.LOGIN_SUCCESS:
+    case UserTypes.LOGIN_SUCCESS:
       localStorage.setItem("token", payload.token)
       return {
         ...state,
@@ -33,10 +33,10 @@ export function auth(state = initialState, action) {
         isAuth: true,
         loading: false,
       }
-    case userTypes.AUTH_ERROR:
-    case userTypes.LOGIN_FAIL:
-    case userTypes.REGISTER_FAIL:
-    case userTypes.LOGOUT:
+    case UserTypes.AUTH_ERROR:
+    case UserTypes.LOGIN_FAIL:
+    case UserTypes.REGISTER_FAIL:
+    case UserTypes.LOGOUT:
       localStorage.removeItem("token")
       return {
         ...state,
@@ -46,7 +46,7 @@ export function auth(state = initialState, action) {
         loading: false,
       }
 
-    case userTypes.AUTH_REQUEST_SUCCESS:
+    case UserTypes.AUTH_REQUEST_SUCCESS:
       return {
         ...state,
         loading: false,
