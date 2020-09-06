@@ -1,7 +1,7 @@
-import React, { Fragment } from "react";
-import EventItem from "../../components/events/EventItem";
+import React, { Fragment } from "react"
+import EventItem from "./EventItem"
 
-const Events = () => {
+const EventsListPage = () => {
   const events = [
     {
       id: "sri2019",
@@ -17,7 +17,7 @@ const Events = () => {
         "https://pygmalion.tech/wp-content/uploads/2019/08/Logo-horizontal.png",
       description: "Semana de la Robótica 2020",
     },
-  ];
+  ]
 
   return (
     <Fragment>
@@ -31,7 +31,7 @@ const Events = () => {
         )}
       </div>
     </Fragment>
-  );
-};
+  )
+}
 
-export default Events;
+export default EventsListPage

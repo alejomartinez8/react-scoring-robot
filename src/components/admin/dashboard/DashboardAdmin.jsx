@@ -2,7 +2,7 @@ import React, { Fragment } from "react"
 import { Link } from "react-router-dom"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
-import { Spinner } from "../../components/layout/Spinner"
+import Spinner from "../../layout/Spinner"
 
 const DashboardAdmin = ({ auth: { user, loading }, match }) => {
   const { path } = match

@@ -13,6 +13,7 @@ export const userServices = {
   forgotPassword,
   validateResetToken,
   resetPassword,
+  getAllUsers,
   update,
   deleteUser,
 }
@@ -92,6 +93,10 @@ function resetPassword({ token, password, confirmPassword }) {
   }
 
   return axios(requestOptions).then(handleResponse).catch(handleError)
+}
+
+function getAllUsers(id, user) {
+  return axios.get(`${config.apiUrl}/getAll`).then(handleResponse).catch(handleError)
 }
 
 function update(id, user) {

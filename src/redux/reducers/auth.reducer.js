@@ -4,7 +4,17 @@ const initialState = {
   token: localStorage.getItem("token"),
   isAuth: false,
   loading: false,
-  user: null,
+  user: {
+    id: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    role: "",
+    institution: "",
+    city: "",
+    country: "",
+  },
+  users: [],
   error: [],
 }
 
@@ -18,13 +28,12 @@ export function auth(state = initialState, action) {
         loading: true,
       }
 
-    case UserTypes.USER_LOADED:
+    case UserTypes.AUTH_REQUEST_SUCCESS:
       return {
         ...state,
-        isAuth: true,
         loading: false,
-        user: payload,
       }
+
     case UserTypes.LOGIN_SUCCESS:
       localStorage.setItem("token", payload.token)
       return {
@@ -33,23 +42,41 @@ export function auth(state = initialState, action) {
         isAuth: true,
         loading: false,
       }
+
+    case UserTypes.USER_LOADED:
+      return {
+        ...state,
+        isAuth: true,
+        loading: false,
+        user: payload,
+      }
+
+    case UserTypes.USERS_LOADED:
+      return {
+        ...state,
+        loading: false,
+        users: [...payload],
+      }
     case UserTypes.AUTH_ERROR:
-    case UserTypes.LOGIN_FAIL:
-    case UserTypes.REGISTER_FAIL:
     case UserTypes.LOGOUT:
       localStorage.removeItem("token")
       return {
         ...state,
-        error: payload,
         token: null,
         isAuth: false,
         loading: false,
-      }
-
-    case UserTypes.AUTH_REQUEST_SUCCESS:
-      return {
-        ...state,
-        loading: false,
+        users: {},
+        user: {
+          id: "",
+          firstName: "",
+          lastName: "",
+          email: "",
+          role: "",
+          institution: "",
+          city: "",
+          country: "",
+        },
+        error: payload,
       }
 
     default:

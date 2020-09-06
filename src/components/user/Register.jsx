@@ -8,7 +8,7 @@ import { register } from "../../redux/actions/user.actions"
 import { setAlert } from "../../redux/actions/alert.actions"
 
 const Register = ({ isAuth, loading, register, setAlert }) => {
-  // inistal data to update
+  // inistal data
   const initialState = {
     email: "",
     firstName: "",

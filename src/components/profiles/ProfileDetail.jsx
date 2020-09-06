@@ -2,7 +2,7 @@ import React from "react"
 import { Link } from "react-router-dom"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
-import { Spinner } from "../../components/layout/Spinner"
+import Spinner from "../../components/layout/Spinner"
 import { deleteUser } from "../../redux/actions/user.actions"
 
 const ProfileDetail = ({ auth: { user, loading }, deleteUser, match }) => {

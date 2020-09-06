@@ -7,17 +7,17 @@ import { connect } from "react-redux"
 
 import PrivateRoute from "./PrivateRoute"
 import Alert from "../../components/layout/Alert"
-import User from "../../pages/users/User"
-import Profile from "../../pages/profiles/Profile"
-import Admin from "../../pages/admin/Admin"
-import Events from "../../pages/events/Events"
+import User from "../user/User"
+import Profile from "../profiles/Profile"
+import Admin from "../admin/Admin"
+import EventsListPage from "../events/EventsListPage"
 
 const Routes = () => {
   return (
     <div className="container mt-4">
       <Alert />
       <Switch>
-        <Route exact path="/events" component={Events} />
+        <Route exact path="/events" component={EventsListPage} />
         <Route path="/admin" component={Admin} />
         <PrivateRoute path="/profile" component={Profile} />
         <Route path="/user" component={User} />

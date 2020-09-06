@@ -1,22 +1,22 @@
-import React, { useEffect } from "react";
-import { Route, Switch } from "react-router-dom";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import React, { useEffect } from "react"
+import { Route, Switch } from "react-router-dom"
+import { connect } from "react-redux"
+import PropTypes from "prop-types"
 
-import Login from "./Login";
-import Register from "./Register";
-import VerifyEmail from "./VerifyEmail";
-import ForgotPassword from "./ForgotPassword";
-import ResetPassword from "./ResetPassword";
+import Login from "./Login"
+import Register from "./Register"
+import VerifyEmail from "./VerifyEmail"
+import ForgotPassword from "./ForgotPassword"
+import ResetPassword from "./ResetPassword"
 
 const User = ({ history, match, isAuth }) => {
-  const { path } = match;
+  const { path } = match
 
   useEffect(() => {
     if (isAuth) {
-      history.push("/");
+      history.push("/")
     }
-  }, [isAuth, history]);
+  }, [isAuth, history])
 
   return (
     <Switch>
@@ -26,15 +26,15 @@ const User = ({ history, match, isAuth }) => {
       <Route path={`${path}/forgot-password`} component={ForgotPassword} />
       <Route path={`${path}/reset-password`} component={ResetPassword} />
     </Switch>
-  );
-};
+  )
+}
 
 User.propTypes = {
   isAuth: PropTypes.bool.isRequired,
-};
+}
 
 const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth,
-});
+})
 
-export default connect(mapStateToProps)(User);
+export default connect(mapStateToProps)(User)

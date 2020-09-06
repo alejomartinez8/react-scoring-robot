@@ -1,10 +1,9 @@
 import React, { Fragment } from "react"
 import { BrowserRouter, Route, Switch } from "react-router-dom"
-import "./App.css"
 import { connect } from "react-redux"
 import { loadUser } from "./redux/actions/user.actions"
 import Routes from "./components/routing/Routes"
-import Landing from "./pages/landing/Landing"
+import Landing from "./components/layout/Landing"
 import Navbar from "./components/layout/Navbar"
 
 const App = ({ loadUser }) => {

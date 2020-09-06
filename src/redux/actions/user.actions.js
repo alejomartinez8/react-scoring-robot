@@ -16,9 +16,7 @@ export const loadUser = () => (dispatch) => {
     .then((user) => {
       dispatch({ type: UserTypes.USER_LOADED, payload: user })
     })
-    .catch((error) => {
-      dispatch({ type: UserTypes.AUTH_ERROR, payload: error })
-    })
+    .catch(handleError)
 }
 
 // login action
@@ -31,10 +29,7 @@ export const login = (email, password) => (dispatch) => {
       dispatch({ type: UserTypes.LOGIN_SUCCESS, payload: token })
       dispatch(loadUser())
     })
-    .catch((error) => {
-      dispatch({ type: UserTypes.LOGIN_FAIL, payload: error })
-      dispatch(setAlert(error.toString(), "danger"))
-    })
+    .catch(handleError)
 }
 
 // logout action
@@ -52,14 +47,13 @@ export const register = (user) => (dispatch) => {
       dispatch({ type: UserTypes.AUTH_REQUEST_SUCCESS, payload: res })
       dispatch(setAlert(res.message, "success"))
     })
-    .catch((error) => {
-      dispatch({ type: UserTypes.REGISTER_FAIL, payload: error })
-      dispatch(setAlert(error.toString(), "danger"))
-    })
+    .catch(handleError)
 }
 
 // forgot password action send an email
 export const forgotPassword = (email) => (dispatch) => {
+  console.log("forgotPassword action")
+
   dispatch({ type: UserTypes.AUTH_REQUEST })
   userServices
     .forgotPassword(email)
@@ -67,10 +61,7 @@ export const forgotPassword = (email) => (dispatch) => {
       dispatch({ type: UserTypes.AUTH_REQUEST_SUCCESS })
       dispatch(setAlert(res.message, "success"))
     })
-    .catch((error) => {
-      dispatch({ type: UserTypes.AUTH_ERROR })
-      dispatch(setAlert(error.toString(), "danger"))
-    })
+    .catch(handleError)
 }
 
 // reset password action
@@ -88,15 +79,20 @@ export const resetPassword = ({ token, password, confirmPassword }) => (
         setAlert("Contraseña actualizada exitosamente, puede ingresar", "success")
       )
     })
-    .catch((error) => {
-      dispatch({ type: UserTypes.AUTH_ERROR, payload: error })
-      dispatch(
-        setAlert(
-          "Token no válido, no es posible actualizar su contraseña, debes solicitar restablecer tu contraseña nuevamente",
-          "danger"
-        )
-      )
+    .catch(handleError)
+}
+
+// get all user actions
+export const getAllUsers = () => (dispatch) => {
+  console.log("get all users actions")
+  dispatch({ type: UserTypes.AUTH_REQUEST })
+
+  userServices
+    .getAllUsers()
+    .then((users) => {
+      dispatch({ type: UserTypes.USERS_LOADED, payload: users })
     })
+    .catch(handleError)
 }
 
 // update user action
@@ -108,10 +104,9 @@ export const update = (id, params) => (dispatch) => {
     .update(id, params)
     .then((user) => {
       dispatch({ type: UserTypes.USER_LOADED, payload: user })
+      dispatch(setAlert("Usuario Actualizado"), "success")
     })
-    .catch((error) => {
-      dispatch({ type: UserTypes.AUTH_ERROR, error })
-    })
+    .catch(handleError)
 }
 
 // delete user action
@@ -123,9 +118,11 @@ export const deleteUser = (id) => (dispatch) => {
     .deleteUser(id)
     .then((res) => {
       dispatch({ type: UserTypes.AUTH_REQUEST_SUCCESS, res })
-      dispatch({ type: UserTypes.LOGOUT })
     })
-    .catch((error) => {
-      dispatch({ type: UserTypes.AUTH_ERROR, error })
-    })
+    .catch(handleError)
+}
+
+const handleError = (error) => (dispatch) => {
+  dispatch({ type: UserTypes.AUTH_ERROR, error })
+  dispatch(setAlert(error.toString(), "danger"))
 }

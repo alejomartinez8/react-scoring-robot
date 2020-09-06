@@ -1,6 +1,6 @@
 import React from "react"
 import { Route, Switch } from "react-router-dom"
-import DashboardAdmin from "./DashboardAdmin"
+import DashboardAdmin from "./dashboard/DashboardAdmin"
 import Users from "./users/Users"
 
 const Admin = ({ match }) => {

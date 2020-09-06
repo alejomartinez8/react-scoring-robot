@@ -4,7 +4,8 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { logout } from "../../redux/actions/user.actions"
 
-const Navbar = ({ isAuth, logout }) => {
+const Navbar = ({ isAuth, role, logout }) => {
+  console.log(role)
   const authLinks = (
     <Fragment>
       <li>
@@ -14,11 +15,20 @@ const Navbar = ({ isAuth, logout }) => {
           <span className="hide-sm"> Perfil</span>
         </Link>
       </li>
+      {role === "Admin" && (
+        <li>
+          <Link to="/admin">
+            <i className="fas fa-user" />
+            {"  "}
+            <span className="hide-sm"> Admin</span>
+          </Link>
+        </li>
+      )}
       <li>
-        <a onClick={logout} href="/">
+        <Link onClick={logout} to="/">
           <i className="fas fa-sign-out-alt" />
           <span className="hide-sm">Salir</span>
-        </a>
+        </Link>
       </li>
     </Fragment>
   )
@@ -38,25 +48,29 @@ const Navbar = ({ isAuth, logout }) => {
         <i className="fas fa-robot"></i>
         <span> Scoring-Robot</span>
       </Link>
-      <ul className="mb-0">
-        <li>
-          <Link to="/events">
-            <i className="fas fa-calendar-alt"></i> {"  "}
-            <span>Eventos</span>
-          </Link>
-        </li>
-        {isAuth ? authLinks : guestLinks}
-      </ul>
+      <div>
+        <ul className="mb-0">
+          <li>
+            <Link to="/events">
+              <i className="fas fa-calendar-alt"></i> {"  "}
+              <span>Eventos</span>
+            </Link>
+          </li>
+          {isAuth ? authLinks : guestLinks}
+        </ul>
+      </div>
     </nav>
   )
 }
 
 Navbar.propTypes = {
+  role: PropTypes.string.isRequired,
   isAuth: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth,
+  role: state.auth.user.role,
 })
 
 export default connect(mapStateToProps, { logout })(Navbar)

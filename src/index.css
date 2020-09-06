@@ -1,20 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;600&display=swap");
 
-/* Global Styles */
-/* :root {
-  --primary: #17a2b8;
-  --dark: #343a40;
-  --light: #f4f4f4;
-  --danger: #dc3545;
-  --success: #28a745;
-} */
-
-/* * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-} */
-
 body {
   font-family: "Nunito", sans-serif;
   font-size: 1rem;
@@ -311,18 +296,18 @@ button {
 }
 
 /* Navbar */
-/* .navbar {
+.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.7rem 2rem;
-  position: fixed;
+  /* position: fixed; */
   z-index: 1;
   width: 100%;
   top: 0;
   border-bottom: solid 1px var(--primary);
   opacity: 0.9;
-} */
+}
 
 .navbar ul {
   display: flex;
@@ -371,7 +356,8 @@ button {
 
   .navbar ul {
     text-align: center;
-    /* justify-content: center; */
+    justify-content: center;
+    padding: 0;
   }
 
   .navbar h1 {

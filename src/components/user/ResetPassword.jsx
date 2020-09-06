@@ -5,7 +5,7 @@ import { userServices } from "../../redux/services"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { setAlert } from "../../redux/actions/alert.actions"
-import ResetPasswordForm from "../../components/user/ResetPasswordForm"
+import ResetPasswordForm from "./ResetPasswordForm"
 
 const ResetPassword = ({ history, setAlert }) => {
   const TokenStatus = {
