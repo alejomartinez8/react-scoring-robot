@@ -9,7 +9,7 @@ import PrivateRoute from "./PrivateRoute"
 import Alert from "../../components/layout/Alert"
 import User from "../../pages/users/User"
 import Profile from "../../pages/profiles/Profile"
-import Dashboard from "../../pages/dashboard/Dashboard"
+import Admin from "../../pages/admin/Admin"
 import Events from "../../pages/events/Events"
 
 const Routes = () => {
@@ -18,7 +18,7 @@ const Routes = () => {
       <Alert />
       <Switch>
         <Route exact path="/events" component={Events} />
-        <PrivateRoute path="/dashboard" component={Dashboard} />
+        <Route path="/admin" component={Admin} />
         <PrivateRoute path="/profile" component={Profile} />
         <Route path="/user" component={User} />
       </Switch>
