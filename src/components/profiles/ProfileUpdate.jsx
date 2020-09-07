@@ -3,10 +3,10 @@ import { Link } from "react-router-dom"
 import { useState } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
-import { update } from "../../redux/actions/user.actions"
+import { updateUser } from "../../redux/actions/user.actions"
 import { deleteUser } from "../../redux/actions/user.actions"
 
-const ProfileUpdate = ({ auth: { user, loading }, update, deleteUser }) => {
+const ProfileUpdate = ({ auth: { user, loading }, updateUser, deleteUser }) => {
   // inistal data to update
   const initialState = {
     email: user.email,
@@ -41,7 +41,7 @@ const ProfileUpdate = ({ auth: { user, loading }, update, deleteUser }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log("Create Profile")
-    update(user.id, formData)
+    updateUser(user.id, formData)
   }
 
   const onDelete = () => {
@@ -204,7 +204,7 @@ const ProfileUpdate = ({ auth: { user, loading }, update, deleteUser }) => {
 //snippet rpt
 ProfileUpdate.propTypes = {
   auth: PropTypes.object.isRequired,
-  update: PropTypes.func.isRequired,
+  updateUser: PropTypes.func.isRequired,
   deleteUser: PropTypes.func.isRequired,
 }
 
@@ -214,4 +214,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { update, deleteUser })(ProfileUpdate)
+export default connect(mapStateToProps, { updateUser, deleteUser })(ProfileUpdate)

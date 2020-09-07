@@ -5,7 +5,7 @@ import Users from "./users/Users"
 
 const Admin = ({ match }) => {
   const { path } = match
-  console.log("Admin path:", path)
+
   return (
     <Switch>
       <Route exact path={path} component={DashboardAdmin} />

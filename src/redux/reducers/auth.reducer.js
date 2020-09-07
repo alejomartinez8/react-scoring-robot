@@ -15,12 +15,13 @@ const initialState = {
     country: "",
   },
   users: [],
+  userToUpdate: {},
   error: [],
 }
 
 export function auth(state = initialState, action) {
   const { type, payload } = action
-
+  // console.log({ payload })
   switch (type) {
     case UserTypes.AUTH_REQUEST:
       return {
@@ -57,6 +58,20 @@ export function auth(state = initialState, action) {
         loading: false,
         users: [...payload],
       }
+
+    case UserTypes.UPDATE_USER:
+      return {
+        ...state,
+        loading: false,
+        userToUpdate: payload,
+      }
+
+    case UserTypes.CLEAR_USER:
+      return {
+        ...state,
+        userToUpdate: {},
+      }
+
     case UserTypes.AUTH_ERROR:
     case UserTypes.LOGOUT:
       localStorage.removeItem("token")

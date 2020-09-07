@@ -5,7 +5,6 @@ import PropTypes from "prop-types"
 import { logout } from "../../redux/actions/user.actions"
 
 const Navbar = ({ isAuth, role, logout }) => {
-  console.log(role)
   const authLinks = (
     <Fragment>
       <li>

@@ -1,5 +1,4 @@
 import axios from "axios"
-import { logout } from "../actions/user.actions"
 
 const config = {
   apiUrl: "http://localhost:5050/users",
@@ -14,7 +13,9 @@ export const userServices = {
   validateResetToken,
   resetPassword,
   getAllUsers,
-  update,
+  getById,
+  createUser,
+  updateUser,
   deleteUser,
 }
 
@@ -95,11 +96,17 @@ function resetPassword({ token, password, confirmPassword }) {
   return axios(requestOptions).then(handleResponse).catch(handleError)
 }
 
-function getAllUsers(id, user) {
+// getAllUsers
+function getAllUsers() {
   return axios.get(`${config.apiUrl}/getAll`).then(handleResponse).catch(handleError)
 }
 
-function update(id, user) {
+function getById(id) {
+  return axios.get(`${config.apiUrl}/${id}`).then(handleResponse).catch(handleError)
+}
+
+// update
+function updateUser(id, user) {
   const requestOptions = {
     method: "put",
     url: `${config.apiUrl}/${id}`,
@@ -110,6 +117,20 @@ function update(id, user) {
   return axios(requestOptions).then(handleResponse).catch(handleError)
 }
 
+// createUser
+function createUser(user) {
+  console.log("createUser service:", user)
+  const requestOptions = {
+    method: "post",
+    url: `${config.apiUrl}`,
+    headers: { "Content-Type": "application/json" },
+    data: JSON.stringify(user),
+  }
+
+  return axios(requestOptions).then(handleResponse).catch(handleError)
+}
+
+// deleteUSer
 function deleteUser(id) {
   const requestOptions = {
     method: "delete",
@@ -128,11 +149,7 @@ function handleResponse(response) {
 
 //handleError
 function handleError(error) {
-  console.log("handleError: ", error.response)
-  if (error.response.status === 401) {
-    logout()
-  }
-  const _error =
-    (error.response.data && error.response.data.message) || error.response.status
-  return Promise.reject(_error)
+  console.log("handleError: ", { error })
+  return error.data
+  // return Promise.reject(error.data)
 }

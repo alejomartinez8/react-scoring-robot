@@ -1,31 +1,37 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
+import { connect } from "react-redux"
+import PropTypes from "prop-types"
+import { createUser, updateUser } from "../../../redux/actions/user.actions"
 
-const AddEdit = ({ history, match, loading }) => {
-  const { id } = match.params
-  const isAddMode = !id
+// inistal data
+const initialState = {
+  email: "",
+  firstName: "",
+  lastName: "",
+  password: "",
+  confirmPassword: "",
+  institution: "",
+  city: "",
+  country: "",
+  role: "",
+}
 
+const UserForm = ({ userToUpdate, loading, createUser, updateUser }) => {
   // load if Edit User
   useEffect(() => {
-    if (!isAddMode) {
+    if (!loading && userToUpdate) {
+      const userData = { ...initialState }
+      for (const key in userToUpdate) {
+        if (key in userData) {
+          userData[key] = userToUpdate[key]
+        }
+      }
+      setFormData(userData)
     }
-  })
+  }, [loading, userToUpdate])
 
-  // inistal data
-  const initialState = {
-    email: "",
-    firstName: "",
-    lastName: "",
-    password: "",
-    confirmPassword: "",
-    institution: "",
-    city: "",
-    country: "",
-    role: "User",
-    acceptTerms: true,
-  }
-
-  const [formData, setformData] = useState(initialState)
+  const [formData, setFormData] = useState(initialState)
 
   // values
   const {
@@ -38,19 +44,23 @@ const AddEdit = ({ history, match, loading }) => {
     city,
     country,
     role,
-    acceptTerms = true,
   } = formData
 
   const handleChange = (e) => {
-    setformData({ ...formData, [e.target.name]: e.target.value })
+    setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    if (userToUpdate) {
+      updateUser(userToUpdate.id, formData)
+    } else {
+      createUser(formData)
+    }
   }
   return (
     <form className="form" onSubmit={handleSubmit}>
-      <h1>{isAddMode ? "Agregar Usuario" : "Editar Usuario"}</h1>
+      <h1>{!userToUpdate ? "Agregar Usuario" : "Editar Usuario"}</h1>
       <div className="form-group">
         <label>Nombres*</label>
         <input
@@ -139,7 +149,7 @@ const AddEdit = ({ history, match, loading }) => {
         </select>
       </div>
 
-      {!isAddMode && (
+      {userToUpdate && (
         <div>
           <h3 className="pt-3">Cambiar Contraseña</h3>
           <p>Dejar en blanco para conservar la misma contraseña</p>
@@ -156,7 +166,6 @@ const AddEdit = ({ history, match, loading }) => {
             name="password"
             value={password}
             onChange={handleChange}
-            required
           />
         </div>
 
@@ -169,43 +178,34 @@ const AddEdit = ({ history, match, loading }) => {
             name="confirmPassword"
             value={confirmPassword}
             onChange={handleChange}
-            required
           />
         </div>
       </div>
 
-      <div className="form-group terms-conditions mb-4">
-        <input
-          id="register-agree"
-          name="acceptTerms"
-          type="checkbox"
-          required
-          checked={acceptTerms}
-          className="form-control-custom"
-          onChange={() =>
-            setformData({
-              ...formData,
-              acceptTerms: !formData.acceptTerms,
-            })
-          }
-        />{" "}
-        <label htmlFor="register-agree"> Acepto Términos y Condiciones </label>
+      <div className="form-row">
+        <button type="submit" className="btn btn-primary m-1" disabled={loading}>
+          {loading && (
+            <span className="spinner-border spinner-border-sm mr-1"></span>
+          )}
+          Guardar
+        </button>
+        <Link to="/admin/users" className="btn btn-secondary m-1">
+          Cancel
+        </Link>
       </div>
-
-      <button
-        type="submit"
-        className="btn btn-lg btn-primary mb-3"
-        disabled={loading}
-      >
-        {loading && <span className="spinner-border spinner-border-sm mr-1"></span>}
-        Guardar
-      </button>
-
-      <Link to={isAddMode ? "." : ".."} className="btn btn-link">
-        Cancel
-      </Link>
     </form>
   )
 }
 
-export default AddEdit
+UserForm.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  userToUpdate: PropTypes.object.isRequired,
+  updateUser: PropTypes.func.isRequired,
+  createUser: PropTypes.func.isRequired,
+}
+
+const mapStateToProps = (state) => ({
+  loading: state.auth.loading,
+})
+
+export default connect(mapStateToProps, { createUser, updateUser })(UserForm)

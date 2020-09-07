@@ -5,6 +5,7 @@ import setAuthToken from "../../helpers/setAuthToken"
 
 // load user action
 export const loadUser = () => (dispatch) => {
+  console.log("loadUser action")
   if (localStorage.token) {
     setAuthToken(localStorage.token)
   }
@@ -17,6 +18,10 @@ export const loadUser = () => (dispatch) => {
       dispatch({ type: UserTypes.USER_LOADED, payload: user })
     })
     .catch(handleError)
+}
+
+export const clearUser = () => (dispatch) => {
+  dispatch({ type: UserTypes.CLEAR_USER })
 }
 
 // login action
@@ -95,16 +100,44 @@ export const getAllUsers = () => (dispatch) => {
     .catch(handleError)
 }
 
-// update user action
-export const update = (id, params) => (dispatch) => {
-  console.log("update user action")
+// get user by Id
+export const getUserById = (id) => (dispatch) => {
+  console.log("getById action")
   dispatch({ type: UserTypes.AUTH_REQUEST })
 
   userServices
-    .update(id, params)
+    .getById(id)
     .then((user) => {
-      dispatch({ type: UserTypes.USER_LOADED, payload: user })
-      dispatch(setAlert("Usuario Actualizado"), "success")
+      console.log(user)
+      dispatch({ type: UserTypes.UPDATE_USER, payload: user })
+    })
+    .catch(handleError)
+}
+
+// create user action
+export const createUser = (user) => (dispatch) => {
+  console.log("createUser action")
+  dispatch({ type: UserTypes.AUTH_REQUEST })
+
+  userServices
+    .createUser(user)
+    .then((user) => {
+      dispatch({ type: UserTypes.AUTH_REQUEST })
+      dispatch(setAlert("Usuario Creado", "success"))
+    })
+    .catch(handleError)
+}
+
+// update user action
+export const updateUser = (id, params) => (dispatch) => {
+  console.log("updateUser action")
+  dispatch({ type: UserTypes.AUTH_REQUEST })
+
+  userServices
+    .updateUser(id, params)
+    .then((user) => {
+      dispatch({ type: UserTypes.AUTH_REQUEST_SUCCESS })
+      dispatch(setAlert("Usuario Actualizado", "success"))
     })
     .catch(handleError)
 }
@@ -123,6 +156,6 @@ export const deleteUser = (id) => (dispatch) => {
 }
 
 const handleError = (error) => (dispatch) => {
-  dispatch({ type: UserTypes.AUTH_ERROR, error })
+  dispatch({ type: UserTypes.AUTH_ERROR, error: error.data })
   dispatch(setAlert(error.toString(), "danger"))
 }
