@@ -69,7 +69,7 @@ Navbar.propTypes = {
 
 const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth,
-  role: state.auth.user.role,
+  role: state.auth.userAuth.role,
 })
 
 export default connect(mapStateToProps, { logout })(Navbar)

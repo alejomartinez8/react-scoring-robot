@@ -3,8 +3,8 @@ import { UserTypes } from "../constants/UserTypes"
 const initialState = {
   token: localStorage.getItem("token"),
   isAuth: false,
-  loading: false,
-  user: {
+  loading: true,
+  userAuth: {
     id: "",
     firstName: "",
     lastName: "",
@@ -14,8 +14,6 @@ const initialState = {
     city: "",
     country: "",
   },
-  users: [],
-  userToUpdate: {},
   error: [],
 }
 
@@ -23,19 +21,7 @@ export function auth(state = initialState, action) {
   const { type, payload } = action
   // console.log({ payload })
   switch (type) {
-    case UserTypes.AUTH_REQUEST:
-      return {
-        ...state,
-        loading: true,
-      }
-
-    case UserTypes.AUTH_REQUEST_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-      }
-
-    case UserTypes.LOGIN_SUCCESS:
+    case UserTypes.AUTH_LOGIN_SUCCESS:
       localStorage.setItem("token", payload.token)
       return {
         ...state,
@@ -44,36 +30,16 @@ export function auth(state = initialState, action) {
         loading: false,
       }
 
-    case UserTypes.USER_LOADED:
+    case UserTypes.AUTH_USER_LOADED:
       return {
         ...state,
         isAuth: true,
         loading: false,
-        user: payload,
-      }
-
-    case UserTypes.USERS_LOADED:
-      return {
-        ...state,
-        loading: false,
-        users: [...payload],
-      }
-
-    case UserTypes.UPDATE_USER:
-      return {
-        ...state,
-        loading: false,
-        userToUpdate: payload,
-      }
-
-    case UserTypes.CLEAR_USER:
-      return {
-        ...state,
-        userToUpdate: {},
+        userAuth: payload,
       }
 
     case UserTypes.AUTH_ERROR:
-    case UserTypes.LOGOUT:
+    case UserTypes.AUTH_LOGOUT:
       localStorage.removeItem("token")
       return {
         ...state,
@@ -81,7 +47,7 @@ export function auth(state = initialState, action) {
         isAuth: false,
         loading: false,
         users: {},
-        user: {
+        userAuth: {
           id: "",
           firstName: "",
           lastName: "",

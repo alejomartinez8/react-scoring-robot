@@ -149,7 +149,10 @@ function handleResponse(response) {
 
 //handleError
 function handleError(error) {
-  console.log("handleError: ", { error })
-  return error.data
-  // return Promise.reject(error.data)
+  console.error(
+    "handleError: ",
+    (error.response.data && error.response.data.message) || error.response.status
+  )
+  // return error.data
+  throw (error.response.data && error.response.data.message) || error.response.status
 }

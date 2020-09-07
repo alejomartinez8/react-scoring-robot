@@ -17,9 +17,13 @@ const Routes = () => {
     <div className="container mt-4">
       <Alert />
       <Switch>
+        {/* Events */}
         <Route exact path="/events" component={EventsListPage} />
-        <Route path="/admin" component={Admin} />
+        {/* Admin */}
+        <PrivateRoute path="/admin" component={Admin} />
+        {/* Profile */}
         <PrivateRoute path="/profile" component={Profile} />
+        {/* Auth */}
         <Route path="/user" component={User} />
       </Switch>
     </div>

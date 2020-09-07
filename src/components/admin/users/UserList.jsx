@@ -1,81 +1,73 @@
 import React, { useEffect } from "react"
 import { Link } from "react-router-dom"
 import { connect } from "react-redux"
-import PropTypes from "prop-types"
 import { getAllUsers, deleteUser } from "../../../redux/actions/user.actions"
-import Spinner from "../../../components/layout/Spinner"
 
-const UserList = ({ match, users, getAllUsers, deleteUser }) => {
+const UserList = ({ getAllUsers, user: { users }, deleteUser, match }) => {
   const { path } = match
 
   useEffect(() => {
     getAllUsers()
-  }, [getAllUsers, deleteUser])
+  }, [getAllUsers])
+
+  const handleDeleteUser = () => {}
 
   return (
-    <div>
-      <h1>Administrar Usuarios</h1>
-      <p>
-        Administra tus usuarios (sólo Administradores puede acceder a esta sección)
-      </p>
-      <Link to={`${path}/add`} className="btn btn-sm btn-success mb-2">
-        Agregar Usuario
-      </Link>
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {users &&
-            users.map((user) => (
-              <tr key={user.id}>
-                <td>
-                  {user.firstName} {user.lastName}
-                </td>
-                <td>{user.email}</td>
-                <td>{user.role}</td>
-                <td style={{ whiteSpace: "nowrap" }}>
-                  <Link
-                    to={`${path}/edit/${user.id}`}
-                    className="btn btn-sm btn-primary mr-1"
-                  >
-                    Editar
-                  </Link>
-                  <button
-                    onClick={() => {
-                      getAllUsers()
-                    }}
-                    className="btn btn-sm btn-danger"
-                  >
-                    <span>Eliminar</span>
-                  </button>
-                </td>
-              </tr>
-            ))}
-          {!users && (
+    <div className="card shadow">
+      <div className="card-header">
+        <h1>Administrar Usuarios</h1>
+        <p>
+          Administra tus usuarios (sólo Administradores puede acceder a esta sección)
+        </p>
+      </div>
+
+      <div className="card-body">
+        <Link to={`${path}/add`} className="btn btn-sm btn-success mb-2">
+          Agregar Usuario
+        </Link>
+        <table className="table table-striped">
+          <thead>
             <tr>
-              <td colSpan="4" className="text-center">
-                <Spinner />
-              </td>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th></th>
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {users &&
+              users.map((user) => (
+                <tr key={user.id}>
+                  <td>
+                    {user.firstName} {user.lastName}
+                  </td>
+                  <td>{user.email}</td>
+                  <td>{user.role}</td>
+                  <td style={{ whiteSpace: "nowrap" }}>
+                    <Link
+                      to={`${path}/edit/${user.id}`}
+                      className="btn btn-sm btn-primary mr-1"
+                    >
+                      Editar
+                    </Link>
+                    <button
+                      onClick={handleDeleteUser}
+                      className="btn btn-sm btn-danger"
+                    >
+                      <span>Eliminar</span>
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }
 
-UserList.propTypes = {
-  users: PropTypes.array.isRequired,
-}
-
 const mapStateToProps = (state) => ({
-  users: state.auth.users,
+  user: state.user,
 })
 
 export default connect(mapStateToProps, { getAllUsers, deleteUser })(UserList)

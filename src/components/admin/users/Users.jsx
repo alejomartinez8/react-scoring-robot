@@ -2,14 +2,15 @@ import React from "react"
 import { Route, Switch } from "react-router-dom"
 import UserList from "./UserList"
 import UserEdit from "./UserEdit"
-import AddUser from "./AddUser"
+import UserForm from "./UserForm"
 
 const Users = ({ match }) => {
   const { path } = match
+  console.log({ path })
   return (
     <Switch>
       <Route exact path={path} component={UserList} />
-      <Route path={`${path}/add`} component={AddUser} />
+      <Route path={`${path}/add`} component={UserForm} />
       <Route path={`${path}/edit/:id`} component={UserEdit} />
     </Switch>
   )

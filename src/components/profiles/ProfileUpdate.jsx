@@ -6,18 +6,18 @@ import PropTypes from "prop-types"
 import { updateUser } from "../../redux/actions/user.actions"
 import { deleteUser } from "../../redux/actions/user.actions"
 
-const ProfileUpdate = ({ auth: { user, loading }, updateUser, deleteUser }) => {
+const ProfileUpdate = ({ auth: { userAuth, loading }, updateUser, deleteUser }) => {
   // inistal data to update
   const initialState = {
-    email: user.email,
-    firstName: user.firstName,
-    lastName: user.lastName,
+    email: userAuth.email,
+    firstName: userAuth.firstName,
+    lastName: userAuth.lastName,
     password: "",
     confirmPassword: "",
-    institution: user.institution,
-    city: user.city,
-    country: user.country,
-    bio: user.bio,
+    institution: userAuth.institution,
+    city: userAuth.city,
+    country: userAuth.country,
+    bio: userAuth.bio,
   }
 
   const [formData, setFormData] = useState(initialState)
@@ -41,17 +41,17 @@ const ProfileUpdate = ({ auth: { user, loading }, updateUser, deleteUser }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log("Create Profile")
-    updateUser(user.id, formData)
+    updateUser(userAuth.id, formData)
   }
 
   const onDelete = () => {
     console.log("Delete User")
-    deleteUser(user.id)
+    deleteUser(userAuth.id)
   }
 
   return (
     <div className="card shadow">
-      <div className="card-header border-primary">
+      <div className="card-header">
         <h2 className="card-title">Editar Perfil</h2>
       </div>
       <div className="card-body">
