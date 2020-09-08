@@ -32,6 +32,14 @@ export function user(state = initialState, action) {
         user: payload,
       }
 
+    case UserTypes.USER_DELETE:
+      return {
+        ...state,
+        users: state.users.map((user) =>
+          user.id === payload ? { ...user, deleting: true } : user
+        ),
+      }
+
     case UserTypes.CLEAR_USER:
       return {
         ...state,

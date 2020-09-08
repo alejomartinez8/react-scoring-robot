@@ -3,7 +3,7 @@ import { UserTypes } from "../constants/UserTypes"
 const initialState = {
   token: localStorage.getItem("token"),
   isAuth: false,
-  loading: true,
+  loading: false,
   userAuth: {
     id: "",
     firstName: "",
@@ -21,6 +21,11 @@ export function auth(state = initialState, action) {
   const { type, payload } = action
   // console.log({ payload })
   switch (type) {
+    case UserTypes.AUTH_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      }
     case UserTypes.AUTH_LOGIN_SUCCESS:
       localStorage.setItem("token", payload.token)
       return {

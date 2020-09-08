@@ -14,7 +14,7 @@ const DashboardAdmin = ({ auth: { userAuth, loading }, match }) => {
       <p>Panel de Administración</p>
 
       <div className="row mb-5">
-        <div className="col-lg-3 m-1">
+        <div className="col-md-5 my-3">
           <div className="card shadow h-100">
             <div className="card-header">
               <h2>Usuarios</h2>
@@ -31,7 +31,7 @@ const DashboardAdmin = ({ auth: { userAuth, loading }, match }) => {
           </div>
         </div>
 
-        <div className="col-lg-3 m-1">
+        <div className="col-md-5 my-3">
           <div className="card shadow h-100">
             <div className="card-header">
               <h2>Equipos</h2>
@@ -48,7 +48,7 @@ const DashboardAdmin = ({ auth: { userAuth, loading }, match }) => {
           </div>
         </div>
 
-        <div className="col-lg-3 m-1">
+        <div className="col-md-5 my-3">
           <div className="card shadow h-100">
             <div className="card-header">
               <h2>Eventos</h2>
@@ -65,7 +65,7 @@ const DashboardAdmin = ({ auth: { userAuth, loading }, match }) => {
           </div>
         </div>
 
-        <div className="col-lg-3 m-1">
+        <div className="col-md-5 my-3">
           <div className="card shadow h-100">
             <div className="card-header">
               <h2>Retos</h2>

@@ -6,7 +6,6 @@ import UserForm from "./UserForm"
 
 const Users = ({ match }) => {
   const { path } = match
-  console.log({ path })
   return (
     <Switch>
       <Route exact path={path} component={UserList} />

@@ -20,7 +20,7 @@ const Routes = () => {
         {/* Events */}
         <Route exact path="/events" component={EventsListPage} />
         {/* Admin */}
-        <PrivateRoute path="/admin" component={Admin} />
+        <PrivateRoute path="/admin" component={Admin} roles="Admin" />
         {/* Profile */}
         <PrivateRoute path="/profile" component={Profile} />
         {/* Auth */}

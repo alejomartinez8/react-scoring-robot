@@ -17,7 +17,7 @@ const Navbar = ({ isAuth, role, logout }) => {
       {role === "Admin" && (
         <li>
           <Link to="/admin">
-            <i className="fas fa-user" />
+            <i className="fas fa-cog" />
             {"  "}
             <span className="hide-sm"> Admin</span>
           </Link>

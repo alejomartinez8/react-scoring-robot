@@ -10,7 +10,7 @@ export const loadUser = () => (dispatch) => {
     setAuthToken(localStorage.token)
   }
 
-  dispatch({ type: UserTypes.AUTH_LOAD_USER })
+  dispatch({ type: UserTypes.AUTH_REQUEST })
 
   userServices
     .loadUser()
@@ -25,12 +25,11 @@ export const loadUser = () => (dispatch) => {
 
 // login action
 export const login = (email, password) => (dispatch) => {
-  dispatch({ type: UserTypes.AUTH_LOGIN_REQUEST })
-
   userServices
     .login(email, password)
     .then((token) => {
       dispatch({ type: UserTypes.AUTH_LOGIN_SUCCESS, payload: token })
+      dispatch(setAlert("Bienvenido", "success"))
       dispatch(loadUser())
     })
     .catch((error) => {
@@ -46,8 +45,6 @@ export const logout = () => (dispatch) => {
 
 // register action
 export const register = (user) => (dispatch) => {
-  dispatch({ type: UserTypes.AUTH_REQUEST })
-
   userServices
     .register(user)
     .then((res) => {
@@ -64,7 +61,6 @@ export const register = (user) => (dispatch) => {
 export const forgotPassword = (email) => (dispatch) => {
   console.log("forgotPassword action")
 
-  dispatch({ type: UserTypes.AUTH_REQUEST })
   userServices
     .forgotPassword(email)
     .then((res) => {
@@ -82,7 +78,6 @@ export const resetPassword = ({ token, password, confirmPassword }) => (
   dispatch
 ) => {
   console.log("resetPassword")
-  dispatch({ type: UserTypes.AUTH_REQUEST })
 
   userServices
     .resetPassword({ token, password, confirmPassword })
@@ -136,11 +131,10 @@ export const getUserById = (id) => (dispatch) => {
 // create user action
 export const createUser = (user) => (dispatch) => {
   console.log("createUser action")
-  dispatch({ type: UserTypes.AUTH_REQUEST })
 
   userServices
     .createUser(user)
-    .then((user) => {
+    .then(() => {
       dispatch({ type: UserTypes.AUTH_REQUEST_SUCCESS })
       dispatch(setAlert("Usuario Creado", "success"))
     })
@@ -153,12 +147,12 @@ export const createUser = (user) => (dispatch) => {
 // update user action
 export const updateUser = (id, params) => (dispatch) => {
   console.log("updateUser action")
-  dispatch({ type: UserTypes.AUTH_REQUEST })
 
   userServices
     .updateUser(id, params)
     .then((user) => {
       dispatch({ type: UserTypes.AUTH_REQUEST_SUCCESS })
+      dispatch(loadUser())
       dispatch(getUserById(user.id))
       dispatch(setAlert("Usuario Actualizado", "success"))
     })
@@ -171,12 +165,13 @@ export const updateUser = (id, params) => (dispatch) => {
 // delete user action
 export const deleteUser = (id) => (dispatch) => {
   console.log("delete user action")
-  dispatch({ type: UserTypes.AUTH_REQUEST })
 
   userServices
     .deleteUser(id)
     .then((res) => {
-      dispatch({ type: UserTypes.AUTH_REQUEST_SUCCESS, res })
+      dispatch({ type: UserTypes.USER_DELETE, payload: id })
+      dispatch(getAllUsers())
+      dispatch(setAlert("Usuario Eliminado", "success"))
     })
     .catch((error) => {
       dispatch({ type: UserTypes.AUTH_ERROR, payload: error })
