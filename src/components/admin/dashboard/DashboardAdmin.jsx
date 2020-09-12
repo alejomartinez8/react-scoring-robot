@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Spinner from "../../layout/Spinner";
@@ -11,44 +10,44 @@ const DashboardAdmin = ({ auth: { userAuth, loading }, match }) => {
     <Spinner />
   ) : (
     <Fragment>
-      <h1 className="large text-primary">Dashboard Admin</h1>
-      <p>Panel de Administración</p>
-
-      <div className="row">
-        <div className="col-sm-6 my-3">
-          <DashboardAdminItem
-            title="Eventos"
-            description="Crea y actualiza eventos manualmente"
-            actionPath={`${path}/events`}
-            actionDescription="Administrar Events"
-          />
+      <div className="card shadow">
+        <div className="card-header">
+          <h1 className="large text-primary">Panel Administración</h1>
         </div>
 
-        <div className="col-sm-6 my-3">
-          <DashboardAdminItem
-            title="Retos"
-            description="Crea y actualiza retos manualmente"
-            actionPath={`${path}/challenges`}
-            actionDescription="Administrar Retos"
-          />
-        </div>
+        <div className="card-body">
+          <table className="table table-striped">
+            <thead></thead>
+            <tbody>
+              <DashboardAdminItem
+                title="Eventos"
+                description="Crea y actualiza eventos manualmente"
+                actionPath={`${path}/events`}
+                actionDescription="Administrar"
+              />
 
-        <div className="col-sm-6 my-3">
-          <DashboardAdminItem
-            title="Usuarios"
-            description="Crea y actualiza usuarios manualmente"
-            actionPath={`${path}/users`}
-            actionDescription="Administrar Usuarios"
-          />
-        </div>
+              <DashboardAdminItem
+                title="Retos"
+                description="Crea y actualiza retos manualmente"
+                actionPath={`${path}/challenges`}
+                actionDescription="Administrar"
+              />
 
-        <div className="col-sm-6 my-3">
-          <DashboardAdminItem
-            title="Equipos"
-            description="Crea y actualiza equipos manualmente"
-            actionPath={`${path}/teams`}
-            actionDescription="Administrar Equipos"
-          />
+              <DashboardAdminItem
+                title="Usuarios"
+                description="Crea y actualiza usuarios manualmente"
+                actionPath={`${path}/users`}
+                actionDescription="Administrar"
+              />
+
+              <DashboardAdminItem
+                title="Equipos"
+                description="Crea y actualiza equipos manualmente"
+                actionPath={`${path}/teams`}
+                actionDescription="Administrar"
+              />
+            </tbody>
+          </table>
         </div>
       </div>
     </Fragment>
