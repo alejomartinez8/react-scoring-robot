@@ -1,23 +1,12 @@
-import React, { Fragment } from "react"
-import EventItem from "./EventItem"
+import React, { Fragment, useEffect } from "react";
+import EventItem from "./EventItem";
+import { connect } from "react-redux";
+import { eventActions } from "../../redux/actions";
 
-const EventsListPage = () => {
-  const events = [
-    {
-      id: "sri2019",
-      name: "SRI2019",
-      imgURL:
-        "https://pygmalion.tech/wp-content/uploads/2019/08/Logo-horizontal.png",
-      description: "Semana de la Robótica y la Innovación 2019",
-    },
-    {
-      id: "sri2020",
-      name: "SRI2020",
-      imgURL:
-        "https://pygmalion.tech/wp-content/uploads/2019/08/Logo-horizontal.png",
-      description: "Semana de la Robótica 2020",
-    },
-  ]
+const EventsListPage = ({ event: { events }, getAllEvents }) => {
+  useEffect(() => {
+    getAllEvents();
+  }, [getAllEvents]);
 
   return (
     <Fragment>
@@ -31,7 +20,15 @@ const EventsListPage = () => {
         )}
       </div>
     </Fragment>
-  )
-}
+  );
+};
 
-export default EventsListPage
+const mapStateToProps = (state) => ({
+  event: state.event,
+});
+
+const actionCreators = {
+  getAllEvents: eventActions.getAllEvents,
+};
+
+export default connect(mapStateToProps, actionCreators)(EventsListPage);

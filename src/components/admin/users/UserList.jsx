@@ -1,18 +1,18 @@
-import React, { useEffect, Fragment } from "react"
-import { Link } from "react-router-dom"
-import { connect } from "react-redux"
-import { getAllUsers, deleteUser } from "../../../redux/actions/user.actions"
+import React, { useEffect, Fragment } from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { getAllUsers, deleteUser } from "../../../redux/actions/user.actions";
 
 const UserList = ({ getAllUsers, user: { users }, deleteUser, match }) => {
-  const { path } = match
+  const { path } = match;
 
   useEffect(() => {
-    getAllUsers()
-  }, [getAllUsers])
+    getAllUsers();
+  }, [getAllUsers]);
 
   const handleDeleteUser = (id) => {
-    deleteUser(id)
-  }
+    deleteUser(id);
+  };
 
   return (
     <Fragment>
@@ -82,11 +82,11 @@ const UserList = ({ getAllUsers, user: { users }, deleteUser, match }) => {
         </div>
       </div>
     </Fragment>
-  )
-}
+  );
+};
 
 const mapStateToProps = (state) => ({
   user: state.user,
-})
+});
 
-export default connect(mapStateToProps, { getAllUsers, deleteUser })(UserList)
+export default connect(mapStateToProps, { getAllUsers, deleteUser })(UserList);

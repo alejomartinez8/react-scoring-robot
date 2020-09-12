@@ -4,7 +4,7 @@ body {
   font-family: "Nunito", sans-serif;
   font-size: 1rem;
   line-height: 1.6;
-  background-color: var(--light);
+  /* background-color: var(--light); */
   color: #333;
 }
 
@@ -20,16 +20,6 @@ ul {
 img {
   width: 100%;
 }
-
-/* Utilities */
-/* .container {
-  max-width: 1100px;
-  margin: auto;
-  overflow: hidden;
-  padding: 0 2rem;
-  margin-top: 6rem;
-  margin-bottom: 3rem;
-} */
 
 /* Text Styles*/
 .x-large {
