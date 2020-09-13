@@ -28,7 +28,7 @@ const updateChallenge = (id, challenge) => (dispatch) => {
 };
 
 const getAllChallenges = () => (dispatch) => {
-  dispatch({ type: ChallengeTypes.CLEAR_CHALLENGES });
+  dispatch({ type: ChallengeTypes.GET_CHALLENGE });
 
   challengeServices
     .getAllChallenges()
@@ -42,7 +42,7 @@ const getAllChallenges = () => (dispatch) => {
 };
 
 const getChallengeById = (id) => (dispatch) => {
-  dispatch({ type: ChallengeTypes.CLEAR_CHALLENGES });
+  dispatch({ type: ChallengeTypes.GET_CHALLENGE });
 
   challengeServices
     .getChallengeById(id)

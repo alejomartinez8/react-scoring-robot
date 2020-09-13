@@ -9,8 +9,10 @@ const DashboardAdminItem = ({
 }) => {
   return (
     <tr>
-      <td>{title}</td>
-      <td>{description}</td>
+      <td scope="row">
+        <strong>{title}</strong>
+        <p>{description}</p>
+      </td>
       <td>
         <Link className="btn btn-primary" to={actionPath}>
           {actionDescription}

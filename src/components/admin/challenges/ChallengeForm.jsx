@@ -2,6 +2,7 @@ import React, { useState, Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { challengeActions } from "../../../redux/actions";
+import Spinner from "../../layout/Spinner";
 
 const initialState = {
   name: "",
@@ -49,100 +50,108 @@ const ChallengeForm = ({
 
   return (
     <Fragment>
-      <Link to="/admin/challenges" className="btn btn-sm btn-primary">
-        Atrás
-      </Link>
-      <div className="card shadow my-2">
-        <div className="card-header">
-          <h2>{!challengeUpdate ? "Agregar Reto" : "Editar Reto"}</h2>
-        </div>
-        <div className="card-body">
-          <form className="form" onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="name">Nombre Reto</label>
-              <input
-                type="text"
-                className="form-control"
-                id="name"
-                name="name"
-                value={name}
-                onChange={handleChange}
-                required
-              />
+      {loading ? (
+        <Spinner />
+      ) : (
+        <Fragment>
+          <Link to="/admin/challenges" className="btn btn-sm btn-primary">
+            Atrás
+          </Link>
+          <div className="card shadow my-2">
+            <div className="card-header">
+              <h2 className="text-primary">
+                {!challengeUpdate ? "Agregar Reto" : "Editar Reto"}
+              </h2>
             </div>
-            <div className="form-group">
-              <label htmlFor="version">Código Reto</label>
-              <input
-                type="text"
-                className="form-control"
-                id="version"
-                name="version"
-                value={version}
-                onChange={handleChange}
-                required
-              />
-            </div>
+            <div className="card-body">
+              <form className="form" onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <label htmlFor="name">Nombre Reto</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="name"
+                    name="name"
+                    value={name}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="version">Código Reto</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="version"
+                    name="version"
+                    value={version}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
 
-            <div className="form-group">
-              <label htmlFor="imageURL">URL Imagen</label>
-              <input
-                type="text"
-                className="form-control"
-                id="imageURL"
-                name="imageURL"
-                value={imageURL}
-                onChange={handleChange}
-              />
-            </div>
+                <div className="form-group">
+                  <label htmlFor="imageURL">URL Imagen</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="imageURL"
+                    name="imageURL"
+                    value={imageURL}
+                    onChange={handleChange}
+                  />
+                </div>
 
-            <div className="form-group">
-              <label htmlFor="description">Descripcion</label>
-              <textarea
-                className="form-control"
-                id="description"
-                name="description"
-                value={description}
-                onChange={handleChange}
-                required
-              />
-            </div>
+                <div className="form-group">
+                  <label htmlFor="description">Descripcion</label>
+                  <textarea
+                    className="form-control"
+                    id="description"
+                    name="description"
+                    value={description}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
 
-            <div className="form-group">
-              <input
-                id="availble"
-                name="available"
-                type="checkbox"
-                required
-                checked={available}
-                className="form-control-custom"
-                onChange={() =>
-                  setFormData({
-                    ...formData,
-                    available: !formData.available,
-                  })
-                }
-              />{" "}
-              <label htmlFor="availble"> Disponible </label>
-            </div>
+                <div className="form-group">
+                  <input
+                    id="availble"
+                    name="available"
+                    type="checkbox"
+                    required
+                    checked={available}
+                    className="form-control-custom"
+                    onChange={() =>
+                      setFormData({
+                        ...formData,
+                        available: !formData.available,
+                      })
+                    }
+                  />{" "}
+                  <label htmlFor="availble"> Disponible </label>
+                </div>
 
-            <div className="form-row">
-              <button
-                type="submit"
-                className="btn btn-primary m-1"
-                disabled={loading}
-              >
-                {loading && (
-                  <span className="spinner-border spinner-border-sm mr-1"></span>
-                )}
-                Guardar
-              </button>
-              <Link to="/admin/challenges" className="btn btn-secondary m-1">
-                Cancel
-              </Link>
+                <div className="form-row">
+                  <button
+                    type="submit"
+                    className="btn btn-primary m-1"
+                    disabled={loading}
+                  >
+                    {loading && (
+                      <span className="spinner-border spinner-border-sm mr-1"></span>
+                    )}
+                    Guardar
+                  </button>
+                  <Link to="/admin/challenges" className="btn btn-secondary m-1">
+                    Cancel
+                  </Link>
+                </div>
+              </form>
             </div>
-          </form>
-        </div>
-      </div>
+          </div>
+        </Fragment>
+      )}
     </Fragment>
   );
 };

@@ -97,8 +97,7 @@ export const resetPassword = ({ token, password, confirmPassword }) => (
 
 // get all user actions
 export const getAllUsers = () => (dispatch) => {
-  console.log("get all users actions");
-  dispatch({ type: UserTypes.CLEAR_USER });
+  dispatch({ type: UserTypes.GET_USERS });
 
   userServices
     .getAllUsers()
@@ -113,8 +112,7 @@ export const getAllUsers = () => (dispatch) => {
 
 // get user by Id
 export const getUserById = (id) => (dispatch) => {
-  console.log("getById action");
-  dispatch({ type: UserTypes.CLEAR_USER });
+  dispatch({ type: UserTypes.GET_USER });
 
   userServices
     .getById(id)

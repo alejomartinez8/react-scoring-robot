@@ -2,6 +2,7 @@ import React, { useState, Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { eventActions } from "../../../redux/actions";
+import Spinner from "../../layout/Spinner";
 
 const initialState = {
   name: "",
@@ -45,96 +46,104 @@ const EventForm = ({ event: { event, loading }, addEvent, updateEvent }) => {
 
   return (
     <Fragment>
-      <Link to="/admin/events" className="btn btn-sm btn-primary">
-        Atrás
-      </Link>
-      <div className="card shadow my-2">
-        <div className="card-header">
-          <h2>{!eventUpdate ? "Agregar Evento" : "Editar Evento"}</h2>
-        </div>
-        <div className="card-body">
-          <form className="form" onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="name">Nombre Evento</label>
-              <input
-                type="text"
-                className="form-control"
-                id="name"
-                name="name"
-                value={name}
-                onChange={handleChange}
-                required
-              />
+      {loading ? (
+        <Spinner />
+      ) : (
+        <Fragment>
+          <Link to="/admin/events" className="btn btn-sm btn-primary">
+            Atrás
+          </Link>
+          <div className="card shadow my-2">
+            <div className="card-header">
+              <h2 className="text-primary">
+                {!eventUpdate ? "Agregar Evento" : "Editar Evento"}
+              </h2>
             </div>
-            <div className="form-group">
-              <label htmlFor="shortName">Nombre Corto(url)</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="SRI20##"
-                id="shortName"
-                name="shortName"
-                value={shortName}
-                onChange={handleChange}
-                required
-              />
-            </div>
+            <div className="card-body">
+              <form className="form" onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <label htmlFor="name">Nombre Evento</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="name"
+                    name="name"
+                    value={name}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="shortName">Nombre Corto(url)</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="SRI20##"
+                    id="shortName"
+                    name="shortName"
+                    value={shortName}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
 
-            <div className="form-group">
-              <label htmlFor="imageURL">URL Imagen</label>
-              <input
-                type="text"
-                className="form-control"
-                id="imageURL"
-                name="imageURL"
-                value={imageURL}
-                onChange={handleChange}
-              />
-            </div>
+                <div className="form-group">
+                  <label htmlFor="imageURL">URL Imagen</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="imageURL"
+                    name="imageURL"
+                    value={imageURL}
+                    onChange={handleChange}
+                  />
+                </div>
 
-            <div className="form-group">
-              <label htmlFor="year">Año</label>
-              <input
-                type="number"
-                className="form-control"
-                id="year"
-                name="year"
-                value={year}
-                onChange={handleChange}
-                required
-              />
-            </div>
+                <div className="form-group">
+                  <label htmlFor="year">Año</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    id="year"
+                    name="year"
+                    value={year}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
 
-            <div className="form-group">
-              <label htmlFor="description">Descripcion</label>
-              <textarea
-                className="form-control"
-                id="description"
-                name="description"
-                value={description}
-                onChange={handleChange}
-                required
-              />
-            </div>
+                <div className="form-group">
+                  <label htmlFor="description">Descripcion</label>
+                  <textarea
+                    className="form-control"
+                    id="description"
+                    name="description"
+                    value={description}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
 
-            <div className="form-row">
-              <button
-                type="submit"
-                className="btn btn-primary m-1"
-                disabled={loading}
-              >
-                {loading && (
-                  <span className="spinner-border spinner-border-sm mr-1"></span>
-                )}
-                Guardar
-              </button>
-              <Link to="/admin/events" className="btn btn-secondary m-1">
-                Cancel
-              </Link>
+                <div className="form-row">
+                  <button
+                    type="submit"
+                    className="btn btn-primary m-1"
+                    disabled={loading}
+                  >
+                    {loading && (
+                      <span className="spinner-border spinner-border-sm mr-1"></span>
+                    )}
+                    Guardar
+                  </button>
+                  <Link to="/admin/events" className="btn btn-secondary m-1">
+                    Cancel
+                  </Link>
+                </div>
+              </form>
             </div>
-          </form>
-        </div>
-      </div>
+          </div>
+        </Fragment>
+      )}
     </Fragment>
   );
 };

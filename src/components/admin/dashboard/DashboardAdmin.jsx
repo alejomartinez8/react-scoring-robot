@@ -10,13 +10,13 @@ const DashboardAdmin = ({ auth: { userAuth, loading }, match }) => {
     <Spinner />
   ) : (
     <Fragment>
-      <div className="card shadow">
+      <div className="card shadow mb-4 border-left-primary">
         <div className="card-header">
-          <h1 className="large text-primary">Panel Administración</h1>
+          <h2 className="text-primary">Panel Administración</h2>
         </div>
 
-        <div className="card-body">
-          <table className="table table-striped">
+        <div className="card-body table-responsive">
+          <table className="table table-striped ">
             <thead></thead>
             <tbody>
               <DashboardAdminItem

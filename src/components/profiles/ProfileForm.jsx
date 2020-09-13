@@ -1,12 +1,11 @@
-import React, { Fragment } from "react"
-import { Link } from "react-router-dom"
-import { useState } from "react"
-import { connect } from "react-redux"
-import PropTypes from "prop-types"
-import { updateUser } from "../../redux/actions/user.actions"
-import { deleteUser } from "../../redux/actions/user.actions"
+import React, { Fragment } from "react";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { updateUser } from "../../redux/actions/user.actions";
 
-const ProfileUpdate = ({ auth: { userAuth, loading }, updateUser, deleteUser }) => {
+const ProfileForm = ({ auth: { userAuth, loading }, updateUser }) => {
   // inistal data to update
   const initialState = {
     email: userAuth.email,
@@ -18,9 +17,9 @@ const ProfileUpdate = ({ auth: { userAuth, loading }, updateUser, deleteUser }) 
     city: userAuth.city,
     country: userAuth.country,
     bio: userAuth.bio,
-  }
+  };
 
-  const [formData, setFormData] = useState(initialState)
+  const [formData, setFormData] = useState(initialState);
 
   // values
   const {
@@ -33,25 +32,22 @@ const ProfileUpdate = ({ auth: { userAuth, loading }, updateUser, deleteUser }) 
     city,
     country,
     bio,
-  } = formData
+  } = formData;
 
   const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value })
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log("Create Profile")
-    updateUser(userAuth.id, formData)
-  }
-
-  const onDelete = () => {
-    console.log("Delete User")
-    deleteUser(userAuth.id)
-  }
+    e.preventDefault();
+    console.log("Create Profile");
+    updateUser(userAuth.id, formData);
+  };
 
   return (
     <Fragment>
-      <Link to="/profile">{"< Atrás"}</Link>
+      <Link to="/profile" className="btn btn-sm btn-primary mb-2">
+        Atrás
+      </Link>
       <div className="card shadow">
         <div className="card-header">
           <h2 className="card-title">Editar Perfil</h2>
@@ -187,38 +183,24 @@ const ProfileUpdate = ({ auth: { userAuth, loading }, updateUser, deleteUser }) 
             <Link to="." className="btn btn-secondary m-1">
               Cancel
             </Link>
-
-            <button
-              onClick={onDelete}
-              type="button"
-              className="btn btn-danger m-1"
-              disabled={loading}
-            >
-              {loading ? (
-                <span className="spinner-border spinner-border-sm m-1"></span>
-              ) : (
-                <i className="fas fa-user-minus"></i>
-              )}
-              Eliminar Cuenta
-            </button>
           </form>
         </div>
       </div>
     </Fragment>
-  )
-}
+  );
+};
 
 //snippet rpt
-ProfileUpdate.propTypes = {
+ProfileForm.propTypes = {
   auth: PropTypes.object.isRequired,
   updateUser: PropTypes.func.isRequired,
   deleteUser: PropTypes.func.isRequired,
-}
+};
 
 const mapStateToProps = (state) => {
   return {
     auth: state.auth,
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps, { updateUser, deleteUser })(ProfileUpdate)
+export default connect(mapStateToProps, { updateUser })(ProfileForm);

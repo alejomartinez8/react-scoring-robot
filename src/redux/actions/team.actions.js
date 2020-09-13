@@ -28,7 +28,7 @@ const updateTeam = (id, team) => (dispatch) => {
 };
 
 const getAllTeams = () => (dispatch) => {
-  dispatch({ type: TeamTypes.CLEAR_TEAMS });
+  dispatch({ type: TeamTypes.GET_TEAMS });
 
   teamServices
     .getAllTeams()
@@ -42,7 +42,7 @@ const getAllTeams = () => (dispatch) => {
 };
 
 const getTeamById = (id) => (dispatch) => {
-  dispatch({ type: TeamTypes.CLEAR_TEAMS });
+  dispatch({ type: TeamTypes.GET_TEAM });
 
   teamServices
     .getTeamById(id)

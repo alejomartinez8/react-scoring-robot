@@ -1,16 +1,16 @@
-import React from "react"
-import { Route, Switch } from "react-router-dom"
-import ProfileUpdate from "./ProfileUpdate"
-import ProfileDetail from "./ProfileDetail"
+import React from "react";
+import { Route, Switch } from "react-router-dom";
+import ProfileForm from "./ProfileForm";
+import ProfileDetail from "./ProfileDetail";
 
 const Profile = ({ match }) => {
-  const { path } = match
+  const { path } = match;
   return (
     <Switch>
       <Route exact path={path} component={ProfileDetail} />
-      <Route path={`${path}/edit-profile`} component={ProfileUpdate} />
+      <Route path={`${path}/edit-profile`} component={ProfileForm} />
     </Switch>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

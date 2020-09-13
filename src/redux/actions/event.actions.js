@@ -7,6 +7,7 @@ const addEvent = (event) => (dispatch) => {
     .addEvent(event)
     .then((event) => {
       dispatch({ type: EventTypes.CLEAR_EVENTS });
+      dispatch(setAlert("Evento Creado", "success"));
     })
     .catch((error) => {
       dispatch({ type: EventTypes.EVENT_ERROR, payload: error });
@@ -27,7 +28,7 @@ const updateEvent = (id, event) => (dispatch) => {
 };
 
 const getAllEvents = () => (dispatch) => {
-  dispatch({ type: EventTypes.CLEAR_EVENTS });
+  dispatch({ type: EventTypes.GET_EVENTS });
 
   eventServices
     .getAllEvents()
@@ -41,7 +42,7 @@ const getAllEvents = () => (dispatch) => {
 };
 
 const getEventById = (id) => (dispatch) => {
-  dispatch({ type: EventTypes.CLEAR_EVENTS });
+  dispatch({ type: EventTypes.GET_EVENT });
 
   eventServices
     .getEventById(id)
