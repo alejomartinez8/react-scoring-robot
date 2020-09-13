@@ -5,7 +5,6 @@ import setAuthToken from "../../helpers/setAuthToken";
 
 // load user action
 export const loadUser = () => (dispatch) => {
-  console.log("loadUser action");
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
@@ -59,8 +58,6 @@ export const register = (user) => (dispatch) => {
 
 // forgot password action send an email
 export const forgotPassword = (email) => (dispatch) => {
-  console.log("forgotPassword action");
-
   userServices
     .forgotPassword(email)
     .then((res) => {
@@ -77,8 +74,6 @@ export const forgotPassword = (email) => (dispatch) => {
 export const resetPassword = ({ token, password, confirmPassword }) => (
   dispatch
 ) => {
-  console.log("resetPassword");
-
   userServices
     .resetPassword({ token, password, confirmPassword })
     .then((res) => {
@@ -128,8 +123,6 @@ export const getUserById = (id) => (dispatch) => {
 
 // create user action
 export const createUser = (user) => (dispatch) => {
-  console.log("createUser action");
-
   userServices
     .createUser(user)
     .then(() => {
@@ -144,8 +137,6 @@ export const createUser = (user) => (dispatch) => {
 
 // update user action
 export const updateUser = (id, params) => (dispatch) => {
-  console.log("updateUser action");
-
   userServices
     .updateUser(id, params)
     .then((user) => {
@@ -162,8 +153,6 @@ export const updateUser = (id, params) => (dispatch) => {
 
 // delete user action
 export const deleteUser = (id) => (dispatch) => {
-  console.log("delete user action");
-
   userServices
     .deleteUser(id)
     .then((res) => {

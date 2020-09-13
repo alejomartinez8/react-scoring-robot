@@ -87,7 +87,6 @@ const UserForm = ({ user: { user, loading }, createUser, updateUser, history }) 
                   <input
                     className="form-control"
                     type="text"
-                    placeholder="Nombres"
                     name="firstName"
                     value={firstName}
                     onChange={handleChange}
@@ -102,7 +101,6 @@ const UserForm = ({ user: { user, loading }, createUser, updateUser, history }) 
                     name="lastName"
                     value={lastName}
                     onChange={handleChange}
-                    placeholder="Apellidos"
                     required
                   />
                 </div>
@@ -111,7 +109,6 @@ const UserForm = ({ user: { user, loading }, createUser, updateUser, history }) 
                   <input
                     className="form-control"
                     type="email"
-                    placeholder="nombre@example.com"
                     name="email"
                     value={email}
                     onChange={handleChange}
@@ -135,7 +132,6 @@ const UserForm = ({ user: { user, loading }, createUser, updateUser, history }) 
                   <input
                     className="form-control"
                     type="text"
-                    placeholder="Medellin"
                     name="city"
                     value={city}
                     onChange={handleChange}
@@ -147,7 +143,6 @@ const UserForm = ({ user: { user, loading }, createUser, updateUser, history }) 
                   <input
                     className="form-control"
                     type="text"
-                    placeholder="Colombia"
                     name="country"
                     value={country}
                     onChange={handleChange}

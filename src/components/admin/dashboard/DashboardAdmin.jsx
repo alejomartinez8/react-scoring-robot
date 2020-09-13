@@ -16,7 +16,7 @@ const DashboardAdmin = ({ auth: { userAuth, loading }, match }) => {
         </div>
 
         <div className="card-body table-responsive">
-          <table className="table table-striped ">
+          <table className="table">
             <thead></thead>
             <tbody>
               <DashboardAdminItem

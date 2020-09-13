@@ -116,7 +116,7 @@ const ChallengeForm = ({
 
                 <div className="form-group">
                   <input
-                    id="availble"
+                    id="available"
                     name="available"
                     type="checkbox"
                     required
@@ -129,7 +129,7 @@ const ChallengeForm = ({
                       })
                     }
                   />{" "}
-                  <label htmlFor="availble"> Disponible </label>
+                  <label htmlFor="available"> Habilitado </label>
                 </div>
 
                 <div className="form-row">

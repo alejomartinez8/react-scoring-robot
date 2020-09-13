@@ -9,7 +9,7 @@ const DashboardAdminItem = ({
 }) => {
   return (
     <tr>
-      <td scope="row">
+      <td>
         <strong>{title}</strong>
         <p>{description}</p>
       </td>

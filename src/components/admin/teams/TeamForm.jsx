@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { teamActions } from "../../../redux/actions";
 import Spinner from "../../layout/Spinner";
+import TeamPlayerForm from "./TeamPlayerForm";
 
 const initialState = {
   coach: "",
@@ -23,24 +24,24 @@ const TeamForm = ({ team: { team, loading }, addTeam, updateTeam }) => {
           teamData[key] = team[key];
         }
       }
-      setFormData(teamData);
+      setTeamData(teamData);
     }
   }, [loading, team, teamUpdate]);
 
-  const [formData, setFormData] = useState(initialState);
-  const { coach, name, category, institution, players } = formData;
+  const [teamData, setTeamData] = useState(initialState);
+  const { coach, name, category, institution, players } = teamData;
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setTeamData({ ...teamData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (teamUpdate) {
-      updateTeam(team.id, formData);
+      updateTeam(team.id, teamData);
     } else {
-      addTeam(formData);
-      setFormData(initialState);
+      addTeam(teamData);
+      setTeamData(initialState);
     }
   };
 
@@ -62,19 +63,6 @@ const TeamForm = ({ team: { team, loading }, addTeam, updateTeam }) => {
             <div className="card-body">
               <form className="form" onSubmit={handleSubmit}>
                 <div className="form-group">
-                  <div className="form-group">
-                    <label htmlFor="coach">Entrenador</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="coach"
-                      name="coach"
-                      value={coach}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-
                   <label htmlFor="name">Nombre Equipo</label>
                   <input
                     type="text"
@@ -88,15 +76,33 @@ const TeamForm = ({ team: { team, loading }, addTeam, updateTeam }) => {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="category">Categoría</label>
+                  <label htmlFor="coach">Entrenador</label>
                   <input
+                    type="text"
+                    className="form-control"
+                    id="coach"
+                    name="coach"
+                    value={coach}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="category">Categoría</label>
+                  <select
                     type="text"
                     className="form-control"
                     id="category"
                     name="category"
                     value={category}
                     onChange={handleChange}
-                  />
+                  >
+                    <option value="elementary">Infantil</option>
+                    <option value="middle">Junior</option>
+                    <option value="high">Juvenil</option>
+                    <option value="senior">Senior</option>
+                  </select>
                 </div>
 
                 <div className="form-group">
@@ -111,6 +117,13 @@ const TeamForm = ({ team: { team, loading }, addTeam, updateTeam }) => {
                     required
                   />
                 </div>
+
+                <hr />
+
+                <h5>Integrante Equipo #1</h5>
+                <TeamPlayerForm player={players[0]} />
+
+                <hr />
 
                 <div className="form-row">
                   <button

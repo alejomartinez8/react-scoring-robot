@@ -1,8 +1,4 @@
-import axios from "axios"
-
-const config = {
-  apiUrl: "http://localhost:5050/users",
-}
+import axios from "axios";
 
 export const userServices = {
   loadUser,
@@ -17,142 +13,102 @@ export const userServices = {
   createUser,
   updateUser,
   deleteUser,
-}
+};
 
 // loadUser
 async function loadUser() {
-  return axios.get(`${config.apiUrl}`).then(handleResponse).catch(handleError)
+  return axios.get(`/users`).then(handleResponse).catch(handleError);
 }
 
 // login
 async function login(email, password) {
-  const requestOptions = {
-    method: "post",
-    url: `${config.apiUrl}/login`,
-    headers: { "Content-Type": "application/json" },
-    data: JSON.stringify({ email, password }),
-  }
-
-  return axios(requestOptions).then(handleResponse).catch(handleError)
+  return axios
+    .post("/users/login", JSON.stringify({ email, password }))
+    .then(handleResponse)
+    .catch(handleError);
 }
 
 // register
 async function register(user) {
-  const requestOptions = {
-    method: "post",
-    url: `${config.apiUrl}/register`,
-    headers: { "Content-Type": "application/json" },
-    data: JSON.stringify(user),
-  }
-
-  return axios(requestOptions).then(handleResponse).catch(handleError)
+  return axios
+    .post("/users/register", JSON.stringify(user))
+    .then(handleResponse)
+    .catch(handleError);
 }
 
 // verifyEmail
 function verifyEmail(token) {
-  const requestOptions = {
-    method: "post",
-    url: `${config.apiUrl}/verify-email`,
-    headers: { "Content-Type": "application/json" },
-    data: JSON.stringify({ token }),
-  }
-
-  return axios(requestOptions).then(handleResponse).catch(handleError)
+  return axios
+    .post("/users/verify-email", JSON.stringify({ token }))
+    .then(handleResponse)
+    .catch(handleError);
 }
 
 // forgotPassword
 function forgotPassword(email) {
-  const requestOptions = {
-    method: "post",
-    url: `${config.apiUrl}/forgot-password`,
-    headers: { "Content-Type": "application/json" },
-    data: JSON.stringify({ email }),
-  }
-
-  return axios(requestOptions).then(handleResponse).catch(handleError)
+  return axios
+    .post("/users/forgot-password", JSON.stringify({ email }))
+    .then(handleResponse)
+    .catch(handleError);
 }
 
 // validate reset token
 function validateResetToken(token) {
-  const requestOptions = {
-    method: "post",
-    url: `${config.apiUrl}/validate-reset-token`,
-    headers: { "Content-Type": "application/json" },
-    data: JSON.stringify({ token }),
-  }
-
-  return axios(requestOptions).then(handleResponse).catch(handleError)
+  return axios
+    .post("/users/validate-reset-token", JSON.stringify({ token }))
+    .then(handleResponse)
+    .catch(handleError);
 }
 
 // reset password
 function resetPassword({ token, password, confirmPassword }) {
-  const requestOptions = {
-    method: "post",
-    url: `${config.apiUrl}/reset-password`,
-    headers: { "Content-Type": "application/json" },
-    data: JSON.stringify({ token, password, confirmPassword }),
-  }
-
-  return axios(requestOptions).then(handleResponse).catch(handleError)
+  return axios
+    .post(
+      "/users/reset-password",
+      JSON.stringify({ token, password, confirmPassword })
+    )
+    .then(handleResponse)
+    .catch(handleError);
 }
 
 // getAllUsers
 function getAllUsers() {
-  return axios.get(`${config.apiUrl}/getAll`).then(handleResponse).catch(handleError)
+  return axios.get(`/users/getAll`).then(handleResponse).catch(handleError);
 }
 
 function getById(id) {
-  return axios.get(`${config.apiUrl}/${id}`).then(handleResponse).catch(handleError)
+  return axios.get(`/users/${id}`).then(handleResponse).catch(handleError);
 }
 
 // update
 function updateUser(id, user) {
-  const requestOptions = {
-    method: "put",
-    url: `${config.apiUrl}/${id}`,
-    headers: { "Content-Type": "application/json" },
-    data: JSON.stringify(user),
-  }
-
-  return axios(requestOptions).then(handleResponse).catch(handleError)
+  return axios
+    .put(`/users/${id}`, JSON.stringify(user))
+    .then(handleResponse)
+    .catch(handleError);
 }
 
 // createUser
 function createUser(user) {
-  console.log("createUser service:", user)
-  const requestOptions = {
-    method: "post",
-    url: `${config.apiUrl}`,
-    headers: { "Content-Type": "application/json" },
-    data: JSON.stringify(user),
-  }
-
-  return axios(requestOptions).then(handleResponse).catch(handleError)
+  return axios
+    .post("/users", JSON.stringify(user))
+    .then(handleResponse)
+    .catch(handleError);
 }
 
 // deleteUSer
 function deleteUser(id) {
-  const requestOptions = {
-    method: "delete",
-    url: `${config.apiUrl}/${id}`,
-    data: "",
-  }
-
-  return axios(requestOptions).then(handleResponse).catch(handleError)
+  return axios.delete(`/users/${id}`).then(handleResponse).catch(handleError);
 }
 
 // handleResponse
 function handleResponse(response) {
-  console.log("handleResponse: ", response)
-  return response.data
+  return response.data;
 }
 
 //handleError
 function handleError(error) {
-  console.error(
-    "handleError: ",
+  throw (
     (error.response.data && error.response.data.message) || error.response.status
-  )
-  // return error.data
-  throw (error.response.data && error.response.data.message) || error.response.status
+  );
 }

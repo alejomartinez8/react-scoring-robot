@@ -9,7 +9,6 @@ const intialState = {
 
 export function team(state = intialState, action) {
   const { type, payload } = action;
-  console.log({ payload });
 
   switch (type) {
     case TeamTypes.GET_TEAM:

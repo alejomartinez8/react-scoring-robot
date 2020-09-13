@@ -1,17 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const EventItem = ({ event: { id, name, imageURL } }) => {
+const EventItem = ({ event: { id, shortName, name, imageURL, description } }) => {
   return (
-    <div className="card m-2">
+    <div className="card mb-4">
       <div className="card-header">
-        <h2>{name}</h2>
+        <h2>{shortName}</h2>
       </div>
+      <img className="card-img-top" src={imageURL} alt=""></img>
       <div className="card-body">
-        <img src={imageURL} alt=""></img>
+        <h5 className="card-title">{name}</h5>
+        <p className="card-text">Descripción: {description}</p>
       </div>
       <div className="card-footer">
-        <Link to={`/events/${id}`} className="btn btn-primary">
+        <Link to={`/events/${shortName}`} className="btn btn-primary">
           Ver Evento
         </Link>
       </div>

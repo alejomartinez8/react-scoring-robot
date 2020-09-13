@@ -1,9 +1,5 @@
 import axios from "axios";
 
-const config = {
-  apiUrl: "http://localhost:5050/events",
-};
-
 export const eventServices = {
   addEvent,
   updateEvent,
@@ -13,55 +9,38 @@ export const eventServices = {
 };
 
 async function addEvent(event) {
-  const requestOptions = {
-    method: "post",
-    url: `${config.apiUrl}`,
-    headers: { "Content-Type": "application/json" },
-    data: JSON.stringify(event),
-  };
-
-  return axios(requestOptions).then(handleResponse).catch(handleError);
-}
-
-async function updateEvent(id, event) {
-  const requestOptions = {
-    method: "post",
-    url: `${config.apiUrl}/${id}`,
-    headers: { "Content-Type": "application/json" },
-    data: JSON.stringify(event),
-  };
-
-  return axios(requestOptions).then(handleResponse).catch(handleError);
-}
-
-async function getAllEvents() {
-  return axios.get(`${config.apiUrl}`).then(handleResponse).catch(handleError);
-}
-
-async function getEventById(id) {
-  return axios.get(`${config.apiUrl}/${id}`).then(handleResponse).catch(handleError);
-}
-
-async function deleteEvent(id) {
   return axios
-    .delete(`${config.apiUrl}/${id}`)
+    .post("/events", JSON.stringify(event))
     .then(handleResponse)
     .catch(handleError);
 }
 
+async function updateEvent(id, event) {
+  return axios
+    .put(`/events/${id}`, JSON.stringify(event))
+    .then(handleResponse)
+    .catch(handleError);
+}
+
+async function getAllEvents() {
+  return axios.get("/events").then(handleResponse).catch(handleError);
+}
+
+async function getEventById(id) {
+  return axios.get(`/events/${id}`).then(handleResponse).catch(handleError);
+}
+
+async function deleteEvent(id) {
+  return axios.delete(`/events/${id}`).then(handleResponse).catch(handleError);
+}
+
 // handleResponse
 function handleResponse(response) {
-  console.log("handleResponse: ", response);
   return response.data;
 }
 
 //handleError
 function handleError(error) {
-  console.error(
-    "handleError: ",
-    (error.response.data && error.response.data.message) || error.response.status
-  );
-  // return error.data
   throw (
     (error.response.data && error.response.data.message) || error.response.status
   );
