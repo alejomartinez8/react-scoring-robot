@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import TeamItem from "./TeamItem";
 import { connect } from "react-redux";
-import { teamActions } from "../../../redux/actions";
+import { teamActions } from "../../redux/actions";
 
 const TeamGridPage = ({ team: { teams }, getAllTeams }) => {
   useEffect(() => {

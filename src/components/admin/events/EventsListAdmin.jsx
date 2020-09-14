@@ -70,7 +70,7 @@ const EventsList = ({
                             </Link>
                             <button
                               className="btn btn-sm btn-danger"
-                              onClick={() => handleDeleteEvent(event.id)}
+                              onClick={() => handleDeleteEvent(event._id)}
                             >
                               <span>Eliminar</span>
                             </button>

@@ -56,6 +56,20 @@ const getEventById = (id) => (dispatch) => {
     });
 };
 
+const getEventByShortName = (shortName) => (dispatch) => {
+  dispatch({ type: EventTypes.GET_EVENT });
+
+  eventServices
+    .getEventByShortName(shortName)
+    .then((event) => {
+      dispatch({ type: EventTypes.EVENT_LOADED, payload: event });
+    })
+    .catch((error) => {
+      dispatch({ type: EventTypes.EVENT_ERROR, payload: error });
+      dispatch(setAlert(error.toString(), "danger"));
+    });
+};
+
 const deleteEvent = (id) => (dispatch) => {
   eventServices
     .deleteEvent(id)
@@ -75,5 +89,6 @@ export const eventActions = {
   updateEvent,
   getAllEvents,
   getEventById,
+  getEventByShortName,
   deleteEvent,
 };

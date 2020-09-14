@@ -17,9 +17,9 @@ ul {
   list-style: none;
 }
 
-img {
+/* img {
   width: 100%;
-}
+} */
 
 /* Text Styles*/
 .x-large {
@@ -117,7 +117,7 @@ img {
   margin: 3rem 0;
 }
 
-.btn {
+/* .btn {
   display: inline-block;
   background: var(--light);
   color: #333;
@@ -205,7 +205,7 @@ img {
   height: 1px;
   background: #ccc;
   margin: 1.5rem 0;
-}
+} */
 
 /* Overlay */
 .dark-overlay {

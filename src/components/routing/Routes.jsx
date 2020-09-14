@@ -10,8 +10,8 @@ import Alert from "../../components/layout/Alert";
 import User from "../user/User";
 import Profile from "../profiles/Profile";
 import Admin from "../admin/Admin";
-import EventsListPage from "../events/EventsListPage";
-import TeamGridPage from "../events/teams/TeamGridPage";
+import Events from "../events/Events";
+import TeamGridPage from "../teams/TeamGridPage";
 
 const Routes = () => {
   return (
@@ -19,9 +19,9 @@ const Routes = () => {
       <Alert />
       <Switch>
         {/* Events */}
-        <Route exact path="/events" component={EventsListPage} />
+        <Route path="/events" component={Events} />
         {/* Teams */}
-        <Route exact path="/teams" component={TeamGridPage} />
+        <PrivateRoute path="/teams" component={TeamGridPage} />
         {/* Admin */}
         <PrivateRoute path="/admin" component={Admin} roles="Admin" />
         {/* Profile */}

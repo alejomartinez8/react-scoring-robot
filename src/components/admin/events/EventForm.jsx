@@ -15,11 +15,11 @@ const initialState = {
   challenges: [],
 };
 
-const optionChallenges = [];
+const callengeOptions = [];
 
 /** Component */
 const EventForm = ({
-  event,
+  eventToUpdate,
   eventLoading,
   challengeList,
   challengeLoading,
@@ -27,59 +27,58 @@ const EventForm = ({
   updateEvent,
   getAllChallenges,
 }) => {
-  // load event info if update
-  const eventUpdate = Object.keys(event).length !== 0;
+  const [eventFormData, setEventFormData] = useState(initialState);
+  const { name, shortName, year, imageURL, description } = eventFormData;
+
+  const [selectedChallenge, setSelectedChallenge] = useState([]);
+
+  // load eventToUpdate if update operation
+  const eventUpdate = Object.keys(eventToUpdate).length !== 0;
   useEffect(() => {
     if (!eventLoading && eventUpdate) {
       const loadEventData = { ...initialState };
-      for (const key in event) {
+      for (const key in eventToUpdate) {
         if (key in loadEventData) {
-          loadEventData[key] = event[key];
+          loadEventData[key] = eventToUpdate[key];
         }
       }
-      // load DataBase info to Hooks
-      setEventData(loadEventData);
+      // load eventToUpdate to Hooks
+      setEventFormData(loadEventData);
       setSelectedChallenge(loadEventData.challenges.map((elm) => elm._id));
     }
-  }, [eventLoading, event, eventUpdate]);
+  }, [eventLoading, eventToUpdate, eventUpdate]);
 
-  const [eventData, setEventData] = useState(initialState);
-  const { name, shortName, year, imageURL, description } = eventData;
-
+  // handle changes in fields of event form
   const handleChange = (e) => {
-    setEventData({ ...eventData, [e.target.name]: e.target.value });
+    setEventFormData({ ...eventFormData, [e.target.name]: e.target.value });
   };
 
-  // load Challenges of API
+  // fetch Challenges from API
   useEffect(() => {
     if (!challengeLoading) {
       getAllChallenges();
     }
   }, [getAllChallenges, challengeLoading]);
 
-  // load options to Select Challenges
+  // load challenges to Select Challenges options
   useEffect(() => {
-    if (!challengeLoading && optionChallenges.length === 0) {
+    if (!challengeLoading && callengeOptions.length === 0) {
       // load all options in Select
       challengeList.forEach((elm) => {
-        optionChallenges.push({ value: elm._id, label: elm.name });
+        callengeOptions.push({ value: elm._id, label: elm.name });
       });
     }
   }, [challengeLoading, challengeList]);
 
-  const [selectedChallenge, setSelectedChallenge] = useState([]);
-
   // use with select-react
-  const handleChallengeChange = (event) => {
-    const selectedOptions = Array.isArray(event)
-      ? event.map((elm) => elm.value)
-      : [];
+  const handleChallengeChange = (e) => {
+    const selectedOptions = Array.isArray(e) ? e.map((elm) => elm.value) : [];
     setSelectedChallenge(selectedOptions);
 
     const valuesToAPI = challengeList.filter((elm) =>
       selectedOptions.includes(elm._id)
     );
-    setEventData({ ...eventData, challenges: valuesToAPI });
+    setEventFormData({ ...eventFormData, challenges: valuesToAPI });
   };
 
   // Use with normal select
@@ -99,7 +98,7 @@ const EventForm = ({
     const valuesToAPI = challengeList.filter((elm) =>
       selectedOptions.includes(elm._id)
     );
-    setEventData({ ...eventData, challenges: valuesToAPI });
+    setEventFormData({ ...eventFormData, challenges: valuesToAPI });
   };*/
 
   // handleSubtmit
@@ -107,10 +106,10 @@ const EventForm = ({
     e.preventDefault();
 
     if (eventUpdate) {
-      updateEvent(event._id, eventData);
+      updateEvent(eventToUpdate._id, eventFormData);
     } else {
-      addEvent(eventData);
-      setEventData(initialState);
+      addEvent(eventFormData);
+      setEventFormData(initialState);
       setSelectedChallenge([]);
     }
   };
@@ -131,6 +130,7 @@ const EventForm = ({
               </h2>
             </div>
             <div className="card-body">
+              {/* Form */}
               <form className="form" onSubmit={handleSubmit}>
                 <div className="form-group">
                   <label htmlFor="name">Nombre Evento</label>
@@ -200,10 +200,10 @@ const EventForm = ({
                     isMulti
                     className="dropdown"
                     placeholder="Selecciona un reto"
-                    value={optionChallenges.filter((elm) =>
+                    value={callengeOptions.filter((elm) =>
                       selectedChallenge.includes(elm.value)
                     )}
-                    options={optionChallenges}
+                    options={callengeOptions}
                     onChange={handleChallengeChange}
                   />
                 </div>
@@ -250,7 +250,7 @@ const EventForm = ({
 };
 
 const mapStateToProps = (state) => ({
-  event: state.event.event,
+  eventToUpdate: state.event.event,
   eventLoading: state.event.loading,
   challengeList: state.challenge.challenges,
   challegenLoading: state.challenge.loading,

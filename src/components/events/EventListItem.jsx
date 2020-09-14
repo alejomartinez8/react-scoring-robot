@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const EventItem = ({ event: { id, shortName, name, imageURL, description } }) => {
+const EventListItem = ({ event: { shortName, name, imageURL, description } }) => {
   return (
     <div className="card mb-4">
       <div className="card-header">
@@ -21,4 +21,4 @@ const EventItem = ({ event: { id, shortName, name, imageURL, description } }) =>
   );
 };
 
-export default EventItem;
+export default EventListItem;

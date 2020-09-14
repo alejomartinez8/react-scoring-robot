@@ -5,32 +5,40 @@ export const eventServices = {
   updateEvent,
   getAllEvents,
   getEventById,
+  getEventByShortName,
   deleteEvent,
 };
 
-async function addEvent(event) {
+function addEvent(event) {
   return axios
     .post("/events", JSON.stringify(event))
     .then(handleResponse)
     .catch(handleError);
 }
 
-async function updateEvent(id, event) {
+function updateEvent(id, event) {
   return axios
     .post(`/events/${id}`, JSON.stringify(event))
     .then(handleResponse)
     .catch(handleError);
 }
 
-async function getAllEvents() {
+function getAllEvents() {
   return axios.get("/events").then(handleResponse).catch(handleError);
 }
 
-async function getEventById(id) {
+function getEventById(id) {
   return axios.get(`/events/${id}`).then(handleResponse).catch(handleError);
 }
 
-async function deleteEvent(id) {
+function getEventByShortName(shortName) {
+  return axios
+    .get(`/events/shortName/${shortName}`)
+    .then(handleResponse)
+    .catch(handleError);
+}
+
+function deleteEvent(id) {
   return axios.delete(`/events/${id}`).then(handleResponse).catch(handleError);
 }
 

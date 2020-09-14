@@ -56,21 +56,21 @@ const ChallengesList = ({
                   <tbody>
                     {challenges &&
                       challenges.map((challenge) => (
-                        <tr key={challenge.id}>
+                        <tr key={challenge._id}>
                           <td>{challenge.name}</td>
                           <td>{challenge.version}</td>
                           <td>{challenge.available ? "Sí" : "No"}</td>
                           <td>{challenge.description}</td>
                           <td style={{ whiteSpace: "nowrap" }}>
                             <Link
-                              to={`${path}/edit/${challenge.id}`}
+                              to={`${path}/edit/${challenge._id}`}
                               className="btn btn-sm btn-primary mr-1"
                             >
                               Editar
                             </Link>
                             <button
                               className="btn btn-sm btn-danger"
-                              onClick={() => handleDeleteChallenge(challenge.id)}
+                              onClick={() => handleDeleteChallenge(challenge._id)}
                             >
                               <span>Eliminar</span>
                             </button>

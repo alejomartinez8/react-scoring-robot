@@ -41,7 +41,7 @@ const ChallengeForm = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     if (challengeUpdate) {
-      updateChallenge(challenge.id, formData);
+      updateChallenge(challenge._id, formData);
     } else {
       addChallenge(formData);
       setFormData(initialState);

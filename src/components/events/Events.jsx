@@ -1,16 +1,14 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import EventsList from "./EventsListAdmin";
-import EventForm from "./EventForm";
-import EventEdit from "./EventEdit";
+import EventsList from "./EventsList";
+import EventPage from "./EventPage";
 
 const Events = ({ match }) => {
   const { path } = match;
   return (
     <Switch>
       <Route exact path={path} component={EventsList} />
-      <Route path={`${path}/add`} component={EventForm} />
-      <Route path={`${path}/edit/:id`} component={EventEdit} />
+      <Route path={`${path}/:shortName`} component={EventPage} />
     </Switch>
   );
 };
