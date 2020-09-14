@@ -2,7 +2,9 @@ import React, { useState, Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { eventActions } from "../../../redux/actions";
+import { challengeActions } from "../../../redux/actions";
 import Spinner from "../../layout/Spinner";
+import Select from "react-select";
 
 const initialState = {
   name: "",
@@ -10,43 +12,112 @@ const initialState = {
   imageURL: "",
   year: "",
   description: "",
+  challenges: [],
 };
 
-const EventForm = ({ event: { event, loading }, addEvent, updateEvent }) => {
-  const eventUpdate = Object.keys(event).length !== 0;
+const optionChallenges = [];
 
+/** Component */
+const EventForm = ({
+  event,
+  eventLoading,
+  challengeList,
+  challengeLoading,
+  addEvent,
+  updateEvent,
+  getAllChallenges,
+}) => {
+  // load event info if update
+  const eventUpdate = Object.keys(event).length !== 0;
   useEffect(() => {
-    if (!loading && eventUpdate) {
-      const eventData = { ...initialState };
+    if (!eventLoading && eventUpdate) {
+      const loadEventData = { ...initialState };
       for (const key in event) {
-        if (key in eventData) {
-          eventData[key] = event[key];
+        if (key in loadEventData) {
+          loadEventData[key] = event[key];
         }
       }
-      setFormData(eventData);
+      // load DataBase info to Hooks
+      setEventData(loadEventData);
+      setSelectedChallenge(loadEventData.challenges.map((elm) => elm._id));
     }
-  }, [loading, event, eventUpdate]);
+  }, [eventLoading, event, eventUpdate]);
 
-  const [formData, setFormData] = useState(initialState);
-  const { name, shortName, year, imageURL, description } = formData;
+  const [eventData, setEventData] = useState(initialState);
+  const { name, shortName, year, imageURL, description } = eventData;
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setEventData({ ...eventData, [e.target.name]: e.target.value });
   };
 
+  // load Challenges of API
+  useEffect(() => {
+    if (!challengeLoading) {
+      getAllChallenges();
+    }
+  }, [getAllChallenges, challengeLoading]);
+
+  // load options to Select Challenges
+  useEffect(() => {
+    if (!challengeLoading && optionChallenges.length === 0) {
+      // load all options in Select
+      challengeList.forEach((elm) => {
+        optionChallenges.push({ value: elm._id, label: elm.name });
+      });
+    }
+  }, [challengeLoading, challengeList]);
+
+  const [selectedChallenge, setSelectedChallenge] = useState([]);
+
+  // use with select-react
+  const handleChallengeChange = (event) => {
+    const selectedOptions = Array.isArray(event)
+      ? event.map((elm) => elm.value)
+      : [];
+    setSelectedChallenge(selectedOptions);
+
+    const valuesToAPI = challengeList.filter((elm) =>
+      selectedOptions.includes(elm._id)
+    );
+    setEventData({ ...eventData, challenges: valuesToAPI });
+  };
+
+  // Use with normal select
+  /*
+  const onChange = (e) => {
+    let options = e.target.options;
+    let selectedOptions = [];
+    if (options) {
+      for (let x = 0; x < options.length; x++) {
+        if (options[x].selected) {
+          selectedOptions.push(options[x].value);
+        }
+      }
+    }
+    setSelectedChallenge(selectedOptions);
+
+    const valuesToAPI = challengeList.filter((elm) =>
+      selectedOptions.includes(elm._id)
+    );
+    setEventData({ ...eventData, challenges: valuesToAPI });
+  };*/
+
+  // handleSubtmit
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (eventUpdate) {
-      updateEvent(event.id, formData);
+      updateEvent(event._id, eventData);
     } else {
-      addEvent(formData);
-      setFormData(initialState);
+      addEvent(eventData);
+      setEventData(initialState);
+      setSelectedChallenge([]);
     }
   };
 
   return (
     <Fragment>
-      {loading ? (
+      {eventLoading ? (
         <Spinner />
       ) : (
         <Fragment>
@@ -78,7 +149,6 @@ const EventForm = ({ event: { event, loading }, addEvent, updateEvent }) => {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="SRI20##"
                     id="shortName"
                     name="shortName"
                     value={shortName}
@@ -124,13 +194,44 @@ const EventForm = ({ event: { event, loading }, addEvent, updateEvent }) => {
                   />
                 </div>
 
+                <div className="form-group">
+                  <label htmlFor="challenges">Retos: </label>
+                  <Select
+                    isMulti
+                    className="dropdown"
+                    placeholder="Selecciona un reto"
+                    value={optionChallenges.filter((elm) =>
+                      selectedChallenge.includes(elm.value)
+                    )}
+                    options={optionChallenges}
+                    onChange={handleChallengeChange}
+                  />
+                </div>
+
+                {/* <div className="form-group">
+                  <select
+                    multiple
+                    className="form-control"
+                    name="challenges"
+                    id="challenges"
+                    value={selectedChallenge}
+                    onChange={onChange}
+                  >
+                    {challengeList.map((elm) => (
+                      <option key={elm._id} value={elm._id}>
+                        {elm.name}
+                      </option>
+                    ))}
+                  </select>
+                </div> */}
+
                 <div className="form-row">
                   <button
                     type="submit"
                     className="btn btn-primary m-1"
-                    disabled={loading}
+                    disabled={eventLoading}
                   >
-                    {loading && (
+                    {eventLoading && (
                       <span className="spinner-border spinner-border-sm mr-1"></span>
                     )}
                     Guardar
@@ -149,12 +250,16 @@ const EventForm = ({ event: { event, loading }, addEvent, updateEvent }) => {
 };
 
 const mapStateToProps = (state) => ({
-  event: state.event,
+  event: state.event.event,
+  eventLoading: state.event.loading,
+  challengeList: state.challenge.challenges,
+  challegenLoading: state.challenge.loading,
 });
 
 const actionCreators = {
   addEvent: eventActions.addEvent,
   updateEvent: eventActions.updateEvent,
+  getAllChallenges: challengeActions.getAllChallenges,
 };
 
 export default connect(mapStateToProps, actionCreators)(EventForm);

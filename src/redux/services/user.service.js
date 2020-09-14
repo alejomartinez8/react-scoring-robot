@@ -83,7 +83,7 @@ function getById(id) {
 // update
 function updateUser(id, user) {
   return axios
-    .put(`/users/${id}`, JSON.stringify(user))
+    .post(`/users/${id}`, JSON.stringify(user))
     .then(handleResponse)
     .catch(handleError);
 }

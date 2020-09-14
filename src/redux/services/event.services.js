@@ -17,7 +17,7 @@ async function addEvent(event) {
 
 async function updateEvent(id, event) {
   return axios
-    .put(`/events/${id}`, JSON.stringify(event))
+    .post(`/events/${id}`, JSON.stringify(event))
     .then(handleResponse)
     .catch(handleError);
 }

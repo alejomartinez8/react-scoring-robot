@@ -120,7 +120,6 @@ const UserForm = ({ user: { user, loading }, createUser, updateUser, history }) 
                   <input
                     className="form-control"
                     type="text"
-                    placeholder="Colegio o Escuela de Robótica"
                     name="institution"
                     value={institution}
                     onChange={handleChange}

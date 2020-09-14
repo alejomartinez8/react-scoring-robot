@@ -17,7 +17,7 @@ async function addTeam(team) {
 
 async function updateTeam(id, team) {
   return axios
-    .put(`/teams/${id}`, JSON.stringify(team))
+    .post(`/teams/${id}`, JSON.stringify(team))
     .then(handleResponse)
     .catch(handleError);
 }

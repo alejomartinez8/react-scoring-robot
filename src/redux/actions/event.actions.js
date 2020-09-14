@@ -20,6 +20,7 @@ const updateEvent = (id, event) => (dispatch) => {
     .updateEvent(id, event)
     .then((event) => {
       dispatch({ type: EventTypes.EVENT_LOADED, payload: event });
+      dispatch(setAlert("Evento actualizado", "success"));
     })
     .catch((error) => {
       dispatch({ type: EventTypes.EVENT_ERROR, payload: error });

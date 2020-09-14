@@ -56,14 +56,14 @@ const EventsList = ({
                   <tbody>
                     {events &&
                       events.map((event) => (
-                        <tr key={event.id}>
+                        <tr key={event._id}>
                           <td>{event.name}</td>
                           <td>{event.shortName}</td>
                           <td>{event.year}</td>
                           <td>{event.description}</td>
                           <td style={{ whiteSpace: "nowrap" }}>
                             <Link
-                              to={`${path}/edit/${event.id}`}
+                              to={`${path}/edit/${event._id}`}
                               className="btn btn-sm btn-primary mr-1"
                             >
                               Editar
