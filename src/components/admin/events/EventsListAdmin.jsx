@@ -63,6 +63,12 @@ const EventsList = ({
                           <td>{event.description}</td>
                           <td style={{ whiteSpace: "nowrap" }}>
                             <Link
+                              to={`/events/${event.shortName}`}
+                              className="btn btn-sm btn-success mr-1"
+                            >
+                              Ver
+                            </Link>
+                            <Link
                               to={`${path}/edit/${event._id}`}
                               className="btn btn-sm btn-primary mr-1"
                             >

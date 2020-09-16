@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { eventActions } from "../../redux/actions";
 import Spinner from "../layout/Spinner";
 
-const EventsList = ({ event: { events, loading }, getAllEvents }) => {
+const EventGrid = ({ event: { events, loading }, getAllEvents }) => {
   useEffect(() => {
     getAllEvents();
   }, [getAllEvents]);
@@ -35,4 +35,4 @@ const actionCreators = {
   getAllEvents: eventActions.getAllEvents,
 };
 
-export default connect(mapStateToProps, actionCreators)(EventsList);
+export default connect(mapStateToProps, actionCreators)(EventGrid);

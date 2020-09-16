@@ -1,5 +1,5 @@
 import React, { useState, Fragment, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { eventActions } from "../../../redux/actions";
 import { challengeActions } from "../../../redux/actions";
@@ -27,6 +27,8 @@ const EventForm = ({
   updateEvent,
   getAllChallenges,
 }) => {
+  let history = useHistory();
+
   const [eventFormData, setEventFormData] = useState(initialState);
   const { name, shortName, year, imageURL, description } = eventFormData;
 
@@ -76,8 +78,13 @@ const EventForm = ({
     setSelectedChallenge(selectedOptions);
 
     const valuesToAPI = challengeList.filter((elm) =>
-      selectedOptions.includes(elm._id)
+      selectedOptions
+        .includes(elm._id)
+        .map((elm) => ({ name: elm.name, _id: elm._id }))
     );
+
+    // reportes = datosComparacion.filter((elm) => elm.Cases > 1).map((elm) => { return { day: elm.Date, total: elm.Cases } })
+
     setEventFormData({ ...eventFormData, challenges: valuesToAPI });
   };
 
@@ -112,6 +119,7 @@ const EventForm = ({
       setEventFormData(initialState);
       setSelectedChallenge([]);
     }
+    // history.goBack();
   };
 
   return (

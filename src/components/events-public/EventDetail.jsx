@@ -1,11 +1,11 @@
 import React, { useEffect, Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { eventActions } from "../../redux/actions";
 import Spinner from "../layout/Spinner";
 
-const EventPage = ({ auth, event, loading, getEventByShortName, match }) => {
+const EventDetail = ({ auth, event, loading, getEventByShortName, match }) => {
   useEffect(() => {
     getEventByShortName(match.params.shortName);
   }, [getEventByShortName, match.params.shortName]);
@@ -20,7 +20,7 @@ const EventPage = ({ auth, event, loading, getEventByShortName, match }) => {
       ) : (
         <Fragment>
           <div className="my-2">
-            <Link to="/events" className="btn btn-primary mr-1">
+            <Link to="." className="btn btn-primary mr-1">
               Atrás
             </Link>
             {auth.isAuth && auth.userAuth.role === "Admin" && (
@@ -33,19 +33,13 @@ const EventPage = ({ auth, event, loading, getEventByShortName, match }) => {
             )}
           </div>
           <h2 className="text-primary m-2">{event.name}</h2>
-          <div className="card mb-4">
-            <img className="card-img-top" src={event.imageURL} alt=""></img>
-            <div className="card-body">
-              <p className="card-text">Descripción: {event.description}</p>
-            </div>
-          </div>
-
+          <img className="card-img-top" src={event.imageURL} alt=""></img>
           <div className="my-4">
             <h2 className="text-primary">Retos</h2>
             {challenges !== undefined ? (
               <Fragment>
                 {challenges.map((challenge) => (
-                  <div className="card shadow my-2" key={challenge._id}>
+                  <div className="card shadow my-4" key={challenge._id}>
                     <div className="card-header">
                       <h3 className="text-primary">{challenge.name}</h3>
                     </div>
@@ -98,7 +92,7 @@ const EventPage = ({ auth, event, loading, getEventByShortName, match }) => {
   );
 };
 
-EventPage.propTypes = {
+EventDetail.propTypes = {
   event: PropTypes.object.isRequired,
 };
 
@@ -112,4 +106,4 @@ const actionsCreators = {
   getEventByShortName: eventActions.getEventByShortName,
 };
 
-export default connect(mapStateToProps, actionsCreators)(EventPage);
+export default connect(mapStateToProps, actionsCreators)(EventDetail);
