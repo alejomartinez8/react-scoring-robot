@@ -15,8 +15,6 @@ const initialState = {
   challenges: [],
 };
 
-const callengeOptions = [];
-
 /** Component */
 const EventForm = ({
   eventToUpdate,
@@ -31,6 +29,7 @@ const EventForm = ({
   const { name, shortName, year, imageURL, description } = eventFormData;
 
   const [selectedChallenge, setSelectedChallenge] = useState([]);
+  const [challengeOptions, setChallengeOptions] = useState([]);
 
   // load eventToUpdate if update operation
   const eventUpdate = Object.keys(eventToUpdate).length !== 0;
@@ -62,11 +61,15 @@ const EventForm = ({
 
   // load challenges to Select Challenges options
   useEffect(() => {
-    if (!challengeLoading && callengeOptions.length === 0) {
-      // load all options in Select
-      challengeList.forEach((elm) => {
-        callengeOptions.push({ value: elm._id, label: elm.name });
-      });
+    if (!challengeLoading && challengeOptions.length === 0) {
+      console.log(challengeList);
+      setChallengeOptions(
+        challengeList.map((elm) => ({
+          value: elm._id,
+          label: elm.name,
+        }))
+      );
+      console.log(challengeOptions);
     }
   }, [challengeLoading, challengeList]);
 
@@ -75,15 +78,12 @@ const EventForm = ({
     const selectedOptions = Array.isArray(e) ? e.map((elm) => elm.value) : [];
     setSelectedChallenge(selectedOptions);
 
-    const valuesToAPI = challengeList.filter((elm) =>
-      selectedOptions
-        .includes(elm._id)
-        .map((elm) => ({ name: elm.name, _id: elm._id }))
-    );
-
-    // reportes = datosComparacion.filter((elm) => elm.Cases > 1).map((elm) => { return { day: elm.Date, total: elm.Cases } })
-
-    setEventFormData({ ...eventFormData, challenges: valuesToAPI });
+    setEventFormData({
+      ...eventFormData,
+      challenges: challengeList
+        .filter((elm) => selectedOptions.includes(elm._id))
+        .map((elm) => ({ _id: elm._id })),
+    });
   };
 
   // Use with normal select
@@ -206,10 +206,10 @@ const EventForm = ({
                     isMulti
                     className="dropdown"
                     placeholder="Selecciona un reto"
-                    value={callengeOptions.filter((elm) =>
+                    value={challengeOptions.filter((elm) =>
                       selectedChallenge.includes(elm.value)
                     )}
-                    options={callengeOptions}
+                    options={challengeOptions}
                     onChange={handleChallengeChange}
                   />
                 </div>
