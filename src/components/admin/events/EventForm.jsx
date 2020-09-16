@@ -1,5 +1,5 @@
 import React, { useState, Fragment, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { eventActions } from "../../../redux/actions";
 import { challengeActions } from "../../../redux/actions";
@@ -27,8 +27,6 @@ const EventForm = ({
   updateEvent,
   getAllChallenges,
 }) => {
-  let history = useHistory();
-
   const [eventFormData, setEventFormData] = useState(initialState);
   const { name, shortName, year, imageURL, description } = eventFormData;
 

@@ -1,28 +1,28 @@
-import React, { useState } from "react"
-import { Link } from "react-router-dom"
-import { Redirect } from "react-router-dom"
-import { connect } from "react-redux"
-import PropTypes from "prop-types"
-import { login } from "../../redux/actions/user.actions"
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { login } from "../../redux/actions/auth.actions";
 
 const Login = ({ isAuth, login, loading }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-  })
+  });
 
-  const { email, password } = formData
+  const { email, password } = formData;
 
   const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value })
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    login(email, password)
-  }
+    e.preventDefault();
+    login(email, password);
+  };
 
   if (isAuth) {
-    return <Redirect to="/events" />
+    return <Redirect to="/events" />;
   }
 
   return (
@@ -82,18 +82,18 @@ const Login = ({ isAuth, login, loading }) => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
 Login.propTypes = {
   isAuth: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   login: PropTypes.func.isRequired,
-}
+};
 
 const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth,
   loading: state.auth.loading,
-})
+});
 
-export default connect(mapStateToProps, { login })(Login)
+export default connect(mapStateToProps, { login })(Login);

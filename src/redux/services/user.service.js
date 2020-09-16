@@ -2,12 +2,6 @@ import axios from "axios";
 
 export const userServices = {
   loadUser,
-  login,
-  register,
-  verifyEmail,
-  forgotPassword,
-  validateResetToken,
-  resetPassword,
   getAllUsers,
   getById,
   createUser,
@@ -18,57 +12,6 @@ export const userServices = {
 // loadUser
 async function loadUser() {
   return axios.get(`/users`).then(handleResponse).catch(handleError);
-}
-
-// login
-async function login(email, password) {
-  return axios
-    .post("/users/login", JSON.stringify({ email, password }))
-    .then(handleResponse)
-    .catch(handleError);
-}
-
-// register
-async function register(user) {
-  return axios
-    .post("/users/register", JSON.stringify(user))
-    .then(handleResponse)
-    .catch(handleError);
-}
-
-// verifyEmail
-function verifyEmail(token) {
-  return axios
-    .post("/users/verify-email", JSON.stringify({ token }))
-    .then(handleResponse)
-    .catch(handleError);
-}
-
-// forgotPassword
-function forgotPassword(email) {
-  return axios
-    .post("/users/forgot-password", JSON.stringify({ email }))
-    .then(handleResponse)
-    .catch(handleError);
-}
-
-// validate reset token
-function validateResetToken(token) {
-  return axios
-    .post("/users/validate-reset-token", JSON.stringify({ token }))
-    .then(handleResponse)
-    .catch(handleError);
-}
-
-// reset password
-function resetPassword({ token, password, confirmPassword }) {
-  return axios
-    .post(
-      "/users/reset-password",
-      JSON.stringify({ token, password, confirmPassword })
-    )
-    .then(handleResponse)
-    .catch(handleError);
 }
 
 // getAllUsers

@@ -1,5 +1,5 @@
 import React, { useEffect, Fragment } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { eventActions } from "../../redux/actions";

@@ -8,7 +8,7 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.css";
 import "./index.css";
 
-axios.defaults.baseURL = "http://localhost:5050";
+axios.defaults.baseURL = "http://localhost:5050/api";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 axios.interceptors.request.use(

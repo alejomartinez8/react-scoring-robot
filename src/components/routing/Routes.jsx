@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 
 import PrivateRoute from "./PrivateRoute";
 import Alert from "../../components/layout/Alert";
-import User from "../user/User";
+import Auth from "../auth/Auth";
 import Profile from "../profiles/Profile";
 import Admin from "../admin/Admin";
 import Events from "../events-public/Events";
@@ -27,7 +27,7 @@ const Routes = () => {
         {/* Profile */}
         <PrivateRoute path="/profile" component={Profile} />
         {/* Auth */}
-        <Route path="/user" component={User} />
+        <Route path="/user" component={Auth} />
       </Switch>
     </div>
   );

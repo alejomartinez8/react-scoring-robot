@@ -52,7 +52,7 @@ export const register = (user) => (dispatch) => {
     })
     .catch((error) => {
       dispatch({ type: UserTypes.AUTH_ERROR, payload: error });
-      dispatch(setAlert(error.toString(), "danger"));
+      dispatch(setAlert(error.toString(), "danger", 20000));
     });
 };
 
