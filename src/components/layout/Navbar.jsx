@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { logout } from "../../redux/actions/user.actions";
+import { authActions } from "../../redux/actions/";
 
 const Navbar = ({ isAuth, role, logout }) => {
   const authLinks = (
@@ -35,8 +35,9 @@ const Navbar = ({ isAuth, role, logout }) => {
   const guestLinks = (
     <Fragment>
       <li>
-        <Link to="/user/register">Registro</Link>
-        <Link to="/user/login">Ingreso</Link>
+        <Link to="/user/login">
+          <i className="fas fa-user"></i> <span>Ingreso</span>
+        </Link>
       </li>
     </Fragment>
   );
@@ -51,8 +52,10 @@ const Navbar = ({ isAuth, role, logout }) => {
         <ul className="mb-0">
           <li>
             <Link to="/events">
-              <i className="fas fa-calendar-alt"></i> {"  "}
-              <span>Eventos</span>
+              <i className="fas fa-calendar-alt"></i> <span>Eventos</span>
+            </Link>
+            <Link to="/teams">
+              <i className="fas fa-users"></i> <span>Equipos</span>
             </Link>
           </li>
           {isAuth ? authLinks : guestLinks}
@@ -72,4 +75,8 @@ const mapStateToProps = (state) => ({
   role: state.auth.userAuth.role,
 });
 
-export default connect(mapStateToProps, { logout })(Navbar);
+const actionCreators = {
+  logout: authActions.logout,
+};
+
+export default connect(mapStateToProps, actionCreators)(Navbar);

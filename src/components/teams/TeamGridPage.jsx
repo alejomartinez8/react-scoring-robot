@@ -1,22 +1,28 @@
 import React, { Fragment, useEffect } from "react";
-import TeamItem from "./TeamItem";
+import { Link } from "react-router-dom";
+import TeamCard from "./TeamCard";
 import { connect } from "react-redux";
 import { teamActions } from "../../redux/actions";
 
-const TeamGridPage = ({ team: { teams }, getAllTeams }) => {
+const TeamGridPage = ({ auth, team: { teams }, getAllTeams, match }) => {
   useEffect(() => {
     getAllTeams();
   }, [getAllTeams]);
 
   return (
     <Fragment>
-      <h1 className="large text-primary">Equipos</h1>
+      <h2 className="text-primary">Equipos</h2>
+      {(auth.userAuth.role === "Admin" || auth.userAuth.role === "User") && (
+        <Link to={`/teams/add`} className="btn btn-outline-secondary">
+          Agregar Equipo
+        </Link>
+      )}
 
-      <div className="row">
+      <div className="row my-2">
         {teams.length > 0 ? (
-          teams.map((team) => <TeamItem key={team.id} team={team} />)
+          teams.map((team) => <TeamCard key={team._id} team={team} auth={auth} />)
         ) : (
-          <h4>Todavía no hay teamos</h4>
+          <h4>Todavía no hay equipos</h4>
         )}
       </div>
     </Fragment>
@@ -24,6 +30,7 @@ const TeamGridPage = ({ team: { teams }, getAllTeams }) => {
 };
 
 const mapStateToProps = (state) => ({
+  auth: state.auth,
   team: state.team,
 });
 

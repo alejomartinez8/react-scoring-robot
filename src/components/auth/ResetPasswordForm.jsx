@@ -2,21 +2,14 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { setAlert } from "../../redux/actions/alert.actions";
-import { resetPassword } from "../../redux/actions/user.actions";
+import { authActions, alertActions } from "../../redux/actions/";
 
 const initialValues = {
   password: "",
   confirmPassword: "",
 };
 
-const ResetPasswordForm = ({
-  token,
-  setAlert,
-  loading,
-  resetPassword,
-  history,
-}) => {
+const ResetPasswordForm = ({ token, setAlert, loading, resetPassword, history }) => {
   const [formData, setformData] = useState(initialValues);
   const { password, confirmPassword } = formData;
 
@@ -94,6 +87,9 @@ const mapStateToProps = (state) => ({
   loading: state.auth.loading,
 });
 
-export default connect(mapStateToProps, { setAlert, resetPassword })(
-  ResetPasswordForm
-);
+const actionCreators = {
+  resetPassword: authActions.resetPassword,
+  setAlert: alertActions.setAlert,
+};
+
+export default connect(mapStateToProps, actionCreators)(ResetPasswordForm);

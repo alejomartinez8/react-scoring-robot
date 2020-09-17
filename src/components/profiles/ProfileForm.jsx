@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { updateUser } from "../../redux/actions/user.actions";
+import { updateUser } from "../../redux/actions";
 
 const ProfileForm = ({ auth: { userAuth, loading }, updateUser }) => {
   // inistal data to update

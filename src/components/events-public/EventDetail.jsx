@@ -26,7 +26,7 @@ const EventDetail = ({ auth, event, loading, getEventByShortName, match }) => {
             {auth.isAuth && auth.userAuth.role === "Admin" && (
               <Link
                 to={`/admin/events/edit/${event._id}`}
-                className="btn btn-outline-dark"
+                className="btn btn-outline-secondary"
               >
                 Editar Evento
               </Link>

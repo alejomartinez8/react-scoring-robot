@@ -62,16 +62,14 @@ const EventForm = ({
   // load challenges to Select Challenges options
   useEffect(() => {
     if (!challengeLoading && challengeOptions.length === 0) {
-      console.log(challengeList);
       setChallengeOptions(
         challengeList.map((elm) => ({
           value: elm._id,
           label: elm.name,
         }))
       );
-      console.log(challengeOptions);
     }
-  }, [challengeLoading, challengeList]);
+  }, [challengeLoading, challengeList, challengeOptions]);
 
   // use with select-react
   const handleChallengeChange = (e) => {
@@ -109,6 +107,7 @@ const EventForm = ({
   // handleSubtmit
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(JSON.stringify(eventFormData));
 
     if (eventUpdate) {
       updateEvent(eventToUpdate._id, eventFormData);

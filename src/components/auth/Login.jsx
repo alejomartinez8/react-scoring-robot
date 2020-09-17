@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { login } from "../../redux/actions/auth.actions";
+import { authActions } from "../../redux/actions/";
 
 const Login = ({ isAuth, login, loading }) => {
   const [formData, setFormData] = useState({
@@ -96,4 +96,8 @@ const mapStateToProps = (state) => ({
   loading: state.auth.loading,
 });
 
-export default connect(mapStateToProps, { login })(Login);
+const actionCreators = {
+  login: authActions.login,
+};
+
+export default connect(mapStateToProps, actionCreators)(Login);

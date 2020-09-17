@@ -11,7 +11,7 @@ import Auth from "../auth/Auth";
 import Profile from "../profiles/Profile";
 import Admin from "../admin/Admin";
 import Events from "../events-public/Events";
-import TeamGridPage from "../teams/TeamGridPage";
+import Teams from "../teams/Teams";
 
 const Routes = () => {
   return (
@@ -21,7 +21,7 @@ const Routes = () => {
         {/* Events */}
         <Route path="/events" component={Events} />
         {/* Teams */}
-        <PrivateRoute path="/teams" component={TeamGridPage} />
+        <Route path="/teams" component={Teams} />
         {/* Admin */}
         <PrivateRoute path="/admin" component={Admin} roles="Admin" />
         {/* Profile */}

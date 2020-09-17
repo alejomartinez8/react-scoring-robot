@@ -68,3 +68,11 @@ export const resetPassword = ({ token, password, confirmPassword }) => (
       dispatch(setAlert(error.toString(), "danger"));
     });
 };
+
+export const authActions = {
+  login,
+  logout,
+  register,
+  forgotPassword,
+  resetPassword,
+};

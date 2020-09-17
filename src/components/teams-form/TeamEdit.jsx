@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { teamActions } from "../../../redux/actions";
+import { teamActions } from "../../redux/actions";
 import TeamForm from "./TeamForm";
 
 const TeamEdit = ({ team: { team }, getTeamById, match }) => {

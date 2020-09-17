@@ -1,11 +1,11 @@
-import React, { useState } from "react"
-import { Link } from "react-router-dom"
-import * as Yup from "yup"
-import { Redirect } from "react-router-dom"
-import { connect } from "react-redux"
-import PropTypes from "prop-types"
-import { register } from "../../redux/actions/user.actions"
-import { setAlert } from "../../redux/actions/alert.actions"
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import * as Yup from "yup";
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { authActions } from "../../redux/actions";
+import { alertActions } from "../../redux/actions/";
 
 const Register = ({ isAuth, loading, register, setAlert }) => {
   // inistal data
@@ -20,7 +20,7 @@ const Register = ({ isAuth, loading, register, setAlert }) => {
     country: "",
     bio: "",
     acceptTerms: true,
-  }
+  };
 
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().required("Nombres requeridos"),
@@ -33,9 +33,9 @@ const Register = ({ isAuth, loading, register, setAlert }) => {
       .oneOf([Yup.ref("password"), null], "Constraseñas deben coincidir")
       .required("Confirma la constraseña"),
     acceptTerms: Yup.bool().oneOf([true], "Acepta los términos y referencias"),
-  })
+  });
 
-  const [formData, setformData] = useState(initialState)
+  const [formData, setformData] = useState(initialState);
 
   // values
   const {
@@ -49,27 +49,27 @@ const Register = ({ isAuth, loading, register, setAlert }) => {
     country,
     bio,
     acceptTerms,
-  } = formData
+  } = formData;
 
   const handleChange = (e) => {
-    setformData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setformData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     validationSchema
       .validate(formData)
       .then(function (userValid) {
-        register(userValid)
+        register(userValid);
       })
       .catch(function (error) {
-        console.log(error.errors)
-        setAlert(error.errors, "danger")
-      })
-  }
+        console.log(error.errors);
+        setAlert(error.errors, "danger");
+      });
+  };
 
   if (isAuth) {
-    return <Redirect to="/events" />
+    return <Redirect to="/events" />;
   }
 
   return (
@@ -232,19 +232,24 @@ const Register = ({ isAuth, loading, register, setAlert }) => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
 Register.propTypes = {
   isAuth: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   register: PropTypes.func.isRequired,
   setAlert: PropTypes.func.isRequired,
-}
+};
 
 const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth,
   loading: state.auth.loading,
-})
+});
 
-export default connect(mapStateToProps, { register, setAlert })(Register)
+const actionCreators = {
+  register: authActions.register,
+  setAlert: alertActions.setAlert,
+};
+
+export default connect(mapStateToProps, actionCreators)(Register);

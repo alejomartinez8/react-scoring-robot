@@ -1,13 +1,13 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import ProfileForm from "./ProfileForm";
-import ProfileDetail from "./ProfileDetail";
+import ProfilePage from "./ProfilePage";
 
 const Profile = ({ match }) => {
   const { path } = match;
   return (
     <Switch>
-      <Route exact path={path} component={ProfileDetail} />
+      <Route exact path={path} component={ProfilePage} />
       <Route path={`${path}/edit-profile`} component={ProfileForm} />
     </Switch>
   );
