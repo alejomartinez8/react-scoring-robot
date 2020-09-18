@@ -49,8 +49,8 @@ const ChallengesList = ({
                       <th>Nombre Reto</th>
                       <th>Version</th>
                       <th>Habilitado</th>
-                      <th>Descripción</th>
-                      <th></th>
+                      <th>Categorías Habilitadas</th>
+                      <th>Editar/Eliminar</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -59,8 +59,27 @@ const ChallengesList = ({
                         <tr key={challenge._id}>
                           <td>{challenge.name}</td>
                           <td>{challenge.version}</td>
-                          <td>{challenge.available ? "Sí" : "No"}</td>
-                          <td>{challenge.description}</td>
+                          <td>
+                            {challenge.available ? (
+                              <span className="badge badge-pill badge-success">
+                                Sí
+                              </span>
+                            ) : (
+                              <span className="badge badge-pill badge-danger">
+                                No
+                              </span>
+                            )}
+                          </td>
+                          <td>
+                            {challenge.categories.map((category, index) => (
+                              <span
+                                key={index}
+                                className="badge badge-pill badge-info mx-1"
+                              >
+                                {category}
+                              </span>
+                            ))}
+                          </td>
                           <td style={{ whiteSpace: "nowrap" }}>
                             <Link
                               to={`${path}/edit/${challenge._id}`}

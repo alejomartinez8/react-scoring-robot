@@ -3,12 +3,16 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { challengeActions } from "../../../redux/actions";
 import Spinner from "../../layout/Spinner";
+import Select from "react-select";
+import { CategoriesType } from "../../../helpers";
 
 const initialState = {
   name: "",
   version: "",
   imageURL: "",
   description: "",
+  maxPlayersChallenge: "",
+  categories: [],
   available: "",
 };
 
@@ -17,8 +21,26 @@ const ChallengeForm = ({
   addChallenge,
   updateChallenge,
 }) => {
-  const challengeUpdate = Object.keys(challenge).length !== 0;
+  //form data use State
+  const [formData, setFormData] = useState(initialState);
+  const {
+    name,
+    version,
+    imageURL,
+    description,
+    maxPlayersChallenge,
+    available,
+  } = formData;
 
+  // selecet Categories use State
+  const categoryOptions = CategoriesType.map((elm, index) => ({
+    value: index,
+    label: elm,
+  }));
+  const [selectedCategory, setSelectedCategory] = useState([]);
+
+  // load to update
+  const challengeUpdate = Object.keys(challenge).length !== 0;
   useEffect(() => {
     if (!loading && challengeUpdate) {
       const challengeData = { ...initialState };
@@ -27,17 +49,37 @@ const ChallengeForm = ({
           challengeData[key] = challenge[key];
         }
       }
+      // load to form
       setFormData(challengeData);
+
+      // load selected Categories to Select Component options
+      const categories = challengeData.categories;
+      setSelectedCategory(
+        categoryOptions
+          .filter((option) => categories.includes(option.label))
+          .map((elm) => elm.value)
+      );
     }
   }, [loading, challenge, challengeUpdate]);
 
-  const [formData, setFormData] = useState(initialState);
-  const { name, version, imageURL, description, available } = formData;
-
+  // handle input chages
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleCategoryChange = (e) => {
+    const selectedOptions = Array.isArray(e) ? e.map((option) => option.value) : [];
+    setSelectedCategory(selectedOptions);
+
+    setFormData({
+      ...formData,
+      categories: categoryOptions
+        .filter((option) => selectedOptions.includes(option.value))
+        .map((elm) => elm.label),
+    });
+  };
+
+  // handle submit form
   const handleSubmit = (e) => {
     e.preventDefault();
     if (challengeUpdate) {
@@ -45,6 +87,7 @@ const ChallengeForm = ({
     } else {
       addChallenge(formData);
       setFormData(initialState);
+      setSelectedCategory([]);
     }
   };
 
@@ -111,6 +154,35 @@ const ChallengeForm = ({
                     value={description}
                     onChange={handleChange}
                     required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="maxPlayersChallenge">
+                    No. Participantes Máximo Total Reto
+                  </label>
+                  <input
+                    type="Number"
+                    className="form-control"
+                    id="maxPlayersChallenge"
+                    name="maxPlayersChallenge"
+                    value={maxPlayersChallenge}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="categories">Categorías: </label>
+                  <Select
+                    isMulti
+                    className="dropdown"
+                    placeholder="Selecciona las categorías permitidas"
+                    options={categoryOptions}
+                    onChange={handleCategoryChange}
+                    value={categoryOptions.filter((elm) =>
+                      selectedCategory.includes(elm.value)
+                    )}
                   />
                 </div>
 
