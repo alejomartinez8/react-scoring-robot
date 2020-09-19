@@ -2,8 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const TeamCard = ({ auth, team }) => {
-  console.log({ team });
-  console.log(auth);
   return (
     <div className="col-lg-4 col-md-6 my-2">
       <div className="card shadow h-100 w-100 ">
@@ -33,9 +31,13 @@ const TeamCard = ({ auth, team }) => {
 
         {(auth.userAuth.role === "Admin" || auth.userAuth.id === team.user.id) && (
           <div className="card-footer">
-            <Link to={`/teams/edit/${team._id}`} className="btn btn-primary">
+            <Link
+              to={`/teams/edit/${team._id}`}
+              className="btn btn-outline-primary btn-sm"
+            >
               Modificar
             </Link>
+            <button className="btn btn-outline-danger btn-sm mx-1">Eliminar</button>
           </div>
         )}
       </div>

@@ -5,7 +5,7 @@ const ProfileCard = ({ userAuth, onDelete, loading, path }) => {
   return (
     <section>
       <h2 className="text-primary my-3">Perfil</h2>
-      <div className="card shadow w-75">
+      <div className="card shadow">
         <div className="card-body">
           <div className="row">
             <div className="col">
@@ -45,20 +45,20 @@ const ProfileCard = ({ userAuth, onDelete, loading, path }) => {
         </div>
 
         <div className="card-footer">
-          <Link to={`${path}/edit-profile`} className="btn btn-primary">
+          <Link to={`${path}/edit-profile`} className="btn btn-outline-primary">
             <i className="fas fa-user"></i> Editar Perfil
           </Link>
           <button
             onClick={onDelete}
             type="button"
-            className="btn btn-danger m-1"
+            className="btn btn-outline-danger mx-1"
             disabled={loading}
           >
             {loading ? (
               <span className="spinner-border spinner-border-sm m-1"></span>
             ) : (
               <i className="fas fa-user-minus"></i>
-            )}
+            )}{" "}
             Eliminar Cuenta
           </button>
         </div>

@@ -4,7 +4,7 @@ import TeamCard from "./TeamCard";
 import { connect } from "react-redux";
 import { teamActions } from "../../redux/actions";
 
-const TeamGridPage = ({ auth, team: { teams }, getAllTeams, match }) => {
+const TeamGridPage = ({ auth, team: { teams }, getAllTeams }) => {
   useEffect(() => {
     getAllTeams();
   }, [getAllTeams]);
@@ -13,7 +13,7 @@ const TeamGridPage = ({ auth, team: { teams }, getAllTeams, match }) => {
     <Fragment>
       <h2 className="text-primary">Equipos</h2>
       {(auth.userAuth.role === "Admin" || auth.userAuth.role === "User") && (
-        <Link to={`/teams/add`} className="btn btn-outline-secondary">
+        <Link to={`/teams/add`} className="btn btn-outline-success">
           Agregar Equipo
         </Link>
       )}

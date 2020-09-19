@@ -11,7 +11,6 @@ const initialState = {
   version: "",
   imageURL: "",
   description: "",
-  maxPlayersChallenge: "",
   categories: [],
   available: "",
 };
@@ -23,14 +22,7 @@ const ChallengeForm = ({
 }) => {
   //form data use State
   const [formData, setFormData] = useState(initialState);
-  const {
-    name,
-    version,
-    imageURL,
-    description,
-    maxPlayersChallenge,
-    available,
-  } = formData;
+  const { name, version, imageURL, description, available } = formData;
 
   // selecet Categories use State
   const categoryOptions = CategoriesType.map((elm, index) => ({
@@ -60,6 +52,7 @@ const ChallengeForm = ({
           .map((elm) => elm.value)
       );
     }
+    // eslint-disable-next-line
   }, [loading, challenge, challengeUpdate]);
 
   // handle input chages
@@ -152,21 +145,6 @@ const ChallengeForm = ({
                     id="description"
                     name="description"
                     value={description}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="maxPlayersChallenge">
-                    No. Participantes Máximo Total Reto
-                  </label>
-                  <input
-                    type="Number"
-                    className="form-control"
-                    id="maxPlayersChallenge"
-                    name="maxPlayersChallenge"
-                    value={maxPlayersChallenge}
                     onChange={handleChange}
                     required
                   />

@@ -67,6 +67,7 @@ const EventForm = ({
           .map((elm) => elm.value)
       );
     }
+    // eslint-disable-next-line
   }, [eventLoading, eventState, eventUpdate]);
 
   // handle changes in fields of event form
@@ -89,6 +90,7 @@ const EventForm = ({
         }))
       );
     }
+    // eslint-disable-next-line
   }, [challengeList]);
 
   // use with select-react

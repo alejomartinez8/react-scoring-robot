@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 
 const initialState = {
   name: "",
@@ -7,19 +7,33 @@ const initialState = {
   birthday: "",
 };
 
-const TeamFormPlayer = ({ player }) => {
+const TeamFormPlayer = ({ addPlayer, index, player, required = false }) => {
   const [playerData, setPlayerData] = useState(initialState);
   const { name, legalId, gender, birthday } = playerData;
 
+  // load form fields
+  useEffect(() => {
+    if (player) {
+      const _player = { ...initialState };
+      for (const key in player) {
+        if (key in _player) {
+          _player[key] = player[key] ? player[key] : "";
+        }
+      }
+      setPlayerData(_player);
+    }
+  }, [player]);
+
   const handleChange = (e) => {
     setPlayerData({ ...playerData, [e.target.name]: e.target.value });
+    addPlayer({ ...playerData, [e.target.name]: e.target.value }, index);
   };
 
   return (
     <Fragment>
       <div className="form-group row">
         <label className="col-md-4 col-form-group" htmlFor="name">
-          Nombre Completo:
+          Nombre Completo {required && "*"}
         </label>
         <div className="col-md">
           <input
@@ -29,23 +43,7 @@ const TeamFormPlayer = ({ player }) => {
             name="name"
             value={name}
             onChange={handleChange}
-            required
-          />
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label className="col-md-4 col-form-group" htmlFor="legalId">
-          Identificación:
-        </label>
-        <div className="col-md">
-          <input
-            type="number"
-            className="form-control"
-            id="legalId"
-            name="legalId"
-            value={legalId}
-            onChange={handleChange}
+            required={required}
           />
         </div>
       </div>
@@ -61,6 +59,22 @@ const TeamFormPlayer = ({ player }) => {
             id="birthday"
             name="birthday"
             value={birthday}
+            onChange={handleChange}
+          />
+        </div>
+      </div>
+
+      <div className="form-group row">
+        <label className="col-md-4 col-form-group" htmlFor="legalId">
+          Identificación:
+        </label>
+        <div className="col-md">
+          <input
+            type="number"
+            className="form-control"
+            id="legalId"
+            name="legalId"
+            value={legalId}
             onChange={handleChange}
           />
         </div>

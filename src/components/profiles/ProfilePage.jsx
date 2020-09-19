@@ -9,7 +9,6 @@ import TeamGridPage from "../teams/TeamGridPage";
 const ProfilePage = ({ auth: { userAuth, loading }, match }) => {
   const { path } = match;
   const onDelete = () => {
-    console.log("Delete User");
     deleteUser(userAuth.id);
   };
 
