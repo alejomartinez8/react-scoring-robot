@@ -1,6 +1,6 @@
 import React from "react";
 
-const TeamFormChallenge = ({ options = [], challenge, handleChange, disabled }) => {
+const TeamFormChallenge = ({ options = [], challenge, handleChange }) => {
   return (
     <div className="form-group row">
       <label className="col-md-4 col-form-group" htmlFor="challenge">
@@ -13,7 +13,7 @@ const TeamFormChallenge = ({ options = [], challenge, handleChange, disabled }) 
           className="form-control"
           value={challenge}
           onChange={handleChange}
-          disabled={disabled}
+          disabled={options.length > 0 ? false : true}
           required
         >
           <option></option>

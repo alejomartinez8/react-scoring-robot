@@ -4,14 +4,24 @@ import TeamCard from "./TeamCard";
 import { connect } from "react-redux";
 import { teamActions } from "../../redux/actions";
 
-const TeamGridPage = ({ auth, team: { teams }, getAllTeams }) => {
+const TeamGridPage = ({
+  auth,
+  team: { teams },
+  getAllTeams,
+  isUserProfile = false,
+  title = "Equipos",
+}) => {
   useEffect(() => {
     getAllTeams();
   }, [getAllTeams]);
 
+  const filteredTeams = isUserProfile
+    ? teams.filter((team) => team.user.id === auth.userAuth.id)
+    : teams;
+
   return (
     <Fragment>
-      <h2 className="text-primary">Equipos</h2>
+      <h2 className="text-primary">{title}</h2>
       {(auth.userAuth.role === "Admin" || auth.userAuth.role === "User") && (
         <Link to={`/teams/add`} className="btn btn-outline-success">
           Agregar Equipo
@@ -19,8 +29,10 @@ const TeamGridPage = ({ auth, team: { teams }, getAllTeams }) => {
       )}
 
       <div className="row my-2">
-        {teams.length > 0 ? (
-          teams.map((team) => <TeamCard key={team._id} team={team} auth={auth} />)
+        {filteredTeams.length > 0 ? (
+          filteredTeams.map((team) => (
+            <TeamCard key={team._id} team={team} auth={auth} />
+          ))
         ) : (
           <h4>Todavía no hay equipos</h4>
         )}

@@ -1,7 +1,8 @@
 import React, { useState, Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { teamActions, eventActions, challengeActions } from "../../redux/actions";
+import { teamActions, eventActions } from "../../redux/actions";
+import { userActions } from "../../redux/actions";
 import Spinner from "../layout/Spinner";
 import TeamFormPlayer from "./TeamFormPlayer";
 import TeamFormCategory from "./TeamFormCategory";
@@ -20,13 +21,13 @@ const initialState = {
 
 const TeamForm = ({
   auth,
+  users,
   team: { team, loadingTeam },
+  events,
   addTeamAction,
   updateTeamAction,
-  events,
   getAllEvents,
-  challenges,
-  getAllChallenges,
+  getAllUsers,
 }) => {
   const [teamData, setTeamData] = useState(initialState);
   const { user, name, event, category, challenge, players } = teamData;
@@ -55,8 +56,8 @@ const TeamForm = ({
       setCategoryOptions(_categoryOptions);
       // console.log({ _categoryOptions });
 
-      const _challengesOptions = challenges.filter((challenge) =>
-        challenge.categories.includes(teamData.category)
+      const _challengesOptions = events.challenges.filter((challenge) =>
+        events.challenges.categories.includes(teamData.category)
       );
       setChallengeOptions(_challengesOptions);
       // console.log(_challengesOptions);
@@ -67,7 +68,7 @@ const TeamForm = ({
   // load users if is Admin creator of team
   useEffect(() => {
     if (auth.userAuth.role === "Admin") {
-      console.log("getAllUsers()");
+      getAllUsers();
     } else if (auth.userAuth.role === "User") {
       setTeamData({
         ...teamData,
@@ -85,30 +86,24 @@ const TeamForm = ({
     getAllEvents();
   }, [getAllEvents]);
 
-  // load challenges options for select
-  useEffect(() => {
-    getAllChallenges();
-  }, [getAllChallenges]);
-
   const handleChange = (e) => {
     setTeamData({ ...teamData, [e.target.name]: e.target.value });
 
-    // event change -> choose category
+    // setCategoryOptions
     if (e.target.name === "event") {
-      setCategoryOptions(
-        events
-          .filter((elm) => elm._id === e.target.value)
-          .map((elm) => elm.categories)[0]
-      );
+      const _categoryOptions = events
+        .filter((elm) => elm._id === e.target.value)
+        .map((elm) => elm.categories)[0];
+      setCategoryOptions(_categoryOptions);
     }
 
-    //category change -> choose challenge
+    //setChallengeOptions
     if (e.target.name === "category") {
-      setChallengeOptions(
-        challenges
-          .filter((challenge) => challenge.categories.includes(e.target.value))
-          .map((elm) => ({ _id: elm._id, name: elm.name }))
-      );
+      const _event = events.filter((elm) => elm._id === event)[0];
+      const _categoryOptions = _event.challenges
+        .filter((elm) => elm.categories.includes(e.target.value))
+        .map((elm) => ({ _id: elm._id, name: elm.name }));
+      setChallengeOptions(_categoryOptions);
     }
   };
 
@@ -159,7 +154,15 @@ const TeamForm = ({
                         value={user}
                         onChange={handleChange}
                         required
-                      />
+                      >
+                        {users
+                          .filter((user) => user.role === "User")
+                          .map((user) => (
+                            <option key={user.id} value={user.id}>
+                              {`${user.firstName} ${user.lastName}`}
+                            </option>
+                          ))}
+                      </select>
                     </div>
                   </div>
                 )}
@@ -191,14 +194,12 @@ const TeamForm = ({
                   options={categoryOptions}
                   category={category}
                   handleChange={handleChange}
-                  disabled={!event}
                 />
 
                 <TeamFormChallenge
                   options={challengeOptions}
                   challenge={challenge}
                   handleChange={handleChange}
-                  disabled={!category}
                 />
 
                 <hr />
@@ -262,17 +263,16 @@ const TeamForm = ({
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  user: state.user.users,
+  users: state.user.users,
   team: state.team,
   events: state.event.events,
-  challenges: state.challenge.challenges,
 });
 
 const actionCreators = {
   addTeamAction: teamActions.addTeam,
   updateTeamAction: teamActions.updateTeam,
+  getAllUsers: userActions.getAllUsers,
   getAllEvents: eventActions.getAllEvents,
-  getAllChallenges: challengeActions.getAllChallenges,
 };
 
 export default connect(mapStateToProps, actionCreators)(TeamForm);

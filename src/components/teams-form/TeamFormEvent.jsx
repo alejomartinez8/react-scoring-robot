@@ -13,7 +13,7 @@ const TeamFormEvent = ({ options = [], event, handleChange, disabled = false }) 
           className="form-control"
           value={event}
           onChange={handleChange}
-          disabled={disabled}
+          disabled={options.length > 0 ? false : true}
           required
         >
           <option></option>

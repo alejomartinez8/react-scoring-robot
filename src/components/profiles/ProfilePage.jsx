@@ -23,7 +23,7 @@ const ProfilePage = ({ auth: { userAuth, loading }, match }) => {
         onDelete={onDelete}
       />
       <section className="my-4">
-        <TeamGridPage user={userAuth} />
+        <TeamGridPage user={userAuth} isUserProfile={true} title={"Mis Equipos"} />
       </section>
     </Fragment>
   );

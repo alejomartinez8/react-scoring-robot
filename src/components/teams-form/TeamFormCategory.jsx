@@ -1,6 +1,6 @@
 import React from "react";
 
-const TeamFormCategory = ({ options = [], category, handleChange, disabled }) => {
+const TeamFormCategory = ({ options = [], category, handleChange }) => {
   return (
     <div className="form-group row">
       <label className="col-md-4 col-form-group" htmlFor="category">
@@ -14,7 +14,7 @@ const TeamFormCategory = ({ options = [], category, handleChange, disabled }) =>
           name="category"
           value={category}
           onChange={handleChange}
-          disabled={disabled}
+          disabled={options.length > 0 ? false : true}
         >
           <option></option>
           {options.map((categoryOption, index) => (
