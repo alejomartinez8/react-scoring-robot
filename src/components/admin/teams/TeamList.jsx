@@ -11,8 +11,8 @@ const TeamsList = ({ team: { teams, loading }, getAllTeams, deleteTeam, match })
     getAllTeams();
   }, [getAllTeams]);
 
-  const handleDeleteTeam = (id) => {
-    deleteTeam(id);
+  const handleDeleteTeam = (_id) => {
+    deleteTeam(_id);
   };
 
   return (
@@ -54,7 +54,7 @@ const TeamsList = ({ team: { teams, loading }, getAllTeams, deleteTeam, match })
                   <tbody>
                     {teams &&
                       teams.map((team) => (
-                        <tr key={team.id}>
+                        <tr key={team._id}>
                           <td>{team.name}</td>
                           <td>{team.category}</td>
                           <td>{team.challenge.name}</td>
@@ -66,14 +66,14 @@ const TeamsList = ({ team: { teams, loading }, getAllTeams, deleteTeam, match })
                           <td>{team.user.country}</td>
                           <td style={{ whiteSpace: "nowrap" }}>
                             <Link
-                              to={`${path}/edit/${team.id}`}
+                              to={`${path}/edit/${team._id}`}
                               className="btn btn-sm btn-primary mr-1"
                             >
                               Editar
                             </Link>
                             <button
                               className="btn btn-sm btn-danger"
-                              onClick={() => handleDeleteTeam(team.id)}
+                              onClick={() => handleDeleteTeam(team._id)}
                             >
                               <span>Eliminar</span>
                             </button>

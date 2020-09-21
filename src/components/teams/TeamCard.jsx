@@ -7,14 +7,13 @@ const TeamCard = ({ auth, team }) => {
       <div className="card shadow h-100 w-100 ">
         <div className="card-header d-flex flex-column">
           <h3 className="text-center flex-row">{team.name}</h3>
-          <h4 className="text-center flex-row">{team.event.shortName}</h4>
+          <h4 className="text-center flex-row">{team.event.slug}</h4>
           <h4 className="text-center flex-row">{team.challenge.name}</h4>
           <span className="badge badge-pill badge-info p-2 ">{team.category}</span>
           <p className="text-center flex-row">
             {team.user.city} / {team.user.country}
           </p>
         </div>{" "}
-        q
         {team.imageURL && (
           <img className="card-img-top" src={team.imageURL} alt={team.name}></img>
         )}

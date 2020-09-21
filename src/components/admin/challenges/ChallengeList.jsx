@@ -47,7 +47,7 @@ const ChallengesList = ({
                   <thead className="thead-dark">
                     <tr>
                       <th>Nombre Reto</th>
-                      <th>Version</th>
+                      <th>Slug</th>
                       <th>Habilitado</th>
                       <th>Categorías Habilitadas</th>
                       <th>Editar/Eliminar</th>

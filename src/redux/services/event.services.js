@@ -31,11 +31,8 @@ function getEventById(id) {
   return axios.get(`/events/${id}`).then(handleResponse).catch(handleError);
 }
 
-function getEventByShortName(shortName) {
-  return axios
-    .get(`/events/shortName/${shortName}`)
-    .then(handleResponse)
-    .catch(handleError);
+function getEventByShortName(slug) {
+  return axios.get(`/events/slug/${slug}`).then(handleResponse).catch(handleError);
 }
 
 function deleteEvent(id) {

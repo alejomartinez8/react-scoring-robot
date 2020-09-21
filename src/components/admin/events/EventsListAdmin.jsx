@@ -58,12 +58,12 @@ const EventsList = ({
                       events.map((event) => (
                         <tr key={event._id}>
                           <td>{event.name}</td>
-                          <td>{event.shortName}</td>
+                          <td>{event.slug}</td>
                           <td>{event.year}</td>
                           <td>{event.description}</td>
                           <td style={{ whiteSpace: "nowrap" }}>
                             <Link
-                              to={`/events/${event.shortName}`}
+                              to={`/events/${event.slug}`}
                               className="btn btn-sm btn-success mr-1"
                             >
                               Ver

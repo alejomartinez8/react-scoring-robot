@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const EventCard = ({ event: { shortName, name, imageURL, description } }) => {
+const EventCard = ({ event: { slug, name, imageURL, description } }) => {
   return (
     <div className="card shadow my-4">
       <div className="card-header">
-        <h2>{shortName}</h2>
+        <h2>{slug}</h2>
       </div>
 
       <div className="card-body">
@@ -14,7 +14,7 @@ const EventCard = ({ event: { shortName, name, imageURL, description } }) => {
         <p className="card-text">Descripción: {description}</p>
       </div>
       <div className="card-footer">
-        <Link to={`/events/${shortName}`} className="btn btn-primary">
+        <Link to={`/events/${slug}`} className="btn btn-primary">
           Ver Evento
         </Link>
       </div>

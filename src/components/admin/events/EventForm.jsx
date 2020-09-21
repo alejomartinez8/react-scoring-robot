@@ -9,7 +9,7 @@ import { CategoriesType } from "../../../helpers";
 
 const initialState = {
   name: "",
-  shortName: "",
+  slug: "",
   imageURL: "",
   year: "",
   description: "",
@@ -29,7 +29,7 @@ const EventForm = ({
 }) => {
   // form data use state
   const [eventFormData, setEventFormData] = useState(initialState);
-  const { name, shortName, year, imageURL, description } = eventFormData;
+  const { name, slug, year, imageURL, description } = eventFormData;
 
   // select use state
   const [challengeOptions, setChallengeOptions] = useState([]);
@@ -72,8 +72,8 @@ const EventForm = ({
 
   // handle changes in fields of event form
   const handleChange = (e) => {
-    if (e.target.name === "shortName") {
-      setEventFormData({ ...eventFormData, shortName: e.target.value.trim() });
+    if (e.target.name === "slug") {
+      setEventFormData({ ...eventFormData, slug: e.target.value.trim() });
     } else {
       setEventFormData({ ...eventFormData, [e.target.name]: e.target.value });
     }
@@ -168,13 +168,13 @@ const EventForm = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="shortName">Nombre Corto(url)</label>
+                  <label htmlFor="slug">Nombre Corto(url)</label>
                   <input
                     type="text"
                     className="form-control"
-                    id="shortName"
-                    name="shortName"
-                    value={shortName}
+                    id="slug"
+                    name="slug"
+                    value={slug}
                     onChange={handleChange}
                     required
                   />

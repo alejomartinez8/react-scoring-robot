@@ -48,19 +48,19 @@ const TeamForm = ({
         }
       }
       setTeamData(teamData);
-      // console.log(teamData);
 
+      // setCategoryOptions
       const _categoryOptions = events
         .filter((event) => event._id === teamData.event)
         .map((event) => event.categories)[0];
       setCategoryOptions(_categoryOptions);
-      // console.log({ _categoryOptions });
 
-      const _challengesOptions = events.challenges.filter((challenge) =>
-        events.challenges.categories.includes(teamData.category)
-      );
+      //setChallengeOptions
+      const _challengesOptions = events
+        .filter((elm) => elm._id === teamData.event)[0]
+        .challenges.filter((elm) => elm.categories.includes(teamData.category))
+        .map((elm) => ({ _id: elm._id, name: elm.name }));
       setChallengeOptions(_challengesOptions);
-      // console.log(_challengesOptions);
     }
     // eslint-disable-next-line
   }, [team]);
@@ -99,10 +99,10 @@ const TeamForm = ({
     //setChallengeOptions
     if (e.target.name === "category") {
       const _event = events.filter((elm) => elm._id === event)[0];
-      const _categoryOptions = _event.challenges
+      const _challengesOptions = _event.challenges
         .filter((elm) => elm.categories.includes(e.target.value))
         .map((elm) => ({ _id: elm._id, name: elm.name }));
-      setChallengeOptions(_categoryOptions);
+      setChallengeOptions(_challengesOptions);
     }
   };
 

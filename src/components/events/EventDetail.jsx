@@ -8,8 +8,8 @@ import ChallengeCard from "../challenges/ChallengeCard";
 
 const EventDetail = ({ auth, event, loading, getEventByShortName, match }) => {
   useEffect(() => {
-    getEventByShortName(match.params.shortName);
-  }, [getEventByShortName, match.params.shortName]);
+    getEventByShortName(match.params.eventSlug);
+  }, [getEventByShortName, match.params.eventSlug]);
 
   const challenges = event.challenges;
   console.log(challenges);
