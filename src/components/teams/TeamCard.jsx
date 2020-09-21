@@ -6,15 +6,18 @@ const TeamCard = ({ auth, team }) => {
     <div className="col-lg-4 col-md-6 my-2">
       <div className="card shadow h-100 w-100 ">
         <div className="card-header d-flex flex-column">
-          <h2 className="text-center flex-row">{team.name}</h2>
-          <h3 className="text-center flex-row">{team.event.shortName}</h3>
-          <h3 className="text-center flex-row">{team.challenge.name}</h3>
+          <h3 className="text-center flex-row">{team.name}</h3>
+          <h4 className="text-center flex-row">{team.event.shortName}</h4>
+          <h4 className="text-center flex-row">{team.challenge.name}</h4>
           <span className="badge badge-pill badge-info p-2 ">{team.category}</span>
-        </div>
+          <p className="text-center flex-row">
+            {team.user.city} / {team.user.country}
+          </p>
+        </div>{" "}
+        q
         {team.imageURL && (
           <img className="card-img-top" src={team.imageURL} alt={team.name}></img>
         )}
-
         <div className="card-body">
           <ul className="list-group list-group-flush">
             <li className="list-group-item">
@@ -28,7 +31,6 @@ const TeamCard = ({ auth, team }) => {
             ))}
           </ul>
         </div>
-
         {(auth.userAuth.role === "Admin" || auth.userAuth.id === team.user.id) && (
           <div className="card-footer">
             <Link

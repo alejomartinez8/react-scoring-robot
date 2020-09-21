@@ -44,7 +44,7 @@ const ChallengesList = ({
               </Link>
               <div className="table-responsive">
                 <table className="table table-striped ">
-                  <thead>
+                  <thead className="thead-dark">
                     <tr>
                       <th>Nombre Reto</th>
                       <th>Version</th>
@@ -58,7 +58,7 @@ const ChallengesList = ({
                       challenges.map((challenge) => (
                         <tr key={challenge._id}>
                           <td>{challenge.name}</td>
-                          <td>{challenge.version}</td>
+                          <td>{challenge.slug}</td>
                           <td>
                             {challenge.available ? (
                               <span className="badge badge-pill badge-success">

@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import TeamCard from "./TeamCard";
 import { connect } from "react-redux";
 import { teamActions } from "../../redux/actions";
+import Spinner from "../layout/Spinner";
 
 const TeamGridPage = ({
   auth,
-  team: { teams },
+  team: { teams, loading },
   getAllTeams,
   isUserProfile = false,
-  title = "Equipos",
+  title = "Todos los Equipos",
 }) => {
   useEffect(() => {
     getAllTeams();
@@ -28,15 +29,19 @@ const TeamGridPage = ({
         </Link>
       )}
 
-      <div className="row my-2">
-        {filteredTeams.length > 0 ? (
-          filteredTeams.map((team) => (
-            <TeamCard key={team._id} team={team} auth={auth} />
-          ))
-        ) : (
-          <h4>Todavía no hay equipos</h4>
-        )}
-      </div>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <div className="row my-2">
+          {filteredTeams.length > 0 ? (
+            filteredTeams.map((team) => (
+              <TeamCard key={team._id} team={team} auth={auth} />
+            ))
+          ) : (
+            <h4>Todavía no hay equipos</h4>
+          )}
+        </div>
+      )}
     </Fragment>
   );
 };

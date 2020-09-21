@@ -8,9 +8,10 @@ import { CategoriesType } from "../../../helpers";
 
 const initialState = {
   name: "",
-  version: "",
+  slug: "",
   imageURL: "",
   description: "",
+  playoffs: false,
   categories: [],
   available: "",
 };
@@ -22,7 +23,7 @@ const ChallengeForm = ({
 }) => {
   //form data use State
   const [formData, setFormData] = useState(initialState);
-  const { name, version, imageURL, description, available } = formData;
+  const { name, slug, imageURL, description, playoffs, available } = formData;
 
   // selecet Categories use State
   const categoryOptions = CategoriesType.map((elm, index) => ({
@@ -57,7 +58,11 @@ const ChallengeForm = ({
 
   // handle input chages
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (e.target.name === "slug") {
+      setFormData({ ...formData, slug: e.target.value.trim() });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   };
 
   const handleCategoryChange = (e) => {
@@ -114,13 +119,13 @@ const ChallengeForm = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="version">Código Reto</label>
+                  <label htmlFor="slug">Slug Reto</label>
                   <input
                     type="text"
                     className="form-control"
-                    id="version"
-                    name="version"
-                    value={version}
+                    id="slug"
+                    name="slug"
+                    value={slug}
                     onChange={handleChange}
                     required
                   />
@@ -148,6 +153,18 @@ const ChallengeForm = ({
                     onChange={handleChange}
                     required
                   />
+                </div>
+
+                <div className="form-group">
+                  <input
+                    type="checkBox"
+                    name="playoffs"
+                    checked={playoffs}
+                    onChange={(e) =>
+                      setFormData({ ...formData, playoffs: e.target.checked })
+                    }
+                  />{" "}
+                  <label htmlFor="playoffs">PlayOffs</label>
                 </div>
 
                 <div className="form-group">

@@ -72,7 +72,11 @@ const EventForm = ({
 
   // handle changes in fields of event form
   const handleChange = (e) => {
-    setEventFormData({ ...eventFormData, [e.target.name]: e.target.value });
+    if (e.target.name === "shortName") {
+      setEventFormData({ ...eventFormData, shortName: e.target.value.trim() });
+    } else {
+      setEventFormData({ ...eventFormData, [e.target.name]: e.target.value });
+    }
   };
 
   // fetch Challenges from API
@@ -214,7 +218,7 @@ const EventForm = ({
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="categories">Categorías: </label>
+                  <label htmlFor="categories">Categorías</label>
                   <Select
                     isMulti
                     className="dropdown"
@@ -228,7 +232,7 @@ const EventForm = ({
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="challenges">Retos: </label>
+                  <label htmlFor="challenges">Retos</label>
                   <Select
                     isMulti
                     className="dropdown"

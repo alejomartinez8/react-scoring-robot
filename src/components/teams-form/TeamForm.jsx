@@ -73,7 +73,6 @@ const TeamForm = ({
       setTeamData({
         ...teamData,
         user: auth.userAuth.id,
-        institution: auth.userAuth.institution,
       });
     } else {
       console.log("No autorizado para crear equipo");
@@ -155,6 +154,7 @@ const TeamForm = ({
                         onChange={handleChange}
                         required
                       >
+                        <option></option>
                         {users
                           .filter((user) => user.role === "User")
                           .map((user) => (

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { eventActions } from "../../redux/actions";
 import Spinner from "../layout/Spinner";
-import ChallengeCard from "./ChallengeCard";
+import ChallengeCard from "../challenges/ChallengeCard";
 
 const EventDetail = ({ auth, event, loading, getEventByShortName, match }) => {
   useEffect(() => {
@@ -33,20 +33,21 @@ const EventDetail = ({ auth, event, loading, getEventByShortName, match }) => {
               </Link>
             )}
           </div>
-          <h2 className="text-primary m-2">{event.name}</h2>
-          <img className="card-img-top" src={event.imageURL} alt=""></img>
-          <div className="my-4">
-            <h2 className="text-primary">Retos</h2>
-            {challenges !== undefined ? (
-              <Fragment>
-                {challenges.map((challenge) => (
-                  <ChallengeCard challenge={challenge} auth={auth} />
-                ))}
-              </Fragment>
-            ) : (
-              <h4>No hay retos</h4>
-            )}
-          </div>
+          <h2 className="text-primary m-2">{event.name} - Retos</h2>
+
+          {challenges !== undefined ? (
+            <Fragment>
+              {challenges.map((challenge) => (
+                <ChallengeCard
+                  key={challenge._id}
+                  challenge={challenge}
+                  auth={auth}
+                />
+              ))}
+            </Fragment>
+          ) : (
+            <h4>No hay retos</h4>
+          )}
         </Fragment>
       )}
     </Fragment>

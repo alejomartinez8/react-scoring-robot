@@ -1,7 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 
 const ChallengeCard = ({ auth, challenge }) => {
+  const match = useRouteMatch();
+  console.log(match);
   return (
     <div className="card shadow my-4" key={challenge._id}>
       <div className="card-header">
@@ -34,20 +36,30 @@ const ChallengeCard = ({ auth, challenge }) => {
         {auth.isAuth && auth.userAuth.role === "Admin" && (
           <Link
             to={`/admin/challenges/edit/${challenge._id}`}
-            className="btn btn-outline-dark mr-2"
+            className="btn btn-outline-dark m-2"
           >
             Editar
           </Link>
         )}
-        <Link to="" className="btn btn-outline-primary  mr-2">
+        <Link
+          to={`${match.url}/${challenge._id}/results`}
+          className="btn btn-outline-primary  m-2"
+        >
           Resultados
         </Link>
-        <Link to="" className="btn btn-outline-success mr-2">
-          Playoffs
-        </Link>
+
+        {challenge.playoffs && (
+          <Link
+            to={`${match.url}/${challenge._id}/playoffs`}
+            className="btn btn-outline-success m-2"
+          >
+            Playoffs
+          </Link>
+        )}
+
         {auth.isAuth &&
           (auth.userAuth.role === "Admin" || auth.userAuth.role === "Judge") && (
-            <Link to={``} className="btn btn-outline-warning mr-2">
+            <Link to={``} className="btn btn-outline-warning m-2">
               Calificar
             </Link>
           )}

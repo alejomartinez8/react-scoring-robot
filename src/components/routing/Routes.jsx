@@ -10,7 +10,7 @@ import Alert from "../../components/layout/Alert";
 import Auth from "../auth/Auth";
 import Profile from "../profiles/Profile";
 import Admin from "../admin/Admin";
-import Events from "../events-public/Events";
+import Events from "../events/Events";
 import Teams from "../teams/Teams";
 
 const Routes = () => {

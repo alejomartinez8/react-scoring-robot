@@ -38,7 +38,7 @@ const UserList = ({ getAllUsers, user: { users, loading }, deleteUser, match }) 
                 Agregar Usuario
               </Link>
               <table className="table table-striped table-responsive">
-                <thead>
+                <thead className="thead-dark">
                   <tr>
                     <th>Nombre Completo</th>
                     <th>Email</th>

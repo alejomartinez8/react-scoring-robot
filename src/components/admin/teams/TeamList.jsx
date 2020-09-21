@@ -39,12 +39,15 @@ const TeamsList = ({ team: { teams, loading }, getAllTeams, deleteTeam, match })
               </Link>
               <div className="table-responsive">
                 <table className="table table-striped ">
-                  <thead>
+                  <thead className="thead-dark">
                     <tr>
                       <th>Nombre Equipos</th>
                       <th>Categoría</th>
+                      <th>Reto</th>
                       <th>Entrenador</th>
                       <th>Institución</th>
+                      <th>Ciudad</th>
+                      <th>País</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -54,8 +57,13 @@ const TeamsList = ({ team: { teams, loading }, getAllTeams, deleteTeam, match })
                         <tr key={team.id}>
                           <td>{team.name}</td>
                           <td>{team.category}</td>
-                          <td>{team.coach}</td>
+                          <td>{team.challenge.name}</td>
+                          <td>
+                            {team.user.firstName} {team.user.lastName}
+                          </td>
                           <td>{team.institution}</td>
+                          <td>{team.user.city}</td>
+                          <td>{team.user.country}</td>
                           <td style={{ whiteSpace: "nowrap" }}>
                             <Link
                               to={`${path}/edit/${team.id}`}

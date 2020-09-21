@@ -1,14 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const EventListItem = ({ event: { shortName, name, imageURL, description } }) => {
+const EventCard = ({ event: { shortName, name, imageURL, description } }) => {
   return (
-    <div className="card mb-4">
+    <div className="card shadow my-4">
       <div className="card-header">
         <h2>{shortName}</h2>
       </div>
-      <img className="card-img-top" src={imageURL} alt=""></img>
+
       <div className="card-body">
+        <img className="card-img-top" src={imageURL} alt=""></img>
         <h5 className="card-title">{name}</h5>
         <p className="card-text">Descripción: {description}</p>
       </div>
@@ -21,4 +22,4 @@ const EventListItem = ({ event: { shortName, name, imageURL, description } }) =>
   );
 };
 
-export default EventListItem;
+export default EventCard;

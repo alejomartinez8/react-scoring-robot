@@ -22,9 +22,11 @@ const ProfilePage = ({ auth: { userAuth, loading }, match }) => {
         path={path}
         onDelete={onDelete}
       />
-      <section className="my-4">
-        <TeamGridPage user={userAuth} isUserProfile={true} title={"Mis Equipos"} />
-      </section>
+      {userAuth.role === "User" && (
+        <section className="my-4">
+          <TeamGridPage user={userAuth} isUserProfile={true} title={"Mis Equipos"} />
+        </section>
+      )}
     </Fragment>
   );
 };

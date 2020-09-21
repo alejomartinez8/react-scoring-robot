@@ -44,7 +44,7 @@ const EventsList = ({
               </Link>
               <div className="table-responsive">
                 <table className="table table-striped">
-                  <thead>
+                  <thead className="thead-dark">
                     <tr>
                       <th>Nombre Evento</th>
                       <th>Nombre Corto</th>
