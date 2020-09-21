@@ -36,14 +36,14 @@ const ChallengeCard = ({ auth, challenge }) => {
         {auth.isAuth && auth.userAuth.role === "Admin" && (
           <Link
             to={`/admin/challenges/edit/${challenge._id}`}
-            className="btn btn-outline-dark m-2"
+            className="btn btn-dark m-1"
           >
             Editar
           </Link>
         )}
         <Link
           to={`${match.url}/${challenge._id}/results`}
-          className="btn btn-outline-primary  m-2"
+          className="btn btn-primary m-1"
         >
           Resultados
         </Link>
@@ -51,7 +51,7 @@ const ChallengeCard = ({ auth, challenge }) => {
         {challenge.playoffs && (
           <Link
             to={`${match.url}/${challenge._id}/playoffs`}
-            className="btn btn-outline-success m-2"
+            className="btn btn-success m-1"
           >
             Playoffs
           </Link>
@@ -61,7 +61,7 @@ const ChallengeCard = ({ auth, challenge }) => {
           (auth.userAuth.role === "Admin" || auth.userAuth.role === "Judge") && (
             <Link
               to={`${match.url}/score/${challenge.slug}`}
-              className="btn btn-outline-warning m-2"
+              className="btn btn-warning m-1"
             >
               Calificar
             </Link>

@@ -1,9 +1,9 @@
 import React, { useState, Fragment, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { teamActions, eventActions } from "../../redux/actions";
 import { userActions } from "../../redux/actions";
 import Spinner from "../layout/Spinner";
+import ButtonBack from "../layout/ButtonBack";
 import TeamFormPlayer from "./TeamFormPlayer";
 import TeamFormCategory from "./TeamFormCategory";
 import TeamFormEvent from "./TeamFormEvent";
@@ -128,9 +128,7 @@ const TeamForm = ({
         <Spinner />
       ) : (
         <Fragment>
-          <Link to="/teams" className="btn btn-sm btn-primary mb-2">
-            Atrás
-          </Link>
+          <ButtonBack className="btn btn-secondary m-1">Atrás</ButtonBack>
           <div className="card shadow mb-2">
             <div className="card-header">
               <h2 className="text-primary">
@@ -248,9 +246,7 @@ const TeamForm = ({
                     )}
                     Guardar
                   </button>
-                  <Link to="/admin/teams" className="btn btn-secondary m-1">
-                    Cancel
-                  </Link>
+                  <ButtonBack className="btn btn-secondary m-1">Cancelar</ButtonBack>
                 </div>
               </form>
             </div>

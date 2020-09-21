@@ -1,8 +1,8 @@
 import React, { useState, Fragment, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { challengeActions } from "../../../redux/actions";
 import Spinner from "../../layout/Spinner";
+import ButtonBack from "../../layout/ButtonBack";
 import Select from "react-select";
 import { CategoriesType } from "../../../helpers";
 
@@ -95,9 +95,7 @@ const ChallengeForm = ({
         <Spinner />
       ) : (
         <Fragment>
-          <Link to="/admin/challenges" className="btn btn-sm btn-primary">
-            Atrás
-          </Link>
+          <ButtonBack className="btn btn-secondary m-1">Atrás</ButtonBack>
           <div className="card shadow my-2">
             <div className="card-header">
               <h2 className="text-primary">
@@ -210,9 +208,7 @@ const ChallengeForm = ({
                     )}
                     Guardar
                   </button>
-                  <Link to="/admin/challenges" className="btn btn-secondary m-1">
-                    Cancel
-                  </Link>
+                  <ButtonBack className="btn btn-secondary m-1">Cancelar</ButtonBack>
                 </div>
               </form>
             </div>

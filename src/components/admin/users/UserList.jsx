@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getAllUsers, deleteUser } from "../../../redux/actions/user.actions";
 import Spinner from "../../layout/Spinner";
+import ButtonBack from "../../layout/ButtonBack";
 
 const UserList = ({ getAllUsers, user: { users, loading }, deleteUser, match }) => {
   const { path } = match;
@@ -21,9 +22,7 @@ const UserList = ({ getAllUsers, user: { users, loading }, deleteUser, match }) 
         <Spinner />
       ) : (
         <Fragment>
-          <Link to="/admin/" className="btn btn-sm btn-primary mb-2">
-            Atrás
-          </Link>
+          <ButtonBack className="btn btn-secondary m-1">Atrás</ButtonBack>
           <div className="card shadow mb-4">
             <div className="card-header">
               <h2 className="text-primary">Administrar Usuarios</h2>

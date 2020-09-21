@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { eventActions } from "../../../redux/actions";
 import Spinner from "../../layout/Spinner";
+import ButtonBack from "../../layout/ButtonBack";
 
 const EventsList = ({
   event: { events, loading },
@@ -26,9 +27,7 @@ const EventsList = ({
         <Spinner />
       ) : (
         <Fragment>
-          <Link to="/admin/" className="btn btn-sm btn-primary mb-2">
-            Atrás
-          </Link>
+          <ButtonBack className="btn btn-secondary m-1">Atrás</ButtonBack>
           <div className="card shadow mb-4">
             <div className="card-header">
               <h2 className="text-primary">Administrar Eventos</h2>

@@ -4,6 +4,7 @@ import TeamCard from "./TeamCard";
 import { connect } from "react-redux";
 import { teamActions } from "../../redux/actions";
 import Spinner from "../layout/Spinner";
+import ButtonBack from "../layout/ButtonBack";
 
 const TeamGridPage = ({
   auth,
@@ -23,6 +24,7 @@ const TeamGridPage = ({
   return (
     <Fragment>
       <h2 className="text-primary">{title}</h2>
+      <ButtonBack className="btn btn-secondary m-1">Atrás</ButtonBack>
       {(auth.userAuth.role === "Admin" || auth.userAuth.role === "User") && (
         <Link to={`/teams/add`} className="btn btn-outline-success">
           Agregar Equipo

@@ -10,27 +10,17 @@ const Input = styled.input`
 
 const initalState = {
   team: "",
-  start: false,
-  firstIntersection: false,
-  stopGlass: false,
-  depositBall: false,
-  turnBack: false,
-  firstIntersectionBack: false,
-  backStart: false,
+  candle1: false,
+  candle2: false,
+  candle3: false,
+  penalty1: false,
+  penalty2: false,
+  pentalty3: false,
 };
 
-const LineFollowingJR = () => {
+const FireFighting = () => {
   const [formData, setFormData] = useState(initalState);
-  const {
-    team,
-    start,
-    firstIntersection,
-    stopGlass,
-    depositBall,
-    turnBack,
-    firstIntersectionBack,
-    backStart,
-  } = formData;
+  const { team, candle1, candle2, candle3, penalty1, penalty2, penalty3 } = formData;
 
   const [totalPoints, setTotalPoints] = useState(0);
 
@@ -38,27 +28,26 @@ const LineFollowingJR = () => {
     setFormData({ ...formData, [e.target.name]: e.target.checked });
     let total = totalPoints;
     switch (e.target.name) {
-      case "start":
-        e.target.checked ? (total += 25) : (total -= 25);
-        break;
-      case "firstIntersection":
-        e.target.checked ? (total += 25) : (total -= 25);
-        break;
-      case "stopGlass":
+      case "candle1":
         e.target.checked ? (total += 100) : (total -= 100);
         break;
-      case "depositBall":
-        e.target.checked ? (total += 100) : (total -= 100);
+      case "candle2":
+        e.target.checked ? (total += 200) : (total -= 200);
         break;
-      case "turnBack":
-        e.target.checked ? (total += 25) : (total -= 25);
+      case "candle3":
+        e.target.checked ? (total += 300) : (total -= 300);
         break;
-      case "firstIntersectionBack":
-        e.target.checked ? (total += 25) : (total -= 25);
+
+      case "penalty1":
+        e.target.checked ? (total -= 50) : (total += 50);
         break;
-      case "backStart":
-        e.target.checked ? (total += 100) : (total -= 100);
+      case "penalty2":
+        e.target.checked ? (total -= 100) : (total += 100);
         break;
+      case "penalty3":
+        e.target.checked ? (total -= 150) : (total += 150);
+        break;
+
       default:
         break;
     }
@@ -69,7 +58,7 @@ const LineFollowingJR = () => {
     <Fragment>
       <div className="card shadow my-4">
         <div className="card-header">
-          <h2 className="text-primary">Calificar Line Following JR</h2>
+          <h2 className="text-primary">Calificar Reto de Fuego</h2>
         </div>
         <div className="card-body">
           <form>
@@ -87,20 +76,40 @@ const LineFollowingJR = () => {
             <div className="form-group row ">
               <label className="col-sm-3 col-form-label">Tareas</label>
               <div className="col-sm-9 table-responsive">
-                <table className="table table-striped ">
+                <table className="table table-striped">
+                  <thead className="thead-dark">
+                    <tr>
+                      <th>Velas</th>
+                      <th>Penalidad</th>
+                    </tr>
+                  </thead>
                   <tbody>
                     <tr>
                       <td>
                         <div className="d-flex align-items-center ">
                           <Input
                             type="checkBox"
-                            name="start"
-                            checked={start}
+                            name="candle1"
+                            checked={candle1}
                             onChange={handleChange}
-                            disabled={firstIntersection}
+                            disabled={candle2 || penalty1}
                           />
-                          <label className="form-check-label" htmlFor="start">
-                            Salir del INICIO (25 pts)
+                          <label className="form-check-label" htmlFor="candle1">
+                            Vela #1 (100 pts)
+                          </label>
+                        </div>
+                      </td>
+                      <td>
+                        <div className="d-flex align-items-center ">
+                          <Input
+                            type="checkBox"
+                            name="penalty1"
+                            checked={penalty1}
+                            onChange={handleChange}
+                            disabled={!candle1 || candle2}
+                          />
+                          <label className="form-check-label" htmlFor="penalty1">
+                            50%
                           </label>
                         </div>
                       </td>
@@ -111,13 +120,28 @@ const LineFollowingJR = () => {
                         <div className="d-flex align-items-center">
                           <Input
                             type="checkBox"
-                            name="firstIntersection"
-                            checked={firstIntersection}
+                            name="candle2"
+                            checked={candle2}
                             onChange={handleChange}
-                            disabled={!start || stopGlass}
+                            disabled={!candle1 || candle3 || penalty2}
                           />
-                          <label className="form-check-label" htmlFor="start">
-                            Superar 1a INTERSECCIÓN (25 pts)
+                          <label className="form-check-label" htmlFor="candle2">
+                            Vela #2 (200 pts)
+                          </label>
+                        </div>
+                      </td>
+
+                      <td>
+                        <div className="d-flex align-items-center ">
+                          <Input
+                            type="checkBox"
+                            name="penalty2"
+                            checked={penalty2}
+                            onChange={handleChange}
+                            disabled={!candle2 || candle3}
+                          />
+                          <label className="form-check-label" htmlFor="penalty2">
+                            50%
                           </label>
                         </div>
                       </td>
@@ -128,81 +152,28 @@ const LineFollowingJR = () => {
                         <div className="d-flex align-items-center ">
                           <Input
                             type="checkBox"
-                            name="stopGlass"
-                            checked={stopGlass}
+                            name="candle3"
+                            checked={candle3}
                             onChange={handleChange}
-                            disabled={!firstIntersection || depositBall}
+                            disabled={!candle2 || penalty3}
                           />
-                          <label className="form-check-label" htmlFor="start">
-                            Detenerse frente al VASO (100 pts)
+                          <label className="form-check-label" htmlFor="candle3">
+                            Vela #3 (300 pts)
                           </label>
                         </div>
                       </td>
-                    </tr>
 
-                    <tr>
                       <td>
                         <div className="d-flex align-items-center ">
                           <Input
                             type="checkBox"
-                            name="depositBall"
-                            checked={depositBall}
+                            name="penalty3"
+                            checked={penalty3}
                             onChange={handleChange}
-                            disabled={!stopGlass || turnBack}
+                            disabled={!candle3}
                           />
-                          <label className="form-check-label" htmlFor="start">
-                            Depositar 1a PELOTA (100 pts)
-                          </label>
-                        </div>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td>
-                        <div className="d-flex align-items-center ">
-                          <Input
-                            type="checkBox"
-                            name="turnBack"
-                            checked={turnBack}
-                            onChange={handleChange}
-                            disabled={!depositBall || firstIntersectionBack}
-                          />
-                          <label className="form-check-label" htmlFor="start">
-                            Devolverse (25 pts)
-                          </label>
-                        </div>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td>
-                        <div className="d-flex align-items-center ">
-                          <Input
-                            type="checkBox"
-                            name="firstIntersectionBack"
-                            checked={firstIntersectionBack}
-                            onChange={handleChange}
-                            disabled={!turnBack || backStart}
-                          />
-                          <label className="form-check-label" htmlFor="start">
-                            Superar 1a INTERSECCIÓN (25 pts)
-                          </label>
-                        </div>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td>
-                        <div className="d-flex align-items-center ">
-                          <Input
-                            type="checkBox"
-                            name="backStart"
-                            checked={backStart}
-                            onChange={handleChange}
-                            disabled={!firstIntersectionBack}
-                          />
-                          <label className="form-check-label" htmlFor="start">
-                            Regresar al INICIO (100 pts)
+                          <label className="form-check-label" htmlFor="penalty3">
+                            50%
                           </label>
                         </div>
                       </td>
@@ -239,4 +210,4 @@ const LineFollowingJR = () => {
   );
 };
 
-export default LineFollowingJR;
+export default FireFighting;

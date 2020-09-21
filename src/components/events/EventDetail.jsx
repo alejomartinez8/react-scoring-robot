@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { eventActions } from "../../redux/actions";
 import Spinner from "../layout/Spinner";
+import ButtonBack from "../layout/ButtonBack";
 import ChallengeCard from "../challenges/ChallengeCard";
 
 const EventDetail = ({ auth, event, loading, getEventByShortName, match }) => {
@@ -21,9 +22,7 @@ const EventDetail = ({ auth, event, loading, getEventByShortName, match }) => {
       ) : (
         <Fragment>
           <div className="my-2">
-            <Link to="." className="btn btn-primary mr-1">
-              Atrás
-            </Link>
+            <ButtonBack className="btn btn-secondary m-1">Atrás</ButtonBack>
             {auth.isAuth && auth.userAuth.role === "Admin" && (
               <Link
                 to={`/admin/events/edit/${event._id}`}

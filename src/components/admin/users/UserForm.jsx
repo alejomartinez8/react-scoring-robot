@@ -1,9 +1,9 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { createUser, updateUser } from "../../../redux/actions/user.actions";
 import Spinner from "../../layout/Spinner";
+import ButtonBack from "../../layout/ButtonBack";
 
 // inistal data
 const initialState = {
@@ -70,9 +70,7 @@ const UserForm = ({ user: { user, loading }, createUser, updateUser, history }) 
         <Spinner />
       ) : (
         <Fragment>
-          <Link to="/admin/users" className="btn btn-sm btn-primary mb-2">
-            Atrás
-          </Link>
+          <ButtonBack className="btn btn-secondary m-1">Atrás</ButtonBack>
 
           <div className="card shadow">
             <div className="card-header">
@@ -209,9 +207,7 @@ const UserForm = ({ user: { user, loading }, createUser, updateUser, history }) 
                     )}
                     Guardar
                   </button>
-                  <Link to="/admin/users" className="btn btn-secondary m-1">
-                    Cancel
-                  </Link>
+                  <ButtonBack className="btn btn-secondary m-1">Cancelar</ButtonBack>
                 </div>
               </form>
             </div>
