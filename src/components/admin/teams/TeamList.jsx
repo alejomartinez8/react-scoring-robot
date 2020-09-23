@@ -5,12 +5,12 @@ import { teamActions } from "../../../redux/actions";
 import Spinner from "../../layout/Spinner";
 import ButtonBack from "../../layout/ButtonBack";
 
-const TeamsList = ({ team: { teams, loading }, getAllTeams, deleteTeam, match }) => {
+const TeamsList = ({ team: { teams, loading }, getTeams, deleteTeam, match }) => {
   const { path } = match;
 
   useEffect(() => {
-    getAllTeams();
-  }, [getAllTeams]);
+    getTeams();
+  }, [getTeams]);
 
   const handleDeleteTeam = (_id) => {
     deleteTeam(_id);
@@ -95,7 +95,7 @@ const mapStateToProps = (state) => ({
 });
 
 const actionCreators = {
-  getAllTeams: teamActions.getAllTeams,
+  getTeams: teamActions.getTeams,
   deleteTeam: teamActions.deleteTeam,
 };
 

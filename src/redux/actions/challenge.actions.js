@@ -55,6 +55,20 @@ const getChallengeById = (id) => (dispatch) => {
     });
 };
 
+const getChallengeBySlug = (slug) => (dispatch) => {
+  dispatch({ type: ChallengeTypes.GET_CHALLENGE });
+
+  challengeServices
+    .getChallengeBySlug(slug)
+    .then((challenge) => {
+      dispatch({ type: ChallengeTypes.CHALLENGE_LOADED, payload: challenge });
+    })
+    .catch((error) => {
+      dispatch({ type: ChallengeTypes.CHALLENGE_ERROR, payload: error });
+      dispatch(setAlert(error.toString(), "danger"));
+    });
+};
+
 const deleteChallenge = (id) => (dispatch) => {
   challengeServices
     .deleteChallenge(id)
@@ -74,5 +88,6 @@ export const challengeActions = {
   updateChallenge,
   getAllChallenges,
   getChallengeById,
+  getChallengeBySlug,
   deleteChallenge,
 };

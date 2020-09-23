@@ -9,13 +9,13 @@ import ButtonBack from "../layout/ButtonBack";
 const TeamGridPage = ({
   auth,
   team: { teams, loading },
-  getAllTeams,
+  getTeams,
   isUserProfile = false,
   title = "Todos los Equipos",
 }) => {
   useEffect(() => {
-    getAllTeams();
-  }, [getAllTeams]);
+    getTeams();
+  }, [getTeams]);
 
   const filteredTeams = isUserProfile
     ? teams.filter((team) => team.user.id === auth.userAuth.id)
@@ -54,7 +54,7 @@ const mapStateToProps = (state) => ({
 });
 
 const actionCreators = {
-  getAllTeams: teamActions.getAllTeams,
+  getTeams: teamActions.getTeams,
 };
 
 export default connect(mapStateToProps, actionCreators)(TeamGridPage);

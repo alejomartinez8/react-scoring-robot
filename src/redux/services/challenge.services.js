@@ -5,6 +5,7 @@ export const challengeServices = {
   updateChallenge,
   getAllChallenges,
   getChallengeById,
+  getChallengeBySlug,
   deleteChallenge,
 };
 
@@ -28,6 +29,13 @@ function getAllChallenges() {
 
 function getChallengeById(id) {
   return axios.get(`/challenges/${id}`).then(handleResponse).catch(handleError);
+}
+
+function getChallengeBySlug(slug) {
+  return axios
+    .get(`/challenges/?slug=${slug}`)
+    .then(handleResponse)
+    .catch(handleError);
 }
 
 function deleteChallenge(id) {

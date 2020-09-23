@@ -10,15 +10,15 @@ const Input = styled.input`
 
 const initalState = {
   team: "",
-  bottle1: false,
-  bottle2: false,
-  bottle3: false,
-  bottle4: false,
+  task1: false,
+  task2: false,
+  task3: false,
+  task4: false,
 };
 
 const BottleCollector = () => {
   const [formData, setFormData] = useState(initalState);
-  const { team, bottle1, bottle2, bottle3, bottle4 } = formData;
+  const { team, task1, task2, task3, task4 } = formData;
 
   const [totalPoints, setTotalPoints] = useState(0);
 
@@ -26,17 +26,17 @@ const BottleCollector = () => {
     setFormData({ ...formData, [e.target.name]: e.target.checked });
     let total = totalPoints;
     switch (e.target.name) {
-      case "bottle1":
+      case "task1":
         e.target.checked ? (total += 100) : (total -= 100);
         break;
-      case "bottle2":
+      case "task2":
         e.target.checked ? (total += 200) : (total -= 200);
         break;
-      case "bottle3":
+      case "task3":
         e.target.checked ? (total += 300) : (total -= 300);
         break;
 
-      case "bottle4":
+      case "task4":
         e.target.checked ? (total += 400) : (total -= 400);
         break;
 
@@ -67,21 +67,22 @@ const BottleCollector = () => {
               <table className="table table-striped">
                 <thead className="thead-dark">
                   <tr>
-                    <th>Botellas</th>
+                    <th>Tareas</th>
                   </tr>
                 </thead>
+
                 <tbody>
                   <tr>
                     <td>
                       <div className="d-flex align-items-center ">
                         <Input
                           type="checkBox"
-                          name="bottle1"
-                          checked={bottle1}
+                          name="task1"
+                          checked={task1}
                           onChange={handleChange}
-                          disabled={bottle2}
+                          disabled={task2}
                         />
-                        <label className="form-check-label" htmlFor="bottle1">
+                        <label className="form-check-label" htmlFor="task1">
                           Botella #1 (100 pts)
                         </label>
                       </div>
@@ -93,12 +94,12 @@ const BottleCollector = () => {
                       <div className="d-flex align-items-center">
                         <Input
                           type="checkBox"
-                          name="bottle2"
-                          checked={bottle2}
+                          name="task2"
+                          checked={task2}
                           onChange={handleChange}
-                          disabled={!bottle1 || bottle3}
+                          disabled={!task1 || task3}
                         />
-                        <label className="form-check-label" htmlFor="bottle2">
+                        <label className="form-check-label" htmlFor="task2">
                           Botella #2 (200 pts)
                         </label>
                       </div>
@@ -110,12 +111,12 @@ const BottleCollector = () => {
                       <div className="d-flex align-items-center ">
                         <Input
                           type="checkBox"
-                          name="bottle3"
-                          checked={bottle3}
+                          name="task3"
+                          checked={task3}
                           onChange={handleChange}
-                          disabled={!bottle2 || bottle4}
+                          disabled={!task2 || task4}
                         />
-                        <label className="form-check-label" htmlFor="bottle3">
+                        <label className="form-check-label" htmlFor="task3">
                           Botella #3 (300 pts)
                         </label>
                       </div>
@@ -127,12 +128,12 @@ const BottleCollector = () => {
                       <div className="d-flex align-items-center ">
                         <Input
                           type="checkBox"
-                          name="bottle4"
-                          checked={bottle4}
+                          name="task4"
+                          checked={task4}
                           onChange={handleChange}
-                          disabled={!bottle3}
+                          disabled={!task3}
                         />
-                        <label className="form-check-label" htmlFor="bottle4">
+                        <label className="form-check-label" htmlFor="task4">
                           Botella #4 (400 pts)
                         </label>
                       </div>

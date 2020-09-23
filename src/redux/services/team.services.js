@@ -3,7 +3,7 @@ import axios from "axios";
 export const teamServices = {
   addTeam,
   updateTeam,
-  getAllTeams,
+  getTeams,
   getTeamById,
   deleteTeam,
 };
@@ -22,8 +22,12 @@ async function updateTeam(id, team) {
     .catch(handleError);
 }
 
-async function getAllTeams() {
-  return axios.get("/teams").then(handleResponse).catch(handleError);
+async function getTeams(query) {
+  console.log(query);
+  return axios
+    .get(`/teams`, { params: query })
+    .then(handleResponse)
+    .catch(handleError);
 }
 
 async function getTeamById(id) {

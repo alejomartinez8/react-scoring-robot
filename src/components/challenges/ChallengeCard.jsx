@@ -3,7 +3,6 @@ import { Link, useRouteMatch } from "react-router-dom";
 
 const ChallengeCard = ({ auth, challenge }) => {
   const match = useRouteMatch();
-  console.log(match);
   return (
     <div className="card shadow my-4" key={challenge._id}>
       <div className="card-header">

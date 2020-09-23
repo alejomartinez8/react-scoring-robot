@@ -27,11 +27,11 @@ const updateTeam = (id, team) => (dispatch) => {
     });
 };
 
-const getAllTeams = () => (dispatch) => {
+const getTeams = (query) => (dispatch) => {
   dispatch({ type: TeamTypes.GET_TEAMS });
 
   teamServices
-    .getAllTeams()
+    .getTeams(query)
     .then((teams) => {
       dispatch({ type: TeamTypes.TEAMS_LOADED, payload: teams });
     })
@@ -61,7 +61,7 @@ const deleteTeam = (id) => (dispatch) => {
     .then(() => {
       dispatch({ type: TeamTypes.TEAM_DELETE, payload: id });
       dispatch(setAlert("Equipo Eliminado", "success"));
-      dispatch(getAllTeams());
+      dispatch(getTeams());
     })
     .catch((error) => {
       dispatch({ type: TeamTypes.TEAM_ERROR, payload: error });
@@ -72,7 +72,7 @@ const deleteTeam = (id) => (dispatch) => {
 export const teamActions = {
   addTeam,
   updateTeam,
-  getAllTeams,
+  getTeams,
   getTeamById,
   deleteTeam,
 };
