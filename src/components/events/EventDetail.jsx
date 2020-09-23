@@ -7,10 +7,10 @@ import Spinner from "../layout/Spinner";
 import ButtonBack from "../layout/ButtonBack";
 import ChallengeCard from "../challenges/ChallengeCard";
 
-const EventDetail = ({ auth, event, loading, getEventByShortName, match }) => {
+const EventDetail = ({ auth, event, loading, getEventBySlug, match }) => {
   useEffect(() => {
-    getEventByShortName(match.params.eventSlug);
-  }, [getEventByShortName, match.params.eventSlug]);
+    getEventBySlug(match.params.eventSlug);
+  }, [getEventBySlug, match.params.eventSlug]);
 
   const challenges = event.challenges;
   console.log(challenges);
@@ -64,7 +64,7 @@ const mapStateToProps = (state) => ({
 });
 
 const actionsCreators = {
-  getEventByShortName: eventActions.getEventByShortName,
+  getEventBySlug: eventActions.getEventBySlug,
 };
 
 export default connect(mapStateToProps, actionsCreators)(EventDetail);

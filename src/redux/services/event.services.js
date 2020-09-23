@@ -5,7 +5,7 @@ export const eventServices = {
   updateEvent,
   getAllEvents,
   getEventById,
-  getEventByShortName,
+  getEventBySlug,
   deleteEvent,
 };
 
@@ -31,7 +31,7 @@ function getEventById(id) {
   return axios.get(`/events/${id}`).then(handleResponse).catch(handleError);
 }
 
-function getEventByShortName(slug) {
+function getEventBySlug(slug) {
   return axios.get(`/events/slug/${slug}`).then(handleResponse).catch(handleError);
 }
 

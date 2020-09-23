@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { challengeActions, teamActions } from "../../redux/actions";
+import { eventActions, challengeActions, teamActions } from "../../redux/actions";
 import styled from "styled-components";
 import ButtonBack from "../layout/ButtonBack";
 
@@ -12,59 +12,95 @@ const Input = styled.input`
 
 const initalState = {
   team: "",
-  taskInput: [],
+  event: "",
+  challenge: "",
+  tasks: [],
+  penalties: [],
+  totalPoints: 0,
 };
 
-const ScoreForm = ({ challenge, getChallengeBySlug, teams, getTeams, match }) => {
+const ScoreForm = ({
+  challenge,
+  getChallengeBySlug,
+  teams,
+  getTeams,
+  match,
+  event,
+  getEventBySlug,
+}) => {
   const [formData, setFormData] = useState(initalState);
-  const { team, taskInput } = formData;
+  const { team, tasks, penalties, totalPoints } = formData;
 
-  const [totalPoints, setTotalPoints] = useState(0);
+  const [penaltyFlag, setPenaltyFlag] = useState(false);
 
   useEffect(() => {
     getChallengeBySlug(match.params.challengeSlug);
-  }, [getChallengeBySlug]);
+    getEventBySlug(match.params.eventSlug);
+    // eslint-disable-next-line
+  }, [getChallengeBySlug, getEventBySlug]);
 
   useEffect(() => {
-    if (Object.keys(challenge).length !== 0) {
-      const _taskInput = taskInput;
+    if (Object.keys(challenge).length !== 0 && Object.keys(event).length !== 0) {
+      const _tasks = [];
+      const _penalties = [];
       for (const key in challenge.tasks) {
-        _taskInput[key] = false;
+        _tasks[key] = false;
+        _penalties[key] = false;
       }
-      setFormData({ ...formData, taskInput: _taskInput });
-      getTeams({ challenge: challenge._id });
-    }
-  }, [taskInput, challenge]);
+      setFormData({
+        ...formData,
+        tasks: _tasks,
+        penalties: _penalties,
+        challenge: challenge._id,
+        event: event._id,
+      });
 
-  const handleChange = (e) => {
-    if (e.target.name === "team") {
-      setFormData({ ...formData, team: e.target.value });
+      setPenaltyFlag(
+        !!challenge.tasks.map((elm) => elm.penalty).reduce((acc, elm) => acc + elm)
+      );
+
+      getTeams({ challenge: challenge._id, event: event._id });
+    }
+    // eslint-disable-next-line
+  }, [challenge, event]);
+
+  // handleChangeInputs
+  const handleChangeInputs = (e, inputs, penalty = false) => {
+    console.log(e.target.name);
+    const _inputs = inputs;
+    _inputs[e.target.name] = e.target.checked;
+
+    const total = !penalty
+      ? calcTotalPoints(_inputs, penalties)
+      : calcTotalPoints(tasks, _inputs);
+    if (!penalty) {
+      setFormData({ ...formData, tasks: _inputs, totalPoints: total });
     } else {
-      const _taskInput = taskInput;
-      _taskInput[e.target.name] = e.target.checked;
-      setFormData({ ...formData, taskInput: _taskInput });
-      calcTotalPoints(challenge.tasks, _taskInput);
+      setFormData({ ...formData, penalties: _inputs, totalPoints: total });
     }
   };
 
   // Disable next or before input
   const checkDisabledTask = (index) => {
     return (
-      (taskInput[index - 1] === undefined ? false : !taskInput[index - 1]) ||
-      taskInput[index + 1]
+      (tasks[index - 1] === undefined ? false : !tasks[index - 1]) ||
+      tasks[index + 1]
     );
   };
 
   // calcTotalPoint
-  const calcTotalPoints = (tasks, _taskInput) => {
-    // console.log(tasks, _taskInput);
+  const calcTotalPoints = (tasks, penalty) => {
+    console.log(challenge.tasks, tasks, penalty);
+    const total = challenge.tasks
+      .map((elm) => elm.points)
+      .reduce((acc, elm, index) => acc + elm * tasks[index], 0);
 
-    const reducer = (accumulator, currentValue, index) => {
-      return accumulator + currentValue * _taskInput[index];
-    };
+    const penaltyTotal = challenge.tasks
+      .map((elm) => elm.penalty)
+      .reduce((acc, elm, index) => acc + elm * penalty[index], 0);
 
-    const total = tasks.map((elm) => elm.points).reduce(reducer);
-    setTotalPoints(total);
+    console.log(total, penaltyTotal);
+    return total - penaltyTotal;
   };
 
   return (
@@ -79,13 +115,15 @@ const ScoreForm = ({ challenge, getChallengeBySlug, teams, getTeams, match }) =>
           <form>
             <div className="form-group">
               <label htmlFor="team">Equipo</label>
-              <div className="col-sm-3">
+              <div className="col-sm-4">
                 <select
                   className="form-control"
                   name="team"
                   id="team"
                   value={team}
-                  onChange={handleChange}
+                  onChange={(e) =>
+                    setFormData({ ...formData, team: e.target.value })
+                  }
                   required
                 >
                   <option value=""></option>
@@ -98,26 +136,29 @@ const ScoreForm = ({ challenge, getChallengeBySlug, teams, getTeams, match }) =>
               </div>
             </div>
 
-            <div className="table-responsive">
-              <table className="table table-striped ">
-                <thead className="thead-dark">
-                  <tr>
-                    <th>Tareas</th>
-                  </tr>
-                </thead>
+            {challenge.tasks && challenge.tasks.length > 0 ? (
+              <div className="table-responsive">
+                <table className="table table-striped ">
+                  <thead className="thead-dark">
+                    <tr>
+                      <th>Tareas</th>
+                      {penaltyFlag && <th>Penalidad</th>}
 
-                <tbody>
-                  {challenge.tasks &&
-                    challenge.tasks.map((task, index) => (
+                      {}
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {challenge.tasks.map((task, index) => (
                       <tr key={index}>
                         <td>
                           <div className="d-flex align-items-center">
                             <Input
                               id={index}
                               name={index}
-                              checked={taskInput[index]}
+                              checked={tasks[index]}
                               type="checkBox"
-                              onChange={handleChange}
+                              onChange={(e) => handleChangeInputs(e, tasks)}
                               disabled={checkDisabledTask(index)}
                             />
                             <label
@@ -125,11 +166,31 @@ const ScoreForm = ({ challenge, getChallengeBySlug, teams, getTeams, match }) =>
                             >{`${task.label} (${task.points} pts)`}</label>
                           </div>
                         </td>
+                        {penaltyFlag && (
+                          <td>
+                            <div className="d-flex align-items-center">
+                              <Input
+                                id={index}
+                                name={index}
+                                checked={penalties[index]}
+                                type="checkBox"
+                                onChange={(e) =>
+                                  handleChangeInputs(e, penalties, true)
+                                }
+                                disabled={!tasks[index]}
+                              />
+                              {`(-${task.penalty} pts)`}
+                            </div>
+                          </td>
+                        )}
                       </tr>
                     ))}
-                </tbody>
-              </table>
-            </div>
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <p>No hay tareas asignadas a este reto</p>
+            )}
 
             <div className="form-group">
               <label htmlFor="team">Total</label>
@@ -157,11 +218,13 @@ const ScoreForm = ({ challenge, getChallengeBySlug, teams, getTeams, match }) =>
 };
 
 const mapStateToProps = (state) => ({
+  event: state.event.event,
   challenge: state.challenge.challenge,
   teams: state.team.teams,
 });
 
 const actionCreators = {
+  getEventBySlug: eventActions.getEventBySlug,
   getChallengeBySlug: challengeActions.getChallengeBySlug,
   getTeams: teamActions.getTeams,
 };

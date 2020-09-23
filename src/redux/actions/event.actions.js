@@ -56,11 +56,11 @@ const getEventById = (id) => (dispatch) => {
     });
 };
 
-const getEventByShortName = (slug) => (dispatch) => {
+const getEventBySlug = (slug) => (dispatch) => {
   dispatch({ type: EventTypes.GET_EVENT });
 
   eventServices
-    .getEventByShortName(slug)
+    .getEventBySlug(slug)
     .then((event) => {
       dispatch({ type: EventTypes.EVENT_LOADED, payload: event });
     })
@@ -89,6 +89,6 @@ export const eventActions = {
   updateEvent,
   getAllEvents,
   getEventById,
-  getEventByShortName,
+  getEventBySlug,
   deleteEvent,
 };
