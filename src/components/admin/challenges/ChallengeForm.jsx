@@ -17,6 +17,7 @@ const initialState = {
   categories: [],
   available: "",
   tasks: [],
+  taskSecuence: true,
 };
 
 const ChallengeForm = ({
@@ -26,7 +27,16 @@ const ChallengeForm = ({
 }) => {
   //form data use State
   const [formData, setFormData] = useState(initialState);
-  const { name, slug, imageURL, description, playoffs, available, tasks } = formData;
+  const {
+    name,
+    slug,
+    imageURL,
+    description,
+    playoffs,
+    available,
+    tasks,
+    taskSecuence,
+  } = formData;
 
   // selecet Categories use State
   const categoryOptions = CategoriesType.map((elm, index) => ({
@@ -247,6 +257,21 @@ const ChallengeForm = ({
                           <ChallengeTaskForm addTask={addTask} textButton="Añadir" />
                         </tbody>
                       </table>
+                    </div>
+
+                    <div className="form-group">
+                      <input
+                        type="checkBox"
+                        name="taskSecuence"
+                        checked={taskSecuence}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            taskSecuence: e.target.checked,
+                          })
+                        }
+                      />{" "}
+                      <label htmlFor="taskSecuence">Tareas en secuencia</label>
                     </div>
                   </div>
                 </div>

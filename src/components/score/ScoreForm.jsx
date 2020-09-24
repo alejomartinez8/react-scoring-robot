@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { eventActions, challengeActions, teamActions } from "../../redux/actions";
 import styled from "styled-components";
 import ButtonBack from "../layout/ButtonBack";
+import Spinner from "../layout/Spinner";
 
 const Input = styled.input`
   width: 30px;
@@ -20,7 +21,7 @@ const initalState = {
 };
 
 const ScoreForm = ({
-  challenge,
+  challenge: { challenge, loading },
   getChallengeBySlug,
   teams,
   getTeams,
@@ -29,9 +30,9 @@ const ScoreForm = ({
   getEventBySlug,
 }) => {
   const [formData, setFormData] = useState(initalState);
-  const { team, tasks, penalties, totalPoints } = formData;
-
   const [penaltyFlag, setPenaltyFlag] = useState(false);
+
+  const { team, tasks, penalties, totalPoints } = formData;
 
   useEffect(() => {
     getChallengeBySlug(match.params.challengeSlug);
@@ -66,7 +67,7 @@ const ScoreForm = ({
 
   // handleChangeInputs
   const handleChangeInputs = (e, inputs, penalty = false) => {
-    console.log(e.target.name);
+    // console.log(e.target.name);
     const _inputs = inputs;
     _inputs[e.target.name] = e.target.checked;
 
@@ -83,14 +84,15 @@ const ScoreForm = ({
   // Disable next or before input
   const checkDisabledTask = (index) => {
     return (
-      (tasks[index - 1] === undefined ? false : !tasks[index - 1]) ||
-      tasks[index + 1]
+      challenge.taskSecuence &&
+      ((tasks[index - 1] === undefined ? false : !tasks[index - 1]) ||
+        tasks[index + 1])
     );
   };
 
   // calcTotalPoint
   const calcTotalPoints = (tasks, penalty) => {
-    console.log(challenge.tasks, tasks, penalty);
+    // console.log(challenge.tasks, tasks, penalty);
     const total = challenge.tasks
       .map((elm) => elm.points)
       .reduce((acc, elm, index) => acc + elm * tasks[index], 0);
@@ -99,7 +101,6 @@ const ScoreForm = ({
       .map((elm) => elm.penalty)
       .reduce((acc, elm, index) => acc + elm * penalty[index], 0);
 
-    console.log(total, penaltyTotal);
     return total - penaltyTotal;
   };
 
@@ -136,7 +137,9 @@ const ScoreForm = ({
               </div>
             </div>
 
-            {challenge.tasks && challenge.tasks.length > 0 ? (
+            {loading ? (
+              <Spinner />
+            ) : challenge.tasks && challenge.tasks.length > 0 ? (
               <div className="table-responsive">
                 <table className="table table-striped ">
                   <thead className="thead-dark">
@@ -219,7 +222,7 @@ const ScoreForm = ({
 
 const mapStateToProps = (state) => ({
   event: state.event.event,
-  challenge: state.challenge.challenge,
+  challenge: state.challenge,
   teams: state.team.teams,
 });
 
