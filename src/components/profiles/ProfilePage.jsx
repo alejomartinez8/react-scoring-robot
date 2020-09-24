@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { deleteUser } from "../../redux/actions/user.actions";
 import Spinner from "../layout/Spinner";
 import ProfileCard from "./ProfileCard";
-import TeamGridPage from "../teams/TeamGridPage";
+import TeamsGrid from "../teams/TeamsGrid";
 
 const ProfilePage = ({ auth: { userAuth, loading }, match }) => {
   const { path } = match;
@@ -24,7 +24,7 @@ const ProfilePage = ({ auth: { userAuth, loading }, match }) => {
       />
       {userAuth.role === "User" && (
         <section className="my-4">
-          <TeamGridPage user={userAuth} isUserProfile={true} title={"Mis Equipos"} />
+          <TeamsGrid user={userAuth} isUserProfile={true} title={"Mis Equipos"} />
         </section>
       )}
     </Fragment>

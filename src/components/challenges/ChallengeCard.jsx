@@ -59,7 +59,7 @@ const ChallengeCard = ({ auth, challenge }) => {
         {auth.isAuth &&
           (auth.userAuth.role === "Admin" || auth.userAuth.role === "Judge") && (
             <Link
-              to={`${match.url}/score/${challenge.slug}`}
+              to={`${match.url}/${challenge.slug}/score`}
               className="btn btn-warning m-1"
             >
               Calificar

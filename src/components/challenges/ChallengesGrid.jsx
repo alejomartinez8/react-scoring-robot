@@ -5,9 +5,9 @@ import { connect } from "react-redux";
 import { eventActions } from "../../redux/actions";
 import Spinner from "../layout/Spinner";
 import ButtonBack from "../layout/ButtonBack";
-import ChallengeCard from "../challenges/ChallengeCard";
+import ChallengeCard from "./ChallengeCard";
 
-const EventDetail = ({ auth, event, loading, getEventBySlug, match }) => {
+const ChallengesGrid = ({ auth, event, loading, getEventBySlug, match }) => {
   useEffect(() => {
     getEventBySlug(match.params.eventSlug);
   }, [getEventBySlug, match.params.eventSlug]);
@@ -53,7 +53,7 @@ const EventDetail = ({ auth, event, loading, getEventBySlug, match }) => {
   );
 };
 
-EventDetail.propTypes = {
+ChallengesGrid.propTypes = {
   event: PropTypes.object.isRequired,
 };
 
@@ -67,4 +67,4 @@ const actionsCreators = {
   getEventBySlug: eventActions.getEventBySlug,
 };
 
-export default connect(mapStateToProps, actionsCreators)(EventDetail);
+export default connect(mapStateToProps, actionsCreators)(ChallengesGrid);

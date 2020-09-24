@@ -54,9 +54,6 @@ const Navbar = ({ isAuth, role, logout }) => {
             <Link to="/events">
               <i className="fas fa-calendar-alt"></i> <span>Eventos</span>
             </Link>
-            <Link to="/teams">
-              <i className="fas fa-users"></i> <span>Equipos</span>
-            </Link>
           </li>
           {isAuth ? authLinks : guestLinks}
         </ul>

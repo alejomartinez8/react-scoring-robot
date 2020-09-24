@@ -5,6 +5,8 @@ import Spinner from "../../layout/Spinner";
 import ButtonBack from "../../layout/ButtonBack";
 import Select from "react-select";
 import { CategoriesType } from "../../../helpers";
+import ChallengeTaskItem from "./ChallengeTaskItem";
+import ChallengeTaskForm from "./ChallengeTaskForm";
 
 const initialState = {
   name: "",
@@ -14,6 +16,7 @@ const initialState = {
   playoffs: false,
   categories: [],
   available: "",
+  tasks: [],
 };
 
 const ChallengeForm = ({
@@ -23,7 +26,7 @@ const ChallengeForm = ({
 }) => {
   //form data use State
   const [formData, setFormData] = useState(initialState);
-  const { name, slug, imageURL, description, playoffs, available } = formData;
+  const { name, slug, imageURL, description, playoffs, available, tasks } = formData;
 
   // selecet Categories use State
   const categoryOptions = CategoriesType.map((elm, index) => ({
@@ -75,6 +78,25 @@ const ChallengeForm = ({
         .filter((option) => selectedOptions.includes(option.value))
         .map((elm) => elm.label),
     });
+  };
+
+  // add tasks
+  const addTask = (task) => {
+    setFormData({ ...formData, tasks: [...tasks, task] });
+  };
+
+  const updateTask = (index, task) => {
+    console.log(index, task);
+    let newTasks = tasks;
+    newTasks[index] = task;
+    console.log(newTasks);
+    setFormData({ ...formData, tasks: newTasks });
+  };
+
+  const deleteTask = (index) => {
+    let newTasks = tasks;
+    newTasks.splice(index, 1);
+    setFormData({ ...formData, tasks: newTasks });
   };
 
   // handle submit form
@@ -195,6 +217,38 @@ const ChallengeForm = ({
                     }
                   />{" "}
                   <label htmlFor="available"> Habilitado </label>
+                </div>
+
+                <div className="card my-2">
+                  <div className="card-header">
+                    <h4>Tareas</h4>
+                  </div>
+                  <div className="card-body">
+                    <div className="table-responsive">
+                      <table className="table table-striped">
+                        <thead className="thead-dark">
+                          <tr>
+                            <th>Tarea</th>
+                            <th>Puntos</th>
+                            <th>Penalidad</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {tasks.map((task, index) => (
+                            <ChallengeTaskItem
+                              key={index}
+                              task={task}
+                              index={index}
+                              deleteTask={deleteTask}
+                              updateTask={updateTask}
+                            />
+                          ))}
+                          <ChallengeTaskForm addTask={addTask} textButton="Añadir" />
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="form-row">

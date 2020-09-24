@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { eventActions } from "../../redux/actions";
 import Spinner from "../layout/Spinner";
 
-const EventGrid = ({ event: { events, loading }, getAllEvents }) => {
+const EventGrid = ({ auth, event: { events, loading }, getAllEvents }) => {
   useEffect(() => {
     getAllEvents();
   }, [getAllEvents]);
@@ -17,7 +17,9 @@ const EventGrid = ({ event: { events, loading }, getAllEvents }) => {
         <Fragment>
           <h1 className="large text-primary">Eventos</h1>
           {events.length > 0 ? (
-            events.map((event) => <EventCard key={event._id} event={event} />)
+            events.map((event) => (
+              <EventCard key={event._id} event={event} auth={auth} />
+            ))
           ) : (
             <h4>Todavía no hay eventos</h4>
           )}
@@ -29,6 +31,7 @@ const EventGrid = ({ event: { events, loading }, getAllEvents }) => {
 
 const mapStateToProps = (state) => ({
   event: state.event,
+  auth: state.auth,
 });
 
 const actionCreators = {

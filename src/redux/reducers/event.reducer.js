@@ -1,7 +1,7 @@
 import { EventTypes } from "../constants/EventTypes";
 
 const intialState = {
-  loading: false,
+  loading: true,
   event: {},
   events: [],
   error: [],

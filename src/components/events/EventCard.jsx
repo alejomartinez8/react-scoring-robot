@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const EventCard = ({ event: { slug, name, imageURL, description } }) => {
+const EventCard = ({ auth, event: { _id, slug, name, imageURL, description } }) => {
   return (
     <div className="card shadow my-4">
       <div className="card-header">
@@ -14,8 +14,16 @@ const EventCard = ({ event: { slug, name, imageURL, description } }) => {
         <p className="card-text">Descripción: {description}</p>
       </div>
       <div className="card-footer">
-        <Link to={`/events/${slug}`} className="btn btn-primary">
-          Ver Evento
+        {auth.isAuth && auth.userAuth.role === "Admin" && (
+          <Link to={`/admin/events/edit/${_id}`} className="btn btn-dark m-1">
+            Editar
+          </Link>
+        )}
+        <Link to={`/events/${slug}/challenges`} className="btn btn-primary m-1">
+          Ver Retos
+        </Link>
+        <Link to={`/events/${slug}/teams`} className="btn btn-warning m-1">
+          Ver Equipos
         </Link>
       </div>
     </div>

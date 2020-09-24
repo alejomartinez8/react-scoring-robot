@@ -23,7 +23,6 @@ async function updateTeam(id, team) {
 }
 
 async function getTeams(query) {
-  console.log(query);
   return axios
     .get(`/teams`, { params: query })
     .then(handleResponse)

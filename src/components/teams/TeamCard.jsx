@@ -30,10 +30,21 @@ const TeamCard = ({ auth, team }) => {
             ))}
           </ul>
         </div>
-        {(auth.userAuth.role === "Admin" || auth.userAuth.id === team.user.id) && (
+        {auth.userAuth.role === "Admin" && (
           <div className="card-footer">
             <Link
-              to={`/teams/edit/${team._id}`}
+              to={`/admin/teams/edit/${team._id}`}
+              className="btn btn-outline-primary btn-sm"
+            >
+              Modificar
+            </Link>
+            <button className="btn btn-outline-danger btn-sm mx-1">Eliminar</button>
+          </div>
+        )}
+        {auth.userAuth.id === team.user.id && (
+          <div className="card-footer">
+            <Link
+              to={`/profile/teams/edit/${team._id}`}
               className="btn btn-outline-primary btn-sm"
             >
               Modificar

@@ -4,14 +4,12 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 // Pages
-
 import PrivateRoute from "./PrivateRoute";
 import Alert from "../../components/layout/Alert";
 import Auth from "../auth/Auth";
 import Profile from "../profiles/Profile";
 import Admin from "../admin/Admin";
 import Events from "../events/Events";
-import Teams from "../teams/Teams";
 
 const Routes = () => {
   return (
@@ -20,8 +18,6 @@ const Routes = () => {
       <Switch>
         {/* Events */}
         <Route path="/events" component={Events} />
-        {/* Teams */}
-        <Route path="/teams" component={Teams} />
         {/* Admin */}
         <PrivateRoute path="/admin" component={Admin} roles="Admin" />
         {/* Profile */}

@@ -2,20 +2,39 @@ import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import TeamCard from "./TeamCard";
 import { connect } from "react-redux";
-import { teamActions } from "../../redux/actions";
+import { teamActions, eventActions } from "../../redux/actions";
 import Spinner from "../layout/Spinner";
 import ButtonBack from "../layout/ButtonBack";
 
-const TeamGridPage = ({
+const TeamsGrid = ({
   auth,
+  event,
+  getEventBySlug,
   team: { teams, loading },
   getTeams,
   isUserProfile = false,
   title = "Todos los Equipos",
+  match,
 }) => {
   useEffect(() => {
-    getTeams();
-  }, [getTeams]);
+    if (!isUserProfile) {
+      getEventBySlug(match.params.eventSlug);
+    }
+    // eslint-disable-next-line
+  }, [getEventBySlug]);
+
+  useEffect(() => {
+    // console.log(event.loading);
+    if (!event.loading) {
+      getTeams({ event: event.event._id });
+    }
+  }, [getTeams, event.loading, event.event._id]);
+
+  useEffect(() => {
+    if (isUserProfile) {
+      getTeams();
+    }
+  }, [isUserProfile, getTeams]);
 
   const filteredTeams = isUserProfile
     ? teams.filter((team) => team.user.id === auth.userAuth.id)
@@ -51,10 +70,12 @@ const TeamGridPage = ({
 const mapStateToProps = (state) => ({
   auth: state.auth,
   team: state.team,
+  event: state.event,
 });
 
 const actionCreators = {
   getTeams: teamActions.getTeams,
+  getEventBySlug: eventActions.getEventBySlug,
 };
 
-export default connect(mapStateToProps, actionCreators)(TeamGridPage);
+export default connect(mapStateToProps, actionCreators)(TeamsGrid);
