@@ -16,8 +16,10 @@ const initialState = {
   playoffs: false,
   categories: [],
   available: "",
+  maxTime: 0,
   tasks: [],
   taskSecuence: true,
+  bonusType: "",
 };
 
 const ChallengeForm = ({
@@ -64,8 +66,10 @@ const ChallengeForm = ({
     description,
     playoffs,
     available,
+    maxTime,
     tasks,
     taskSecuence,
+    bonusType,
   } = formData;
 
   // selecet Categories use State
@@ -144,6 +148,7 @@ const ChallengeForm = ({
               </h2>
             </div>
             <div className="card-body">
+              <h4>Información</h4>
               <form className="form" onSubmit={handleSubmit}>
                 <div className="form-group">
                   <label htmlFor="name">Nombre Reto</label>
@@ -195,18 +200,6 @@ const ChallengeForm = ({
                 </div>
 
                 <div className="form-group">
-                  <input
-                    type="checkBox"
-                    name="playoffs"
-                    checked={playoffs}
-                    onChange={(e) =>
-                      setFormData({ ...formData, playoffs: e.target.checked })
-                    }
-                  />{" "}
-                  <label htmlFor="playoffs">PlayOffs</label>
-                </div>
-
-                <div className="form-group">
                   <label htmlFor="categories">Categorías: </label>
                   <Select
                     isMulti
@@ -218,6 +211,90 @@ const ChallengeForm = ({
                       selectedCategory.includes(elm.value)
                     )}
                   />
+                </div>
+
+                <hr />
+                <h4>Tareas</h4>
+
+                <div className="form-group">
+                  <label htmlFor="maxTime">Tiempo Maxímo (segundos)</label>
+                  <input
+                    type="Number"
+                    className="form-control col-sm-3"
+                    id="maxTime"
+                    name="maxTime"
+                    value={maxTime}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="form-group table-responsive">
+                  <table className="table table-striped">
+                    <thead className="thead-dark">
+                      <tr>
+                        <th>Tarea</th>
+                        <th>Puntos</th>
+                        <th>Penalidad</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {tasks.map((task, index) => (
+                        <ChallengeTaskItem
+                          key={index}
+                          task={task}
+                          index={index}
+                          deleteTask={deleteTask}
+                          updateTask={updateTask}
+                        />
+                      ))}
+                      <ChallengeTaskForm addTask={addTask} textButton="Añadir" />
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkBox"
+                    name="taskSecuence"
+                    checked={taskSecuence}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        taskSecuence: e.target.checked,
+                      })
+                    }
+                  />{" "}
+                  <label htmlFor="taskSecuence">Tareas en secuencia</label>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="bonusType">Puntaje Bonus</label>
+                  <select
+                    className="form-control"
+                    name="bonusType"
+                    id="bonustype"
+                    value={bonusType}
+                    onChange={handleChange}
+                  >
+                    <option value="">Ninguno</option>
+                    <option value="timer">Sumar tiempo restante Timer</option>
+                    <option value="manual">Ingresar manualmente</option>
+                  </select>
+                </div>
+
+                <hr />
+                <div className="form-group">
+                  <input
+                    type="checkBox"
+                    name="playoffs"
+                    checked={playoffs}
+                    onChange={(e) =>
+                      setFormData({ ...formData, playoffs: e.target.checked })
+                    }
+                  />{" "}
+                  <label htmlFor="playoffs">PlayOffs</label>
                 </div>
 
                 <div className="form-group">
@@ -236,53 +313,6 @@ const ChallengeForm = ({
                     }
                   />{" "}
                   <label htmlFor="available"> Habilitado </label>
-                </div>
-
-                <div className="card my-2">
-                  <div className="card-header">
-                    <h4>Tareas</h4>
-                  </div>
-                  <div className="card-body">
-                    <div className="table-responsive">
-                      <table className="table table-striped">
-                        <thead className="thead-dark">
-                          <tr>
-                            <th>Tarea</th>
-                            <th>Puntos</th>
-                            <th>Penalidad</th>
-                            <th></th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {tasks.map((task, index) => (
-                            <ChallengeTaskItem
-                              key={index}
-                              task={task}
-                              index={index}
-                              deleteTask={deleteTask}
-                              updateTask={updateTask}
-                            />
-                          ))}
-                          <ChallengeTaskForm addTask={addTask} textButton="Añadir" />
-                        </tbody>
-                      </table>
-                    </div>
-
-                    <div className="form-group">
-                      <input
-                        type="checkBox"
-                        name="taskSecuence"
-                        checked={taskSecuence}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            taskSecuence: e.target.checked,
-                          })
-                        }
-                      />{" "}
-                      <label htmlFor="taskSecuence">Tareas en secuencia</label>
-                    </div>
-                  </div>
                 </div>
 
                 <div className="form-row">

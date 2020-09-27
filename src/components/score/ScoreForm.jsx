@@ -1,6 +1,11 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { eventActions, challengeActions, teamActions } from "../../redux/actions";
+import {
+  eventActions,
+  challengeActions,
+  teamActions,
+  scoreActions,
+} from "../../redux/actions";
 import styled from "styled-components";
 import ButtonBack from "../layout/ButtonBack";
 import Spinner from "../layout/Spinner";
@@ -17,32 +22,33 @@ const initalState = {
   challenge: "",
   tasks: [],
   penalties: [],
-  totalPoints: 0,
+  taskPoints: 0,
+  bonusPoints: 0,
 };
 
 const ScoreForm = ({
+  event,
+  getEventBySlug,
   challenge: { challenge, loading },
   getChallengeBySlug,
   teams,
   getTeams,
+  sendScore,
   match,
-  event,
-  getEventBySlug,
 }) => {
-  const [formData, setFormData] = useState(initalState);
-  const [penaltyFlag, setPenaltyFlag] = useState(false);
-
-  const { team, tasks, penalties, totalPoints } = formData;
-
+  // load Event && Challenge
   useEffect(() => {
     getChallengeBySlug(match.params.challengeSlug);
     getEventBySlug(match.params.eventSlug);
-    // eslint-disable-next-line
-  }, [getChallengeBySlug, getEventBySlug]);
+  }, [
+    getChallengeBySlug,
+    getEventBySlug,
+    match.params.challengeSlug,
+    match.params.eventSlug,
+  ]);
 
   useEffect(() => {
     if (Object.keys(challenge).length !== 0 && Object.keys(event).length !== 0) {
-      console.log(challenge);
       const _tasks = [];
       const _penalties = [];
       for (const key in challenge.tasks) {
@@ -55,6 +61,8 @@ const ScoreForm = ({
         penalties: _penalties,
         challenge: challenge._id,
         event: event._id,
+        timeRemainig: challenge.maxTime,
+        bonusType: challenge.bonusType,
       });
 
       setPenaltyFlag(
@@ -62,9 +70,15 @@ const ScoreForm = ({
       );
 
       getTeams({ challenge: challenge._id, event: event._id });
+      setSeconds(challenge.maxTime);
     }
     // eslint-disable-next-line
   }, [challenge, event]);
+
+  // use states vars
+  const [formData, setFormData] = useState(initalState);
+  const [penaltyFlag, setPenaltyFlag] = useState(false);
+  const { team, tasks, penalties, taskPoints, bonusPoints } = formData;
 
   // handleChangeInputs
   const handleChangeInputs = (e, inputs, penalty = false) => {
@@ -73,26 +87,39 @@ const ScoreForm = ({
     _inputs[e.target.name] = e.target.checked;
 
     const total = !penalty
-      ? calcTotalPoints(_inputs, penalties)
-      : calcTotalPoints(tasks, _inputs);
+      ? calcTaskPoints(_inputs, penalties)
+      : calcTaskPoints(tasks, _inputs);
     if (!penalty) {
-      setFormData({ ...formData, tasks: _inputs, totalPoints: total });
+      setFormData({ ...formData, tasks: _inputs, taskPoints: total });
+
+      if (tasks[tasks.length - 1]) {
+        setTimer(false);
+        if (challenge.bonusType === "timer") {
+          setFormData({
+            ...formData,
+            tasks: _inputs,
+            taskPoints: total,
+            bonusPoints: seconds,
+          });
+        }
+      }
     } else {
-      setFormData({ ...formData, penalties: _inputs, totalPoints: total });
+      setFormData({ ...formData, penalties: _inputs, taskPoints: total });
     }
   };
 
   // Disable next or before input
   const checkDisabledTask = (index) => {
     return (
-      challenge.taskSecuence &&
-      ((tasks[index - 1] === undefined ? false : !tasks[index - 1]) ||
-        tasks[index + 1])
+      !timer ||
+      (challenge.taskSecuence &&
+        ((tasks[index - 1] === undefined ? false : !tasks[index - 1]) ||
+          tasks[index + 1]))
     );
   };
 
-  // calcTotalPoint
-  const calcTotalPoints = (tasks, penalty) => {
+  // Calc task points
+  const calcTaskPoints = (tasks, penalty) => {
     // console.log(challenge.tasks, tasks, penalty);
     const total = challenge.tasks
       .map((elm) => elm.points)
@@ -101,10 +128,44 @@ const ScoreForm = ({
     const penaltyTotal = challenge.tasks
       .map((elm) => elm.penalty)
       .reduce((acc, elm, index) => acc + elm * penalty[index], 0);
-
     return total - penaltyTotal;
   };
 
+  /********** Timer *************/
+  const [timer, setTimer] = useState(false);
+  const [seconds, setSeconds] = useState(0);
+
+  useEffect(() => {
+    if (seconds === 0) {
+      setTimer(false);
+    }
+
+    if (timer) {
+      const interval = setInterval(() => {
+        setSeconds((seconds) => seconds - 1);
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [timer, seconds]);
+
+  // handle stop or start Timer
+  const handleSetTimer = (e) => {
+    e.preventDefault();
+    setTimer(!timer);
+  };
+
+  // handle restart timer
+  const handleRestartTimer = (e) => {
+    e.preventDefault();
+    setSeconds(challenge.maxTime);
+  };
+
+  // Submit
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    sendScore(formData);
+  };
   return (
     <Fragment>
       <div className="card shadow my-4">
@@ -114,7 +175,7 @@ const ScoreForm = ({
           </h2>
         </div>
         <div className="card-body">
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="team">Equipo</label>
               <div className="col-sm-4">
@@ -138,6 +199,26 @@ const ScoreForm = ({
               </div>
             </div>
 
+            <hr />
+            <div className="form-group row my-2 justify-content-center align-items-center">
+              <div className="">
+                <div className="display-4">{seconds} (s)</div>
+              </div>
+              <div className="">
+                <button
+                  onClick={handleSetTimer}
+                  className={!timer ? "btn btn-success m-2" : "btn btn-danger m-2"}
+                >
+                  {!timer ? "Iniciar" : "Parar"}
+                </button>
+                <button onClick={handleRestartTimer} className="btn btn-warning m-2">
+                  Reiniciar
+                </button>
+              </div>
+            </div>
+
+            <hr />
+
             {loading ? (
               <Spinner />
             ) : challenge.tasks && challenge.tasks.length > 0 ? (
@@ -147,8 +228,6 @@ const ScoreForm = ({
                     <tr>
                       <th>Tareas</th>
                       {penaltyFlag && <th>Penalidad</th>}
-
-                      {}
                     </tr>
                   </thead>
 
@@ -196,11 +275,39 @@ const ScoreForm = ({
               <p>No hay tareas asignadas a este reto</p>
             )}
 
-            <div className="form-group">
-              <label htmlFor="team">Total</label>
-              <div className="col-sm-9 display-4">{totalPoints} pts</div>
+            {/* Points */}
+            <hr />
+            <div className="form-group ">
+              <h4>Total Puntos</h4>
+
+              <div className="form-group">
+                <label>Puntos por Bonus</label>
+                <input
+                  type="Number"
+                  className="col-sm-4 form-control"
+                  name="bonusPoints"
+                  value={bonusPoints}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      bonusPoints:
+                        e.target.value !== "" ? parseInt(e.target.value) : 0,
+                    })
+                  }
+                ></input>
+              </div>
+
+              <div className="d-flex justify-content-center">
+                <span className="display-4 text-center">
+                  {taskPoints}{" "}
+                  {bonusPoints !== 0 &&
+                    `+ ${bonusPoints} = ${taskPoints + bonusPoints}`}{" "}
+                  pts
+                </span>
+              </div>
             </div>
 
+            {/* Submit */}
             <div className="form-group">
               <button
                 type="submit"
@@ -231,6 +338,7 @@ const actionCreators = {
   getEventBySlug: eventActions.getEventBySlug,
   getChallengeBySlug: challengeActions.getChallengeBySlug,
   getTeams: teamActions.getTeams,
+  sendScore: scoreActions.sendScore,
 };
 
 export default connect(mapStateToProps, actionCreators)(ScoreForm);
