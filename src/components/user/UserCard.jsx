@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const ProfileCard = ({ userAuth, onDelete, loading, path }) => {
+const UserCard = ({ userAuth, onDelete, loading }) => {
   return (
     <section>
       <h2 className="text-primary my-3">Perfil</h2>
@@ -45,7 +45,7 @@ const ProfileCard = ({ userAuth, onDelete, loading, path }) => {
         </div>
 
         <div className="card-footer">
-          <Link to={`${path}/edit-profile`} className="btn btn-outline-primary">
+          <Link to={`/user/edit/${userAuth.id}`} className="btn btn-outline-primary">
             <i className="fas fa-user"></i> Editar Perfil
           </Link>
           <button
@@ -67,4 +67,4 @@ const ProfileCard = ({ userAuth, onDelete, loading, path }) => {
   );
 };
 
-export default ProfileCard;
+export default UserCard;

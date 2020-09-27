@@ -1,7 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import Spinner from "../layout/Spinner";
 
 const PrivateRoute = ({
@@ -23,7 +22,7 @@ const PrivateRoute = ({
         } else {
           if (!isAuth) {
             // not logged-in, then redirect to login page with the return url
-            return <Redirect to="/user/login" />;
+            return <Redirect to="/auth/login" />;
           }
 
           // check if route is restricted by role
@@ -37,10 +36,6 @@ const PrivateRoute = ({
       }}
     />
   );
-};
-
-PrivateRoute.propTypes = {
-  auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({

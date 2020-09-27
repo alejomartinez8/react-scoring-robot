@@ -1,10 +1,10 @@
 import React, { useState, Fragment, useEffect } from "react";
 import { connect } from "react-redux";
 import { challengeActions } from "../../../redux/actions";
+import { CategoriesType } from "../../../helpers";
 import Spinner from "../../layout/Spinner";
 import ButtonBack from "../../layout/ButtonBack";
 import Select from "react-select";
-import { CategoriesType } from "../../../helpers";
 import ChallengeTaskItem from "./ChallengeTaskItem";
 import ChallengeTaskForm from "./ChallengeTaskForm";
 
@@ -22,9 +22,39 @@ const initialState = {
 
 const ChallengeForm = ({
   challenge: { challenge, loading },
+  getChallengeById,
   addChallenge,
   updateChallenge,
+  match,
 }) => {
+  useEffect(() => {
+    if (match.params.id) {
+      getChallengeById(match.params.id);
+    }
+  }, [getChallengeById, match.params.id]);
+
+  useEffect(() => {
+    if (!loading && match.params.id) {
+      const challengeData = { ...initialState };
+      for (const key in challenge) {
+        if (key in challengeData) {
+          challengeData[key] = challenge[key];
+        }
+      }
+      // load to form
+      setFormData(challengeData);
+
+      // load selected Categories to Select Component options
+      const categories = challengeData.categories;
+      setSelectedCategory(
+        categoryOptions
+          .filter((option) => categories.includes(option.label))
+          .map((elm) => elm.value)
+      );
+    }
+    // eslint-disable-next-line
+  }, [loading, challenge, match.params.id]);
+
   //form data use State
   const [formData, setFormData] = useState(initialState);
   const {
@@ -47,27 +77,6 @@ const ChallengeForm = ({
 
   // load to update
   const challengeUpdate = Object.keys(challenge).length !== 0;
-  useEffect(() => {
-    if (!loading && challengeUpdate) {
-      const challengeData = { ...initialState };
-      for (const key in challenge) {
-        if (key in challengeData) {
-          challengeData[key] = challenge[key];
-        }
-      }
-      // load to form
-      setFormData(challengeData);
-
-      // load selected Categories to Select Component options
-      const categories = challengeData.categories;
-      setSelectedCategory(
-        categoryOptions
-          .filter((option) => categories.includes(option.label))
-          .map((elm) => elm.value)
-      );
-    }
-    // eslint-disable-next-line
-  }, [loading, challenge, challengeUpdate]);
 
   // handle input chages
   const handleChange = (e) => {
@@ -303,6 +312,7 @@ const mapStateToProps = (state) => ({
 });
 
 const actionCreators = {
+  getChallengeById: challengeActions.getChallengeById,
   addChallenge: challengeActions.addChallenge,
   updateChallenge: challengeActions.updateChallenge,
 };

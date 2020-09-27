@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { deleteUser } from "../../redux/actions/user.actions";
 import Spinner from "../layout/Spinner";
-import ProfileCard from "./ProfileCard";
+import UserCard from "./UserCard";
 import TeamsGrid from "../teams/TeamsGrid";
 
-const ProfilePage = ({ auth: { userAuth, loading }, match }) => {
+const UserPage = ({ auth: { userAuth, loading }, match }) => {
   const { path } = match;
   const onDelete = () => {
     deleteUser(userAuth.id);
@@ -16,7 +16,7 @@ const ProfilePage = ({ auth: { userAuth, loading }, match }) => {
     <Spinner />
   ) : (
     <Fragment>
-      <ProfileCard
+      <UserCard
         userAuth={userAuth}
         loading={loading}
         path={path}
@@ -24,14 +24,14 @@ const ProfilePage = ({ auth: { userAuth, loading }, match }) => {
       />
       {userAuth.role === "User" && (
         <section className="my-4">
-          <TeamsGrid user={userAuth} isUserProfile={true} title={"Mis Equipos"} />
+          <TeamsGrid user={userAuth} isUserUser={true} title={"Mis Equipos"} />
         </section>
       )}
     </Fragment>
   );
 };
 
-ProfilePage.propTypes = {
+UserPage.propTypes = {
   auth: PropTypes.object.isRequired,
   deleteUser: PropTypes.func.isRequired,
 };
@@ -40,4 +40,4 @@ const mapSateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapSateToProps, { deleteUser })(ProfilePage);
+export default connect(mapSateToProps, { deleteUser })(UserPage);

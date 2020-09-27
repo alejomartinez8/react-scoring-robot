@@ -1,7 +1,10 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { createUser, updateUser } from "../../../redux/actions/user.actions";
+import {
+  createUser,
+  getUserById,
+  updateUser,
+} from "../../../redux/actions/user.actions";
 import Spinner from "../../layout/Spinner";
 import ButtonBack from "../../layout/ButtonBack";
 
@@ -15,15 +18,28 @@ const initialState = {
   institution: "",
   city: "",
   country: "",
+  bio: "",
   role: "User",
 };
 
-const UserForm = ({ user: { user, loading }, createUser, updateUser, history }) => {
-  const userUpdate = Object.keys(user).length !== 0;
+const UserForm = ({
+  userAuth,
+  user: { user, loading },
+  getUserById,
+  createUser,
+  updateUser,
+  match,
+}) => {
+  //load User
+  useEffect(() => {
+    if (match.params.id) {
+      getUserById(match.params.id);
+    }
+  }, [getUserById, match.params.id]);
 
   // load if Edit User
   useEffect(() => {
-    if (!loading && userUpdate) {
+    if (match.params.id && !loading) {
       const userData = { ...initialState };
       for (const key in user) {
         if (key in userData) {
@@ -32,7 +48,7 @@ const UserForm = ({ user: { user, loading }, createUser, updateUser, history }) 
       }
       setFormData(userData);
     }
-  }, [loading, user, userUpdate]);
+  }, [loading, user, match.params.id]);
 
   const [formData, setFormData] = useState(initialState);
 
@@ -46,6 +62,7 @@ const UserForm = ({ user: { user, loading }, createUser, updateUser, history }) 
     institution,
     city,
     country,
+    bio,
     role,
   } = formData;
 
@@ -55,7 +72,7 @@ const UserForm = ({ user: { user, loading }, createUser, updateUser, history }) 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (userUpdate) {
+    if (match.params.id) {
       console.log("updateUser");
       updateUser(user.id, formData);
     } else {
@@ -75,7 +92,7 @@ const UserForm = ({ user: { user, loading }, createUser, updateUser, history }) 
           <div className="card shadow">
             <div className="card-header">
               <h2 className="text-primary">
-                {!userUpdate ? "Agregar Usuario" : "Editar Usuario"}
+                {!match.params.id ? "Agregar Usuario" : "Editar Usuario"}
               </h2>
             </div>
             <div className="card-body">
@@ -145,23 +162,37 @@ const UserForm = ({ user: { user, loading }, createUser, updateUser, history }) 
                     onChange={handleChange}
                   />
                 </div>
+                {userAuth.role === "Admin" && (
+                  <div className="form-group">
+                    <label>Role*</label>
+                    <select
+                      className={"form-control"}
+                      type="select"
+                      name="role"
+                      value={role}
+                      onChange={handleChange}
+                    >
+                      <option value="User">User</option>
+                      <option value="Judge">Judge</option>
+                      <option value="Admin">Admin</option>
+                    </select>
+                  </div>
+                )}
 
-                <div className="form-group">
-                  <label>Role*</label>
-                  <select
-                    className={"form-control"}
-                    type="select"
-                    name="role"
-                    value={role}
-                    onChange={handleChange}
-                  >
-                    <option value="User">User</option>
-                    <option value="Judge">Judge</option>
-                    <option value="Admin">Admin</option>
-                  </select>
-                </div>
+                {userAuth.id === user.id && (
+                  <div className="form-group">
+                    <label>Cuéntanos un poco sobre ti</label>
+                    <textarea
+                      className="form-control"
+                      placeholder="Una breve biografía tuya"
+                      name="bio"
+                      value={bio}
+                      onChange={handleChange}
+                    />
+                  </div>
+                )}
 
-                {userUpdate && (
+                {match.params.id && (
                   <div>
                     <h3 className="pt-3">Cambiar Contraseña</h3>
                     <p>Dejar en blanco para conservar la misma contraseña</p>
@@ -170,7 +201,7 @@ const UserForm = ({ user: { user, loading }, createUser, updateUser, history }) 
 
                 <div className="form-row">
                   <div className="form-group mr-3">
-                    <label>Contraseña{!userUpdate && "*"}</label>
+                    <label>Contraseña{!match.params.id && "*"}</label>
                     <input
                       type="password"
                       className="form-control"
@@ -183,7 +214,7 @@ const UserForm = ({ user: { user, loading }, createUser, updateUser, history }) 
                   </div>
 
                   <div className="form-group">
-                    <label>Confirmar Contraseña{!userUpdate && "*"}</label>
+                    <label>Confirmar Contraseña{!match.params.id && "*"}</label>
                     <input
                       type="password"
                       className="form-control"
@@ -218,12 +249,15 @@ const UserForm = ({ user: { user, loading }, createUser, updateUser, history }) 
   );
 };
 
-UserForm.propTypes = {
-  user: PropTypes.object.isRequired,
-};
-
 const mapStateToProps = (state) => ({
+  userAuth: state.auth.userAuth,
   user: state.user,
 });
 
-export default connect(mapStateToProps, { createUser, updateUser })(UserForm);
+const actionCreators = {
+  createUser,
+  updateUser,
+  getUserById,
+};
+
+export default connect(mapStateToProps, actionCreators)(UserForm);

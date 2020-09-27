@@ -44,7 +44,7 @@ const TeamCard = ({ auth, team }) => {
         {auth.userAuth.id === team.user.id && (
           <div className="card-footer">
             <Link
-              to={`/profile/teams/edit/${team._id}`}
+              to={`/user/teams/edit/${team._id}`}
               className="btn btn-outline-primary btn-sm"
             >
               Modificar

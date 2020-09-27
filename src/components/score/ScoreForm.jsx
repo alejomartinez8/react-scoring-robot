@@ -42,6 +42,7 @@ const ScoreForm = ({
 
   useEffect(() => {
     if (Object.keys(challenge).length !== 0 && Object.keys(event).length !== 0) {
+      console.log(challenge);
       const _tasks = [];
       const _penalties = [];
       for (const key in challenge.tasks) {

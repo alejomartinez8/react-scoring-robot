@@ -1,7 +1,6 @@
 import React, { useState, Fragment, useEffect } from "react";
 import { connect } from "react-redux";
-import { teamActions, eventActions } from "../../redux/actions";
-import { userActions } from "../../redux/actions";
+import { userActions, teamActions, eventActions } from "../../redux/actions";
 import Spinner from "../layout/Spinner";
 import ButtonBack from "../layout/ButtonBack";
 import TeamFormPlayer from "./TeamFormPlayer";
@@ -22,71 +21,73 @@ const initialState = {
 const TeamForm = ({
   auth,
   users,
-  team: { team, loadingTeam },
+  team: { team, loading },
   events,
+  getTeamById,
   addTeamAction,
   updateTeamAction,
   getAllEvents,
   getAllUsers,
+  match,
 }) => {
-  const [teamData, setTeamData] = useState(initialState);
-  const { user, name, event, category, challenge, players } = teamData;
+  // load events for select
+  useEffect(() => {
+    getAllEvents();
+  }, [getAllEvents]);
 
-  //
-  const [categoryOptions, setCategoryOptions] = useState([]);
-  const [challengeOptions, setChallengeOptions] = useState([]);
+  // load team
+  useEffect(() => {
+    if (match.params.id) {
+      getTeamById(match.params.id);
+    }
+  }, [getTeamById, match.params.id]);
 
   // load form fields
-  const teamUpdate = Object.keys(team).length !== 0;
   useEffect(() => {
-    if (teamUpdate) {
-      // set data to Hooks useState
+    if (match.params.id && events.length > 0 && Object.entries(team).length > 0) {
       const teamData = { ...initialState };
       for (const key in team) {
         if (key in teamData) {
           teamData[key] = team[key];
         }
       }
-      setTeamData(teamData);
+      setFormData(teamData);
 
-      // setCategoryOptions
+      // Set Category Options
       const _categoryOptions = events
         .filter((event) => event._id === teamData.event)
         .map((event) => event.categories)[0];
       setCategoryOptions(_categoryOptions);
 
-      //setChallengeOptions
-      const _challengesOptions = events
-        .filter((elm) => elm._id === teamData.event)[0]
-        .challenges.filter((elm) => elm.categories.includes(teamData.category))
+      // Set Challenge Options
+      const _event = events.filter((event) => event._id === teamData.event)[0];
+      const _challengesOptions = _event.challenges
+        .filter((elm) => elm.categories.includes(teamData.category))
         .map((elm) => ({ _id: elm._id, name: elm.name }));
       setChallengeOptions(_challengesOptions);
     }
-    // eslint-disable-next-line
-  }, [team]);
+  }, [team, events, match.params.id]);
+
+  const [formData, setFormData] = useState(initialState);
+  const { user, name, event, category, challenge, players } = formData;
+  const [categoryOptions, setCategoryOptions] = useState([]);
+  const [challengeOptions, setChallengeOptions] = useState([]);
 
   // load users if is Admin creator of team
   useEffect(() => {
     if (auth.userAuth.role === "Admin") {
       getAllUsers();
     } else if (auth.userAuth.role === "User") {
-      setTeamData({
-        ...teamData,
+      setFormData({
+        ...formData,
         user: auth.userAuth.id,
       });
-    } else {
-      console.log("No autorizado para crear equipo");
     }
     // eslint-disable-next-line
   }, [auth]);
 
-  // load events for select
-  useEffect(() => {
-    getAllEvents();
-  }, [getAllEvents]);
-
   const handleChange = (e) => {
-    setTeamData({ ...teamData, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
     // setCategoryOptions
     if (e.target.name === "event") {
@@ -109,22 +110,22 @@ const TeamForm = ({
   const addPlayer = (player, index) => {
     const _players = players;
     _players[index] = player;
-    setTeamData({ ...teamData, players: _players });
+    setFormData({ ...formData, players: _players });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (teamUpdate) {
-      updateTeamAction(team._id, teamData);
+    if (match.params.id) {
+      updateTeamAction(team._id, formData);
     } else {
-      addTeamAction(teamData);
-      setTeamData(initialState);
+      addTeamAction(formData);
+      setFormData(initialState);
     }
   };
 
   return (
     <Fragment>
-      {loadingTeam ? (
+      {loading ? (
         <Spinner />
       ) : (
         <Fragment>
@@ -132,7 +133,7 @@ const TeamForm = ({
           <div className="card shadow mb-2">
             <div className="card-header">
               <h2 className="text-primary">
-                {!teamUpdate ? "Agregar Equipo" : "Editar Equipo"}
+                {!match.params.id ? "Agregar Equipo" : "Editar Equipo"}
               </h2>
             </div>
 
@@ -239,9 +240,9 @@ const TeamForm = ({
                   <button
                     type="submit"
                     className="btn btn-primary m-1"
-                    disabled={loadingTeam}
+                    disabled={loading}
                   >
-                    {loadingTeam && (
+                    {loading && (
                       <span className="spinner-border spinner-border-sm mr-1"></span>
                     )}
                     Guardar
@@ -265,6 +266,7 @@ const mapStateToProps = (state) => ({
 });
 
 const actionCreators = {
+  getTeamById: teamActions.getTeamById,
   addTeamAction: teamActions.addTeam,
   updateTeamAction: teamActions.updateTeam,
   getAllUsers: userActions.getAllUsers,

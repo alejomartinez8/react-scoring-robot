@@ -21,31 +21,25 @@ const initialState = {
 const EventForm = ({
   eventState,
   eventLoading,
+  getEventById,
   challengeList,
   challengeLoading,
   addEvent,
   updateEvent,
   getAllChallenges,
+  match,
 }) => {
-  // form data use state
-  const [eventFormData, setEventFormData] = useState(initialState);
-  const { name, slug, year, imageURL, description } = eventFormData;
-
-  // select use state
-  const [challengeOptions, setChallengeOptions] = useState([]);
-  const [selectedChallenge, setSelectedChallenge] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState([]);
-
-  // select Categories use State
-  const categoryOptions = CategoriesType.map((elm, index) => ({
-    value: index,
-    label: elm,
-  }));
+  // load event
+  useEffect(() => {
+    if (match.params.id) {
+      getEventById(match.params.id);
+    }
+  }, [getEventById, match.params.id]);
 
   // load eventState if update operation
   const eventUpdate = Object.keys(eventState).length !== 0;
   useEffect(() => {
-    if (!eventLoading && eventUpdate) {
+    if (!eventLoading && match.params.id) {
       const loadEventData = { ...initialState };
       for (const key in eventState) {
         if (key in loadEventData) {
@@ -68,7 +62,22 @@ const EventForm = ({
       );
     }
     // eslint-disable-next-line
-  }, [eventLoading, eventState, eventUpdate]);
+  }, [eventLoading, eventState, match.params.id]);
+
+  // form data use state
+  const [eventFormData, setEventFormData] = useState(initialState);
+  const { name, slug, year, imageURL, description } = eventFormData;
+
+  // select use state
+  const [challengeOptions, setChallengeOptions] = useState([]);
+  const [selectedChallenge, setSelectedChallenge] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState([]);
+
+  // select Categories use State
+  const categoryOptions = CategoriesType.map((elm, index) => ({
+    value: index,
+    label: elm,
+  }));
 
   // handle changes in fields of event form
   const handleChange = (e) => {
@@ -273,6 +282,7 @@ const mapStateToProps = (state) => ({
 });
 
 const actionCreators = {
+  getEventById: eventActions.getEventById,
   addEvent: eventActions.addEvent,
   updateEvent: eventActions.updateEvent,
   getAllChallenges: challengeActions.getAllChallenges,

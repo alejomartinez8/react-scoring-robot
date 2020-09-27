@@ -4,12 +4,13 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 // Pages
+
 import PrivateRoute from "./PrivateRoute";
 import Alert from "../../components/layout/Alert";
-import Auth from "../auth/Auth";
-import Profile from "../profiles/Profile";
-import Admin from "../admin/Admin";
-import Events from "../events/Events";
+import Auth from "./Auth";
+import User from "./User";
+import Admin from "./Admin";
+import Events from "./Events";
 
 const Routes = () => {
   return (
@@ -20,10 +21,10 @@ const Routes = () => {
         <Route path="/events" component={Events} />
         {/* Admin */}
         <PrivateRoute path="/admin" component={Admin} roles="Admin" />
-        {/* Profile */}
-        <PrivateRoute path="/profile" component={Profile} />
+        {/* User */}
+        <PrivateRoute path="/user" component={User} />
         {/* Auth */}
-        <Route path="/user" component={Auth} />
+        <Route path="/auth" component={Auth} />
       </Switch>
     </div>
   );

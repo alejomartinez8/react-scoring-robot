@@ -12,12 +12,12 @@ const TeamsGrid = ({
   getEventBySlug,
   team: { teams, loading },
   getTeams,
-  isUserProfile = false,
+  isUserUser = false,
   title = "Todos los Equipos",
   match,
 }) => {
   useEffect(() => {
-    if (!isUserProfile) {
+    if (!isUserUser) {
       getEventBySlug(match.params.eventSlug);
     }
     // eslint-disable-next-line
@@ -31,12 +31,12 @@ const TeamsGrid = ({
   }, [getTeams, event.loading, event.event._id]);
 
   useEffect(() => {
-    if (isUserProfile) {
+    if (isUserUser) {
       getTeams();
     }
-  }, [isUserProfile, getTeams]);
+  }, [isUserUser, getTeams]);
 
-  const filteredTeams = isUserProfile
+  const filteredTeams = isUserUser
     ? teams.filter((team) => team.user.id === auth.userAuth.id)
     : teams;
 
@@ -44,8 +44,14 @@ const TeamsGrid = ({
     <Fragment>
       <h2 className="text-primary">{title}</h2>
       <ButtonBack className="btn btn-secondary m-1">Atrás</ButtonBack>
-      {(auth.userAuth.role === "Admin" || auth.userAuth.role === "User") && (
-        <Link to={`/teams/add`} className="btn btn-outline-success">
+      {auth.userAuth.role === "Admin" && (
+        <Link to={`/admin/teams/add`} className="btn btn-outline-success">
+          Agregar Equipo
+        </Link>
+      )}
+
+      {auth.userAuth.role === "User" && (
+        <Link to={`profile/teams/add`} className="btn btn-outline-success">
           Agregar Equipo
         </Link>
       )}

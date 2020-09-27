@@ -1,7 +1,7 @@
 import { ChallengeTypes } from "../constants/ChallengeTypes";
 
 const intialState = {
-  loading: true,
+  loading: false,
   challenge: {},
   challenges: [],
   error: [],

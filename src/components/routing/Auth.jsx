@@ -3,11 +3,11 @@ import { Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import Login from "./Login";
-import Register from "./Register";
-import VerifyEmail from "./VerifyEmail";
-import ForgotPassword from "./ForgotPassword";
-import ResetPassword from "./ResetPassword";
+import Login from "../auth/Login";
+import Register from "../auth/Register";
+import VerifyEmail from "../auth/VerifyEmail";
+import ForgotPassword from "../auth/ForgotPassword";
+import ResetPassword from "../auth/ResetPassword";
 
 const Auth = ({ history, match, isAuth }) => {
   const { path } = match;

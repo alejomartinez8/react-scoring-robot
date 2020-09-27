@@ -8,7 +8,7 @@ const Navbar = ({ isAuth, role, logout }) => {
   const authLinks = (
     <Fragment>
       <li>
-        <Link to="/profile">
+        <Link to="/user">
           <i className="fas fa-user" />
           {"  "}
           <span className="hide-sm"> Perfil</span>

@@ -167,6 +167,7 @@ const Register = ({ isAuth, loading, register, setAlert }) => {
               onChange={handleChange}
             />
           </div>
+
           <div className="form-row">
             <div className="form-group mr-3">
               <label>Contraseña*</label>
