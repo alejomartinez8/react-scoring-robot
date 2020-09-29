@@ -156,7 +156,7 @@ const ChallengeForm = ({
             <div className="card-body">
               <h4>Información</h4>
               <form className="form" onSubmit={handleSubmit}>
-                <span>(*) Obligatorios</span>
+                <span>(*) Olbl</span>
                 <div className="form-group">
                   <label htmlFor="name">Nombre Reto (*)</label>
                   <input
