@@ -156,8 +156,9 @@ const ChallengeForm = ({
             <div className="card-body">
               <h4>Información</h4>
               <form className="form" onSubmit={handleSubmit}>
+                <span>(*) Obligatorios</span>
                 <div className="form-group">
-                  <label htmlFor="name">Nombre Reto</label>
+                  <label htmlFor="name">Nombre Reto (*)</label>
                   <input
                     type="text"
                     className="form-control"
@@ -170,7 +171,7 @@ const ChallengeForm = ({
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="slug">Slug Reto</label>
+                  <label htmlFor="slug">Slug Reto (*)</label>
                   <input
                     type="text"
                     className="form-control"
@@ -202,12 +203,11 @@ const ChallengeForm = ({
                     name="description"
                     value={description}
                     onChange={handleChange}
-                    required
                   />
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="maxTeams">No. Equipos Máximo por Reto</label>
+                  <label htmlFor="maxTeams">No. Equipos Máximo por Reto (*)</label>
                   <input
                     type="Number"
                     className="form-control"
@@ -220,7 +220,7 @@ const ChallengeForm = ({
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="maxTeams">No. Turnos Máximo por Equipo</label>
+                  <label htmlFor="maxTeams">No. Turnos Máximo por Equipo (*)</label>
                   <input
                     type="Number"
                     className="form-control"
@@ -234,7 +234,7 @@ const ChallengeForm = ({
 
                 <div className="form-group">
                   <label htmlFor="maxTeams">
-                    Suma de puntajes Top Máximo de Turnos
+                    Suma de puntajes Top Máximo de Turnos (*)
                   </label>
                   <input
                     type="Number"

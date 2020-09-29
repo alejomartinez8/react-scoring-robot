@@ -68,14 +68,13 @@ const ChallengeResults = ({
         <Spinner />
       ) : (
         <Fragment>
-          <h2 className="text-primary">Resultados reto {challenge.name}</h2>
+          <h2 className="text-primary">Puntajes reto {challenge.name}</h2>
           <ButtonBack className="btn btn-secondary m-1">Atrás</ButtonBack>
           <div className="table-responsive">
             <table className="table table-striped ">
               <thead className="thead-dark">
                 <tr>
                   <th>Puesto</th>
-                  <th>Equipo #</th>
                   <th>Nombre Equipo</th>
                   <th>Institución</th>
                   <th>Ciudad</th>
@@ -89,7 +88,6 @@ const ChallengeResults = ({
                   sortedTeams.map((team, index) => (
                     <tr key={team._id}>
                       <td>{index + 1}</td>
-                      <td></td>
                       <td>{team.name}</td>
                       <td>{team.user.institution}</td>
                       <td>{team.user.city}</td>

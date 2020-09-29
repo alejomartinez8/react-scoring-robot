@@ -225,11 +225,23 @@ const ScoreForm = ({
             </div>
 
             <hr />
-            <div className="form-group row my-2 justify-content-center align-items-center">
-              <div className="">
-                <div className="display-4">{seconds} (s)</div>
+            <div className="form-group my-2 text-center">
+              <div className="lead">
+                Turno(s):{" "}
+                {team !== ""
+                  ? teams
+                      .filter((elm) => elm._id === team)
+                      .map((elm) => elm.turnCounter)[0]
+                  : 0}{" "}
+                de {challenge.maxTurns}
               </div>
-              <div className="">
+            </div>
+
+            <hr />
+            <div className="form-group row my-2 justify-content-center align-items-center">
+              <div className="display-4">{seconds} (s)</div>
+
+              <div>
                 <button
                   onClick={handleSetTimer}
                   className={!timer ? "btn btn-success m-2" : "btn btn-danger m-2"}

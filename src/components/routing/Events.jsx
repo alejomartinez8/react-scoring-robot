@@ -12,22 +12,18 @@ const Events = () => {
     <Switch>
       <Route exact path="/events" component={EventGrid} />
       {/* Challenges */}
+      <Route exact path={"/events/:eventSlug"} component={ChallengesGrid} />
       <Route
-        exact
-        path={"/events/:eventSlug/challenges"}
-        component={ChallengesGrid}
-      />
-      <Route
-        path={"/events/:eventSlug/challenges/:challengeSlug/results"}
+        path={"/events/:eventSlug/:challengeSlug/results"}
         component={ChallengeResults}
       />
       <Route
-        path={"/events/:eventSlug/challenges/:challengeSlug/playoffs"}
+        path={"/events/:eventSlug/:challengeSlug/playoffs"}
         component={ChallengePlayoffs}
       />
       <PrivateRoute
         roles={["Admin", "Judge"]}
-        path={"/events/:eventSlug/challenges/:challengeSlug/score"}
+        path={"/events/:eventSlug/:challengeSlug/score"}
         component={ChallengeScoreForm}
       />
     </Switch>
