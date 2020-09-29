@@ -14,11 +14,11 @@ const sendScore = (score) => (dispatch) => {
     });
 };
 
-const getAllScores = () => (dispatch) => {
-  dispatch({ type: ScoreTypes.GET_SCORE });
+const getScores = (params) => (dispatch) => {
+  dispatch({ type: ScoreTypes.GET_SCORES });
 
   scoreServices
-    .getAllScores()
+    .getScores(params)
     .then((scores) => {
       dispatch({ type: ScoreTypes.SCORES_LOADED, payload: scores });
     })
@@ -48,7 +48,7 @@ const deleteScore = (id) => (dispatch) => {
     .then(() => {
       dispatch({ type: ScoreTypes.SCORE_DELETE, payload: id });
       dispatch(setAlert("Reto Eliminado", "success"));
-      dispatch(getAllScores());
+      dispatch(getScores());
     })
     .catch((error) => {
       dispatch({ type: ScoreTypes.SCORE_ERROR, payload: error });
@@ -58,7 +58,7 @@ const deleteScore = (id) => (dispatch) => {
 
 export const scoreActions = {
   sendScore,
-  getAllScores,
+  getScores,
   getScoreById,
   deleteScore,
 };

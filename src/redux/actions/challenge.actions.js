@@ -27,11 +27,11 @@ const updateChallenge = (id, challenge) => (dispatch) => {
     });
 };
 
-const getAllChallenges = () => (dispatch) => {
+const getChallenges = (query) => (dispatch) => {
   dispatch({ type: ChallengeTypes.GET_CHALLENGE });
 
   challengeServices
-    .getAllChallenges()
+    .getChallenges(query)
     .then((challenges) => {
       dispatch({ type: ChallengeTypes.CHALLENGES_LOADED, payload: challenges });
     })
@@ -75,7 +75,7 @@ const deleteChallenge = (id) => (dispatch) => {
     .then(() => {
       dispatch({ type: ChallengeTypes.CHALLENGE_DELETE, payload: id });
       dispatch(setAlert("Reto Eliminado", "success"));
-      dispatch(getAllChallenges());
+      dispatch(getChallenges());
     })
     .catch((error) => {
       dispatch({ type: ChallengeTypes.CHALLENGE_ERROR, payload: error });
@@ -86,7 +86,7 @@ const deleteChallenge = (id) => (dispatch) => {
 export const challengeActions = {
   addChallenge,
   updateChallenge,
-  getAllChallenges,
+  getChallenges,
   getChallengeById,
   getChallengeBySlug,
   deleteChallenge,

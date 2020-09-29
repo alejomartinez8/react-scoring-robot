@@ -24,9 +24,8 @@ const TeamsGrid = ({
   }, [getEventBySlug]);
 
   useEffect(() => {
-    // console.log(event.loading);
     if (!event.loading) {
-      getTeams({ event: event.event._id });
+      getTeams({ "event._id": event.event._id });
     }
   }, [getTeams, event.loading, event.event._id]);
 
@@ -37,7 +36,7 @@ const TeamsGrid = ({
   }, [isUserUser, getTeams]);
 
   const filteredTeams = isUserUser
-    ? teams.filter((team) => team.user.id === auth.userAuth.id)
+    ? teams.filter((team) => team.user._id === auth.userAuth.id)
     : teams;
 
   return (

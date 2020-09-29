@@ -13,6 +13,9 @@ const initialState = {
   slug: "",
   imageURL: "",
   description: "",
+  maxTeams: 0,
+  maxTurns: 0,
+  topMaxTurns: 0,
   playoffs: false,
   categories: [],
   available: "",
@@ -64,12 +67,15 @@ const ChallengeForm = ({
     slug,
     imageURL,
     description,
-    playoffs,
-    available,
-    maxTime,
+    maxTeams,
+    maxTurns,
+    topMaxTurns,
     tasks,
     taskSecuence,
     bonusType,
+    maxTime,
+    playoffs,
+    available,
   } = formData;
 
   // selecet Categories use State
@@ -162,6 +168,7 @@ const ChallengeForm = ({
                     required
                   />
                 </div>
+
                 <div className="form-group">
                   <label htmlFor="slug">Slug Reto</label>
                   <input
@@ -194,6 +201,47 @@ const ChallengeForm = ({
                     id="description"
                     name="description"
                     value={description}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="maxTeams">No. Equipos Máximo por Reto</label>
+                  <input
+                    type="Number"
+                    className="form-control"
+                    id="maxTeams"
+                    name="maxTeams"
+                    value={maxTeams}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="maxTeams">No. Turnos Máximo por Equipo</label>
+                  <input
+                    type="Number"
+                    className="form-control"
+                    id="maxTurns"
+                    name="maxTurns"
+                    value={maxTurns}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="maxTeams">
+                    Suma de puntajes Top Máximo de Turnos
+                  </label>
+                  <input
+                    type="Number"
+                    className="form-control"
+                    id="topMaxTurns"
+                    name="topMaxTurns"
+                    value={topMaxTurns}
                     onChange={handleChange}
                     required
                   />

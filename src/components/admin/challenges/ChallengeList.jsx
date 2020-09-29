@@ -7,15 +7,15 @@ import ButtonBack from "../../layout/ButtonBack";
 
 const ChallengesList = ({
   challenge: { challenges, loading },
-  getAllChallenges,
+  getChallenges,
   deleteChallenge,
   match,
 }) => {
   const { path } = match;
 
   useEffect(() => {
-    getAllChallenges();
-  }, [getAllChallenges]);
+    getChallenges();
+  }, [getChallenges]);
 
   const handleDeleteChallenge = (id) => {
     deleteChallenge(id);
@@ -111,7 +111,7 @@ const mapStateToProps = (state) => ({
 });
 
 const actionCreators = {
-  getAllChallenges: challengeActions.getAllChallenges,
+  getChallenges: challengeActions.getChallenges,
   deleteChallenge: challengeActions.deleteChallenge,
 };
 

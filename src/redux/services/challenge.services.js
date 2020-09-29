@@ -3,7 +3,7 @@ import axios from "axios";
 export const challengeServices = {
   addChallenge,
   updateChallenge,
-  getAllChallenges,
+  getChallenges,
   getChallengeById,
   getChallengeBySlug,
   deleteChallenge,
@@ -23,8 +23,11 @@ function updateChallenge(id, challenge) {
     .catch(handleError);
 }
 
-function getAllChallenges() {
-  return axios.get("/challenges").then(handleResponse).catch(handleError);
+function getChallenges(query) {
+  return axios
+    .get("/challenges", { params: query })
+    .then(handleResponse)
+    .catch(handleError);
 }
 
 function getChallengeById(id) {

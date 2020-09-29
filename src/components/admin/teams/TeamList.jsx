@@ -51,15 +51,13 @@ const TeamsList = ({ team: { teams, loading }, getTeams, deleteTeam, match }) =>
                     </tr>
                   </thead>
                   <tbody>
-                    {teams &&
+                    {teams.length > 0 &&
                       teams.map((team) => (
                         <tr key={team._id}>
                           <td>{team.name}</td>
                           <td>{team.category}</td>
                           <td>{team.challenge.name}</td>
-                          <td>
-                            {team.user.firstName} {team.user.lastName}
-                          </td>
+                          <td>{team.user.fullName}</td>
                           <td>{team.institution}</td>
                           <td>{team.user.city}</td>
                           <td>{team.user.country}</td>

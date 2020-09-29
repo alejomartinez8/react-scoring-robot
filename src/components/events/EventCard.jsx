@@ -22,9 +22,6 @@ const EventCard = ({ auth, event: { _id, slug, name, imageURL, description } }) 
         <Link to={`/events/${slug}/challenges`} className="btn btn-primary m-1">
           Ver Retos
         </Link>
-        <Link to={`/events/${slug}/teams`} className="btn btn-warning m-1">
-          Ver Equipos
-        </Link>
       </div>
     </div>
   );

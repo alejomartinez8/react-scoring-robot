@@ -13,6 +13,7 @@ export function team(state = intialState, action) {
   switch (type) {
     case TeamTypes.GET_TEAM:
     case TeamTypes.GET_TEAMS:
+    case TeamTypes.UPDATE_TEAM:
       return {
         ...state,
         loading: true,
@@ -28,11 +29,11 @@ export function team(state = intialState, action) {
       };
 
     case TeamTypes.TEAM_LOADED:
+    case TeamTypes.TEAM_UPDATED:
       return {
         ...state,
         loading: false,
         team: payload,
-        teams: [],
         error: [],
       };
 

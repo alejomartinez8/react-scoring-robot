@@ -26,7 +26,7 @@ const EventForm = ({
   challengeLoading,
   addEvent,
   updateEvent,
-  getAllChallenges,
+  getChallenges,
   match,
 }) => {
   // load event
@@ -90,8 +90,8 @@ const EventForm = ({
 
   // fetch Challenges from API
   useEffect(() => {
-    getAllChallenges();
-  }, [getAllChallenges]);
+    getChallenges();
+  }, [getChallenges]);
 
   // load challenges to Select Challenges options
   useEffect(() => {
@@ -285,7 +285,7 @@ const actionCreators = {
   getEventById: eventActions.getEventById,
   addEvent: eventActions.addEvent,
   updateEvent: eventActions.updateEvent,
-  getAllChallenges: challengeActions.getAllChallenges,
+  getChallenges: challengeActions.getChallenges,
 };
 
 export default connect(mapStateToProps, actionCreators)(EventForm);

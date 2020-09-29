@@ -9,12 +9,11 @@ import TeamFormEvent from "./TeamFormEvent";
 import TeamFormChallenge from "./TeamFormChallenge";
 
 const initialState = {
-  user: "",
+  user: {},
+  event: {},
+  challenge: {},
   name: "",
-  institution: "",
-  event: "",
   category: "",
-  challenge: "",
   players: [],
 };
 
@@ -52,24 +51,26 @@ const TeamForm = ({
         }
       }
       setFormData(teamData);
+      console.log(teamData);
+
+      const _event = events.filter((elm) => elm._id === teamData.event._id);
 
       // Set Category Options
-      const _categoryOptions = events
-        .filter((event) => event._id === teamData.event)
-        .map((event) => event.categories)[0];
+      const _categoryOptions = _event.map((event) => event.categories)[0];
       setCategoryOptions(_categoryOptions);
 
       // Set Challenge Options
-      const _event = events.filter((event) => event._id === teamData.event)[0];
-      const _challengesOptions = _event.challenges
-        .filter((elm) => elm.categories.includes(teamData.category))
-        .map((elm) => ({ _id: elm._id, name: elm.name }));
-      setChallengeOptions(_challengesOptions);
+      if (_event.length > 0) {
+        const _challengesOptions = _event[0].challenges
+          .filter((elm) => elm.categories.includes(teamData.category))
+          .map((elm) => ({ _id: elm._id, name: elm.name, slug: elm.slug }));
+        setChallengeOptions(_challengesOptions);
+      }
     }
   }, [team, events, match.params.id]);
 
   const [formData, setFormData] = useState(initialState);
-  const { user, name, event, category, challenge, players } = formData;
+  const { user, event, challenge, name, category, players } = formData;
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [challengeOptions, setChallengeOptions] = useState([]);
 
@@ -87,23 +88,53 @@ const TeamForm = ({
   }, [auth]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    console.log(e.target.value);
+    switch (e.target.name) {
+      case "user":
+        setFormData({
+          ...formData,
+          user: e.target.value
+            ? users.find((elm) => elm.id === e.target.value)
+            : { _id: "" },
+        });
+        break;
 
-    // setCategoryOptions
-    if (e.target.name === "event") {
-      const _categoryOptions = events
-        .filter((elm) => elm._id === e.target.value)
-        .map((elm) => elm.categories)[0];
-      setCategoryOptions(_categoryOptions);
-    }
+      case "event":
+        setFormData({
+          ...formData,
+          event: e.target.value
+            ? events.find((elm) => elm._id === e.target.value)
+            : { _id: "" },
+        });
+        // setCategoryOptions
+        const _categoryOptions = events
+          .filter((elm) => elm._id === e.target.value)
+          .map((elm) => elm.categories)[0];
+        setCategoryOptions(_categoryOptions);
+        break;
 
-    //setChallengeOptions
-    if (e.target.name === "category") {
-      const _event = events.filter((elm) => elm._id === event)[0];
-      const _challengesOptions = _event.challenges
-        .filter((elm) => elm.categories.includes(e.target.value))
-        .map((elm) => ({ _id: elm._id, name: elm.name }));
-      setChallengeOptions(_challengesOptions);
+      case "category":
+        setFormData({ ...formData, category: e.target.value });
+        //setChallengeOptions
+        const _challengesOptions = events
+          .filter((elm) => elm._id === event._id)[0]
+          .challenges.filter((elm) => elm.categories.includes(e.target.value))
+          .map((elm) => ({ _id: elm._id, name: elm.name }));
+        setChallengeOptions(_challengesOptions);
+        break;
+
+      case "challenge":
+        setFormData({
+          ...formData,
+          challenge: e.target.value
+            ? challengeOptions.find((elm) => (elm._id = e.target.value))
+            : { _id: "" },
+        });
+        break;
+
+      default:
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+        break;
     }
   };
 
@@ -115,10 +146,27 @@ const TeamForm = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const teamToSend = {
+      user: users.find((elm) => elm.id === user._id),
+      // .map((elm) => ({ _id: elm.id, name: elm.name })),
+      event: events
+        .filter((elm) => elm._id === event._id)
+        .map((obj) => ({ _id: obj._id, slug: obj.slug, name: obj.name }))[0],
+      challenge: events
+        .filter((elm) => elm._id === event._id)[0]
+        .challenges.filter((elm) => elm._id === challenge._id)
+        .map((obj) => ({ _id: obj._id, slug: obj.slug, name: obj.name }))[0],
+      name,
+      category,
+      players,
+    };
+
+    console.log(teamToSend);
+
     if (match.params.id) {
-      updateTeamAction(team._id, formData);
+      updateTeamAction(team._id, teamToSend);
     } else {
-      addTeamAction(formData);
+      addTeamAction(teamToSend);
       setFormData(initialState);
     }
   };
@@ -149,15 +197,15 @@ const TeamForm = ({
                         className="form-control"
                         id="user"
                         name="user"
-                        value={user}
+                        value={user._id}
                         onChange={handleChange}
                         required
                       >
-                        <option></option>
+                        <option value=""></option>
                         {users
                           .filter((user) => user.role === "User")
                           .map((user) => (
-                            <option key={user.id} value={user.id}>
+                            <option key={user._id} value={user._id}>
                               {`${user.firstName} ${user.lastName}`}
                             </option>
                           ))}
@@ -185,7 +233,7 @@ const TeamForm = ({
 
                 <TeamFormEvent
                   options={events}
-                  event={event}
+                  event={event._id}
                   handleChange={handleChange}
                 />
 
@@ -197,7 +245,7 @@ const TeamForm = ({
 
                 <TeamFormChallenge
                   options={challengeOptions}
-                  challenge={challenge}
+                  challenge={challenge._id}
                   handleChange={handleChange}
                 />
 

@@ -13,7 +13,7 @@ const TeamCard = ({ auth, team }) => {
           <p className="text-center flex-row">
             {team.user.city} / {team.user.country}
           </p>
-        </div>{" "}
+        </div>
         {team.imageURL && (
           <img className="card-img-top" src={team.imageURL} alt={team.name}></img>
         )}
@@ -21,7 +21,7 @@ const TeamCard = ({ auth, team }) => {
           <ul className="list-group list-group-flush">
             <li className="list-group-item">
               <strong>Entrenador: </strong>
-              {team.user.firstName} {team.user.lastName}
+              {team.user.fullName}
             </li>
             {team.players.map((player, index) => (
               <li key={player._id} className="list-group-item">

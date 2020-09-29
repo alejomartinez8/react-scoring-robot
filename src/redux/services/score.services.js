@@ -2,20 +2,25 @@ import axios from "axios";
 
 export const scoreServices = {
   sendScore,
-  getAllScores,
+  getScores,
   getScoreById,
   deleteScore,
 };
 
-function sendScore(score) {
+function sendScore(params) {
   return axios
-    .post("/scores", JSON.stringify(score))
+    .post("/teams/score", JSON.stringify(params))
     .then(handleResponse)
     .catch(handleError);
 }
 
-function getAllScores() {
-  return axios.get("/scores").then(handleResponse).catch(handleError);
+function getScores(params) {
+  console.log(params);
+
+  return axios
+    .get(`/scores`, { params: params })
+    .then(handleResponse)
+    .catch(handleError);
 }
 
 function getScoreById(id) {

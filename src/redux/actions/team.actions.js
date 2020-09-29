@@ -15,10 +15,12 @@ const addTeam = (team) => (dispatch) => {
 };
 
 const updateTeam = (id, team) => (dispatch) => {
+  dispatch({ type: TeamTypes.UPDATE_TEAM });
+
   teamServices
     .updateTeam(id, team)
     .then((team) => {
-      dispatch({ type: TeamTypes.TEAM_LOADED, payload: team });
+      dispatch({ type: TeamTypes.TEAM_UPDATED, payload: team });
       dispatch(setAlert("Equipo actualizado", "success"));
     })
     .catch((error) => {

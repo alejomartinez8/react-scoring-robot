@@ -41,7 +41,7 @@ const ChallengeCard = ({ auth, challenge }) => {
           </Link>
         )}
         <Link
-          to={`${match.url}/${challenge._id}/results`}
+          to={`${match.url}/${challenge.slug}/results`}
           className="btn btn-primary m-1"
         >
           Resultados
@@ -49,7 +49,7 @@ const ChallengeCard = ({ auth, challenge }) => {
 
         {challenge.playoffs && (
           <Link
-            to={`${match.url}/${challenge._id}/playoffs`}
+            to={`${match.url}/${challenge.slug}/playoffs`}
             className="btn btn-success m-1"
           >
             Playoffs
