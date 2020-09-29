@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 import { userActions, teamActions, eventActions } from "../../redux/actions";
 import Spinner from "../layout/Spinner";
 import ButtonBack from "../layout/ButtonBack";
-import TeamFormPlayer from "./TeamFormPlayer";
-import TeamFormCategory from "./TeamFormCategory";
-import TeamFormEvent from "./TeamFormEvent";
-import TeamFormChallenge from "./TeamFormChallenge";
+import TeamInputPlayers from "./TeamInputPlayers";
+import TeamSelectCategories from "./TeamSelectCategories";
+import TeamSelectEvents from "./TeamSelectEvents";
+import TeamSelectChallenges from "./TeamSelectChallenges";
 
 const initialState = {
   user: {},
@@ -231,19 +231,19 @@ const TeamForm = ({
                   </div>
                 </div>
 
-                <TeamFormEvent
+                <TeamSelectEvents
                   options={events}
                   event={event._id}
                   handleChange={handleChange}
                 />
 
-                <TeamFormCategory
+                <TeamSelectCategories
                   options={categoryOptions}
                   category={category}
                   handleChange={handleChange}
                 />
 
-                <TeamFormChallenge
+                <TeamSelectChallenges
                   options={challengeOptions}
                   challenge={challenge._id}
                   handleChange={handleChange}
@@ -251,7 +251,7 @@ const TeamForm = ({
 
                 <hr />
                 <h5>Integrante Equipo #1</h5>
-                <TeamFormPlayer
+                <TeamInputPlayers
                   addPlayer={addPlayer}
                   index={0}
                   player={players[0]}
@@ -260,7 +260,7 @@ const TeamForm = ({
 
                 <hr />
                 <h5>Integrante Equipo #2</h5>
-                <TeamFormPlayer
+                <TeamInputPlayers
                   addPlayer={addPlayer}
                   index={1}
                   player={players[1]}
@@ -268,7 +268,7 @@ const TeamForm = ({
 
                 <hr />
                 <h5>Integrante Equipo #3</h5>
-                <TeamFormPlayer
+                <TeamInputPlayers
                   addPlayer={addPlayer}
                   index={2}
                   player={players[2]}
@@ -276,7 +276,7 @@ const TeamForm = ({
 
                 <hr />
                 <h5>Integrante Equipo #4</h5>
-                <TeamFormPlayer
+                <TeamInputPlayers
                   addPlayer={addPlayer}
                   index={3}
                   player={players[3]}

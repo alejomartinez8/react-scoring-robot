@@ -1,6 +1,6 @@
 import React from "react";
 
-const TeamFormChallenge = ({ options = [], challenge, handleChange }) => {
+const TeamSelectChallenges = ({ options = [], challenge, handleChange }) => {
   return (
     <div className="form-group row">
       <label className="col-md-4 col-form-group" htmlFor="challenge">
@@ -28,4 +28,4 @@ const TeamFormChallenge = ({ options = [], challenge, handleChange }) => {
   );
 };
 
-export default TeamFormChallenge;
+export default TeamSelectChallenges;

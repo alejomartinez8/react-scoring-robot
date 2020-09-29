@@ -8,7 +8,7 @@ import EventForm from "../admin/events/EventForm";
 import ChallengesList from "../admin/challenges/ChallengeList";
 import ChallengeForm from "../admin/challenges/ChallengeForm";
 import TeamsList from "../admin/teams/TeamList";
-import TeamForm from "../teams-form/TeamForm";
+import TeamForm from "../teams/TeamForm";
 
 const Admin = ({ match }) => {
   return (

@@ -1,68 +1,16 @@
-import React, { Fragment, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { Fragment } from "react";
 import TeamCard from "./TeamCard";
-import { connect } from "react-redux";
-import { teamActions, eventActions } from "../../redux/actions";
 import Spinner from "../layout/Spinner";
-import ButtonBack from "../layout/ButtonBack";
 
-const TeamsGrid = ({
-  auth,
-  event,
-  getEventBySlug,
-  team: { teams, loading },
-  getTeams,
-  isUserUser = false,
-  title = "Todos los Equipos",
-  match,
-}) => {
-  useEffect(() => {
-    if (!isUserUser) {
-      getEventBySlug(match.params.eventSlug);
-    }
-    // eslint-disable-next-line
-  }, [getEventBySlug]);
-
-  useEffect(() => {
-    if (!event.loading) {
-      getTeams({ "event._id": event.event._id });
-    }
-  }, [getTeams, event.loading, event.event._id]);
-
-  useEffect(() => {
-    if (isUserUser) {
-      getTeams();
-    }
-  }, [isUserUser, getTeams]);
-
-  const filteredTeams = isUserUser
-    ? teams.filter((team) => team.user._id === auth.userAuth.id)
-    : teams;
-
+const TeamsGrid = ({ auth, teams = [], loading }) => {
   return (
     <Fragment>
-      <h2 className="text-primary">{title}</h2>
-      <ButtonBack className="btn btn-secondary m-1">Atrás</ButtonBack>
-      {auth.userAuth.role === "Admin" && (
-        <Link to={`/admin/teams/add`} className="btn btn-outline-success">
-          Agregar Equipo
-        </Link>
-      )}
-
-      {auth.userAuth.role === "User" && (
-        <Link to={`profile/teams/add`} className="btn btn-outline-success">
-          Agregar Equipo
-        </Link>
-      )}
-
       {loading ? (
         <Spinner />
       ) : (
-        <div className="row my-2">
-          {filteredTeams.length > 0 ? (
-            filteredTeams.map((team) => (
-              <TeamCard key={team._id} team={team} auth={auth} />
-            ))
+        <div className="row my-4">
+          {teams.length > 0 ? (
+            teams.map((team) => <TeamCard key={team._id} team={team} auth={auth} />)
           ) : (
             <h4>Todavía no hay equipos</h4>
           )}
@@ -72,15 +20,4 @@ const TeamsGrid = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-  team: state.team,
-  event: state.event,
-});
-
-const actionCreators = {
-  getTeams: teamActions.getTeams,
-  getEventBySlug: eventActions.getEventBySlug,
-};
-
-export default connect(mapStateToProps, actionCreators)(TeamsGrid);
+export default TeamsGrid;

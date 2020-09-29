@@ -1,43 +1,50 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import { deleteUser } from "../../redux/actions/user.actions";
+import { teamActions } from "../../redux/actions";
 import Spinner from "../layout/Spinner";
 import UserCard from "./UserCard";
 import TeamsGrid from "../teams/TeamsGrid";
 
-const UserPage = ({ auth: { userAuth, loading }, match }) => {
+const UserPage = ({ auth, team, getTeams, match }) => {
   const { path } = match;
+  console.log(auth);
+
+  useEffect(() => {
+    if ((auth.role = "User")) {
+      getTeams({ "user._id": auth.id });
+    }
+  }, [getTeams]);
+
   const onDelete = () => {
-    deleteUser(userAuth.id);
+    deleteUser(auth.id);
   };
 
-  return loading && userAuth === null ? (
+  return auth === null ? (
     <Spinner />
   ) : (
     <Fragment>
-      <UserCard
-        userAuth={userAuth}
-        loading={loading}
-        path={path}
-        onDelete={onDelete}
-      />
-      {userAuth.role === "User" && (
-        <section className="my-4">
-          <TeamsGrid user={userAuth} isUserUser={true} title={"Mis Equipos"} />
-        </section>
-      )}
+      <h2 className="text-primary my-3">Perfil</h2>
+      <UserCard auth={auth} path={path} onDelete={onDelete} auth={auth} />
+      <hr s />
+      <h2 className="text-primary my-3">Mis Equipos</h2>
+      <Link to="/user/teams/add" className="btn btn-primary my-2">
+        Agregar Equipo
+      </Link>
+      <TeamsGrid teams={team.teams} loading={team.loading} auth={auth} />
     </Fragment>
   );
 };
 
-UserPage.propTypes = {
-  auth: PropTypes.object.isRequired,
-  deleteUser: PropTypes.func.isRequired,
-};
-
 const mapSateToProps = (state) => ({
-  auth: state.auth,
+  auth: state.auth.userAuth,
+  team: state.team,
 });
 
-export default connect(mapSateToProps, { deleteUser })(UserPage);
+const actionCreator = {
+  deleteUser,
+  getTeams: teamActions.getTeams,
+};
+
+export default connect(mapSateToProps, actionCreator)(UserPage);

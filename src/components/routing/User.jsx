@@ -3,7 +3,7 @@ import { Switch } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import UserForm from "../admin/users/UserForm";
 import UserPage from "../user/UserPage";
-import TeamForm from "../teams-form/TeamForm";
+import TeamForm from "../teams/TeamForm";
 
 const User = ({ match }) => {
   return (

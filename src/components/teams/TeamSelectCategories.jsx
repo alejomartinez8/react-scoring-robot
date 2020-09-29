@@ -1,6 +1,6 @@
 import React from "react";
 
-const TeamFormCategory = ({ options = [], category, handleChange }) => {
+const TeamSelectCategories = ({ options = [], category, handleChange }) => {
   return (
     <div className="form-group row">
       <label className="col-md-4 col-form-group" htmlFor="category">
@@ -28,4 +28,4 @@ const TeamFormCategory = ({ options = [], category, handleChange }) => {
   );
 };
 
-export default TeamFormCategory;
+export default TeamSelectCategories;

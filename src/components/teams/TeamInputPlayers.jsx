@@ -7,7 +7,7 @@ const initialState = {
   birthday: "",
 };
 
-const TeamFormPlayer = ({ addPlayer, index, player, required = false }) => {
+const TeamInputPlayers = ({ addPlayer, index, player, required = false }) => {
   const [playerData, setPlayerData] = useState(initialState);
   const { name, legalId, gender, birthday } = playerData;
 
@@ -102,4 +102,4 @@ const TeamFormPlayer = ({ addPlayer, index, player, required = false }) => {
   );
 };
 
-export default TeamFormPlayer;
+export default TeamInputPlayers;

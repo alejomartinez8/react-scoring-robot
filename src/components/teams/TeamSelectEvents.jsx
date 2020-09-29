@@ -1,6 +1,11 @@
 import React from "react";
 
-const TeamFormEvent = ({ options = [], event, handleChange, disabled = false }) => {
+const TeamSelectEvents = ({
+  options = [],
+  event,
+  handleChange,
+  disabled = false,
+}) => {
   return (
     <div className="form-group row">
       <label className="col-md-4 col-form-group" htmlFor="event">
@@ -28,4 +33,4 @@ const TeamFormEvent = ({ options = [], event, handleChange, disabled = false }) 
   );
 };
 
-export default TeamFormEvent;
+export default TeamSelectEvents;
