@@ -3,6 +3,7 @@ import axios from "axios";
 export const teamServices = {
   addTeam,
   updateTeam,
+  registerTeam,
   getTeams,
   getTeamById,
   deleteTeam,
@@ -20,6 +21,10 @@ async function updateTeam(id, team) {
     .post(`/teams/${id}`, JSON.stringify(team))
     .then(handleResponse)
     .catch(handleError);
+}
+
+async function registerTeam(id) {
+  return axios.put(`/teams/register/${id}`).then(handleResponse).catch(handleError);
 }
 
 async function getTeams(query) {

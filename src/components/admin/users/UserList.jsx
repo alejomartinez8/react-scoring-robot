@@ -29,10 +29,6 @@ const UserList = ({ getAllUsers, user: { users, loading }, deleteUser, match }) 
             </div>
 
             <div className="card-body mb-2">
-              <p>
-                Administra tus usuarios (sólo Administradores puede acceder a esta
-                sección)
-              </p>
               <Link to={`${path}/add`} className="btn btn-sm btn-success mb-2">
                 Agregar Usuario
               </Link>

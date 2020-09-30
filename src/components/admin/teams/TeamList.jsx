@@ -5,18 +5,27 @@ import { teamActions } from "../../../redux/actions";
 import Spinner from "../../layout/Spinner";
 import ButtonBack from "../../layout/ButtonBack";
 
-const TeamsList = ({ team: { teams, loading }, getTeams, deleteTeam, match }) => {
+const TeamsList = ({
+  team: { teams },
+  getTeams,
+  registerTeam,
+  deleteTeam,
+  match,
+}) => {
   const { path } = match;
 
   useEffect(() => {
     getTeams();
-  }, [getTeams]);
+  }, [getTeams, teams]);
 
   const handleDeleteTeam = (_id) => {
     deleteTeam(_id);
   };
 
-  console.log(teams);
+  const handleRegisterTeam = (id) => {
+    registerTeam(id);
+    getTeams();
+  };
 
   return (
     <Fragment>
@@ -31,10 +40,6 @@ const TeamsList = ({ team: { teams, loading }, getTeams, deleteTeam, match }) =>
             </div>
 
             <div className="card-body">
-              <p>
-                Administra equipos (sólo Administradores pueden acceder a esta
-                sección)
-              </p>
               <Link className="btn btn-sm btn-success mb-2" to={`${path}/add`}>
                 Agregar Equipos
               </Link>
@@ -49,7 +54,8 @@ const TeamsList = ({ team: { teams, loading }, getTeams, deleteTeam, match }) =>
                       <th>Institución</th>
                       <th>Ciudad</th>
                       <th>País</th>
-                      <th></th>
+                      <th>Registrado</th>
+                      <th>Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -65,15 +71,26 @@ const TeamsList = ({ team: { teams, loading }, getTeams, deleteTeam, match }) =>
                           <td>{team.institution}</td>
                           <td>{team.user ? team.user.city : ""}</td>
                           <td>{team.user ? team.user.country : ""}</td>
+                          <td className="text-center">
+                            <label class="switch">
+                              <input
+                                type="checkbox"
+                                checked={team.registered}
+                                onChange={() => handleRegisterTeam(team._id)}
+                              />
+                              <span class="slider round"></span>
+                            </label>
+                          </td>
                           <td style={{ whiteSpace: "nowrap" }}>
                             <Link
                               to={`${path}/edit/${team._id}`}
-                              className="btn btn-sm btn-primary mr-1"
+                              className="btn btn-sm btn-primary m-1"
                             >
                               <i className="fas fa-edit"></i> Editar
                             </Link>
+
                             <button
-                              className="btn btn-sm btn-danger"
+                              className="btn btn-sm btn-danger m-1"
                               onClick={() => handleDeleteTeam(team._id)}
                             >
                               <span>Eliminar</span>
@@ -98,6 +115,7 @@ const mapStateToProps = (state) => ({
 
 const actionCreators = {
   getTeams: teamActions.getTeams,
+  registerTeam: teamActions.registerTeam,
   deleteTeam: teamActions.deleteTeam,
 };
 

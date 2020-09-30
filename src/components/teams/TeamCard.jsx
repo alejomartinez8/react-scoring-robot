@@ -9,11 +9,18 @@ const TeamCard = ({ auth, team }) => {
         <div className="card-header d-flex flex-column">
           <h3 className="text-center flex-row">{team.name}</h3>
           <h4 className="text-center flex-row">{team.event.slug}</h4>
-          <h4 className="text-center flex-row">{team.challenge.name}</h4>
-          <span className="badge badge-pill badge-info p-2 ">{team.category}</span>
+          <h4 className="text-center flex-row">Reto: {team.challenge.name}</h4>
+          <h4 className="text-center flex-row">Categoría: {team.category}</h4>
           <p className="text-center flex-row">
             {team.user.city} / {team.user.country}
           </p>
+          <span
+            className={`badge badge-pill ${
+              team.registered ? "badge-success" : "badge-warning"
+            } p-2`}
+          >
+            {team.registered ? "Inscrito" : "Pre-inscrito"}
+          </span>
         </div>
         {team.imageURL && (
           <img className="card-img-top" src={team.imageURL} alt={team.name}></img>

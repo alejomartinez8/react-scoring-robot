@@ -34,10 +34,6 @@ const ChallengesList = ({
             </div>
 
             <div className="card-body ">
-              <p>
-                Administra tus retos (sólo Administradores pueden acceder a esta
-                sección)
-              </p>
               <Link className="btn btn-sm btn-success mb-2" to={`${path}/add`}>
                 Agregar Reto
               </Link>

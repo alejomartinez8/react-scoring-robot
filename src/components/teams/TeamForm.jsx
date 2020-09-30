@@ -15,6 +15,7 @@ const initialState = {
   name: "",
   category: "",
   players: [],
+  registered: false,
 };
 
 const TeamForm = ({
@@ -69,7 +70,7 @@ const TeamForm = ({
   }, [team, events, match.params.id]);
 
   const [formData, setFormData] = useState(initialState);
-  const { user, event, challenge, name, category, players } = formData;
+  const { user, event, challenge, name, category, players, registered } = formData;
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [challengeOptions, setChallengeOptions] = useState([]);
 
@@ -224,6 +225,29 @@ const TeamForm = ({
                   challenge={challenge}
                   handleChange={handleChange}
                 />
+
+                {auth.userAuth.role === "Admin" && (
+                  <div className="form-group row">
+                    <label className="col-md-4 col-form-group" htmlFor="user">
+                      Registrar
+                    </label>
+                    <div className="col-md">
+                      <label class="switch">
+                        <input
+                          type="checkbox"
+                          checked={registered}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              registered: e.target.checked,
+                            })
+                          }
+                        />
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </div>
+                )}
 
                 <hr />
                 <h5>Integrante Equipo #1</h5>

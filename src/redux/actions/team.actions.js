@@ -29,6 +29,20 @@ const updateTeam = (id, team) => (dispatch) => {
     });
 };
 
+const registerTeam = (id) => (dispatch) => {
+  dispatch({ type: TeamTypes.REGISTER_TEAM });
+
+  teamServices
+    .registerTeam(id)
+    .then((team) => {
+      dispatch({ type: TeamTypes.TEAM_REGISTERED, payload: team });
+    })
+    .catch((error) => {
+      dispatch({ type: TeamTypes.TEAM_ERROR, payload: error });
+      dispatch(setAlert(error.toString(), "danger"));
+    });
+};
+
 const getTeams = (query) => (dispatch) => {
   dispatch({ type: TeamTypes.GET_TEAMS });
 
@@ -74,6 +88,7 @@ const deleteTeam = (id) => (dispatch) => {
 export const teamActions = {
   addTeam,
   updateTeam,
+  registerTeam,
   getTeams,
   getTeamById,
   deleteTeam,

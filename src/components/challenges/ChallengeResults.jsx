@@ -20,6 +20,7 @@ const ChallengeResults = ({
     if (!challenge.loading && challenge._id) {
       getTeams({
         challenge: challenge._id,
+        registered: true,
       });
     }
   }, [challenge.loading, challenge._id, getTeams]);

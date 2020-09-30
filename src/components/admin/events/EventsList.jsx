@@ -34,10 +34,6 @@ const EventsList = ({
             </div>
 
             <div className="card-body">
-              <p>
-                Administra tus eventos (sólo Administradores pueden acceder a esta
-                sección)
-              </p>
               <Link className="btn btn-sm btn-success mb-2" to={`${path}/add`}>
                 Agregar Evento
               </Link>
