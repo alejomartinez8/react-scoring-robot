@@ -1,5 +1,5 @@
-import React, { Fragment } from "react"
-import { Link } from "react-router-dom"
+import React, { Fragment } from "react";
+import { Link } from "react-router-dom";
 
 const Landing = () => {
   return (
@@ -18,14 +18,14 @@ const Landing = () => {
 
             <div className="buttons m-1">
               <Link to="/events" className="btn btn-primary">
-                Ver Eventos
+                <i className="fas fa-calendar"></i> Ver Eventos
               </Link>
             </div>
           </div>
         </div>
       </section>
     </Fragment>
-  )
-}
+  );
+};
 
-export default Landing
+export default Landing;

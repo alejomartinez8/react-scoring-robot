@@ -68,40 +68,49 @@ const ChallengeResults = ({
         <Spinner />
       ) : (
         <Fragment>
-          <h2 className="text-primary">Puntajes reto {challenge.name}</h2>
           <ButtonBack className="btn btn-secondary m-1">Atrás</ButtonBack>
-          <div className="table-responsive">
-            <table className="table table-striped ">
-              <thead className="thead-dark">
-                <tr>
-                  <th>Puesto</th>
-                  <th>Nombre Equipo</th>
-                  <th>Institución</th>
-                  <th>Ciudad</th>
-                  <th>Top Máx ({challenge.topMaxTurns})</th>
-                  <th>Acumulado</th>
-                  <th>Turnos</th>
-                </tr>
-              </thead>
-              <tbody>
-                {teams.length > 0 &&
-                  sortedTeams.map((team, index) => (
-                    <tr key={team._id}>
-                      <td>{index + 1}</td>
-                      <td>{team.name}</td>
-                      <td>{team.user.institution}</td>
-                      <td>{team.user.city}</td>
-                      <td className="text-center">
-                        {sumTopTurns(team.turns, challenge.topMaxTurns)}
-                      </td>
-                      <td className="text-center">{sumAllTurn(team.turns)}</td>
-                      <td>
-                        {team.turns.length} de {challenge.maxTurns}
-                      </td>
+          <div className="card shadow my-2">
+            <div className="card-header">
+              <h2 className="text-primary">
+                <i className="fas fa-list"></i> Puntajes reto {challenge.name}
+              </h2>
+            </div>
+
+            <div className="card-body">
+              <div className="table-responsive">
+                <table className="table table-striped ">
+                  <thead className="thead-dark">
+                    <tr>
+                      <th>Puesto</th>
+                      <th>Nombre Equipo</th>
+                      <th>Institución</th>
+                      <th>Ciudad</th>
+                      <th>Top Máx ({challenge.topMaxTurns})</th>
+                      <th>Acumulado</th>
+                      <th>Turnos</th>
                     </tr>
-                  ))}
-              </tbody>
-            </table>
+                  </thead>
+                  <tbody>
+                    {teams.length > 0 &&
+                      sortedTeams.map((team, index) => (
+                        <tr key={team._id}>
+                          <td>{index + 1}</td>
+                          <td>{team.name}</td>
+                          <td>{team.user.institution}</td>
+                          <td>{team.user.city}</td>
+                          <td className="text-center">
+                            {sumTopTurns(team.turns, challenge.topMaxTurns)}
+                          </td>
+                          <td className="text-center">{sumAllTurn(team.turns)}</td>
+                          <td>
+                            {team.turns.length} de {challenge.maxTurns}
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </Fragment>
       )}

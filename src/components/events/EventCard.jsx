@@ -16,11 +16,11 @@ const EventCard = ({ auth, event: { _id, slug, name, imageURL, description } }) 
       <div className="card-footer">
         {auth.isAuth && auth.userAuth.role === "Admin" && (
           <Link to={`/admin/events/edit/${_id}`} className="btn btn-dark m-1">
-            Editar
+            <i className="fas fa-edit"></i> Editar
           </Link>
         )}
         <Link to={`/events/${slug}`} className="btn btn-primary m-1">
-          Ver Retos
+          <i className="fas fa-trophy"></i> Ver Retos
         </Link>
       </div>
     </div>

@@ -6,11 +6,14 @@ const DashboardAdminItem = ({
   description,
   actionPath,
   actionDescription,
+  icon,
 }) => {
   return (
     <tr>
       <td>
-        <strong>{title}</strong>
+        <strong>
+          <i className={icon}></i> {title}
+        </strong>
         <p>{description}</p>
       </td>
       <td>

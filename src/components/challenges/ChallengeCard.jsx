@@ -6,7 +6,9 @@ const ChallengeCard = ({ auth, challenge }) => {
   return (
     <div className="card shadow my-4" key={challenge._id}>
       <div className="card-header">
-        <h3 className="text-primary">{challenge.name}</h3>
+        <h3 className="text-primary">
+          <i className="fas fa-trophy"></i> {challenge.name}
+        </h3>
       </div>
       <div className="card-body">
         <div className="row">
@@ -37,14 +39,14 @@ const ChallengeCard = ({ auth, challenge }) => {
             to={`/admin/challenges/edit/${challenge._id}`}
             className="btn btn-dark m-1"
           >
-            Editar
+            <i className="fas fa-edit"></i> Editar
           </Link>
         )}
         <Link
           to={`${match.url}/${challenge.slug}/results`}
           className="btn btn-primary m-1"
         >
-          Resultados
+          <i className="fas fa-list"></i> Resultados
         </Link>
 
         {challenge.playoffs && (
@@ -62,7 +64,7 @@ const ChallengeCard = ({ auth, challenge }) => {
               to={`${match.url}/${challenge.slug}/score`}
               className="btn btn-warning m-1"
             >
-              Calificar
+              <i className="fas fa-tasks"></i> Calificar
             </Link>
           )}
       </div>

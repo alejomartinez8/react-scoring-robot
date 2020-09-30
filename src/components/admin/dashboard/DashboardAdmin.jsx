@@ -12,7 +12,9 @@ const DashboardAdmin = ({ auth: { userAuth, loading }, match }) => {
     <Fragment>
       <div className="card shadow mb-4 border-left-primary">
         <div className="card-header">
-          <h2 className="text-primary">Panel Administración</h2>
+          <h2 className="text-primary">
+            <i className="fas fa-tachometer"></i> Dashboard
+          </h2>
         </div>
 
         <div className="card-body table-responsive">
@@ -24,6 +26,7 @@ const DashboardAdmin = ({ auth: { userAuth, loading }, match }) => {
                 description="Crea y actualiza eventos manualmente"
                 actionPath={`${path}/events`}
                 actionDescription="Administrar"
+                icon="fas fa-calendar"
               />
 
               <DashboardAdminItem
@@ -31,6 +34,7 @@ const DashboardAdmin = ({ auth: { userAuth, loading }, match }) => {
                 description="Crea y actualiza retos manualmente"
                 actionPath={`${path}/challenges`}
                 actionDescription="Administrar"
+                icon="fas fa-trophy"
               />
 
               <DashboardAdminItem
@@ -38,6 +42,7 @@ const DashboardAdmin = ({ auth: { userAuth, loading }, match }) => {
                 description="Crea y actualiza usuarios manualmente"
                 actionPath={`${path}/users`}
                 actionDescription="Administrar"
+                icon="fas fa-user"
               />
 
               <DashboardAdminItem
@@ -45,6 +50,7 @@ const DashboardAdmin = ({ auth: { userAuth, loading }, match }) => {
                 description="Crea y actualiza equipos manualmente"
                 actionPath={`${path}/teams`}
                 actionDescription="Administrar"
+                icon="fas fa-users"
               />
             </tbody>
           </table>

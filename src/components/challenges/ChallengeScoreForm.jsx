@@ -19,7 +19,7 @@ const initalState = {
   totalPoints: 0,
 };
 
-const ScoreForm = ({
+const CallengeScoreForm = ({
   getEventBySlug,
   challenge: { challenge, loading },
   getChallengeBySlug,
@@ -46,11 +46,12 @@ const ScoreForm = ({
 
   // load score form
   useEffect(() => {
-    if (Object.keys(challenge).length !== 0 && teams.length > 0) {
+    console.log(challenge, teams);
+    if (Object.keys(challenge).length > 0) {
       resetScoreForm();
     }
     // eslint-disable-next-line
-  }, [challenge, teams]);
+  }, [challenge]);
 
   function resetScoreForm() {
     const _tasks = [];
@@ -72,6 +73,8 @@ const ScoreForm = ({
     );
 
     setSeconds(challenge.maxTime);
+    setTimer(false);
+    setTeam("");
   }
 
   // use states vars
@@ -187,8 +190,7 @@ const ScoreForm = ({
       "challenge.slug": match.params.challengeSlug,
     });
     // resetForm
-    setTimer(false);
-    setTeam("");
+
     resetScoreForm();
   };
 
@@ -198,6 +200,7 @@ const ScoreForm = ({
       <div className="card shadow my-4">
         <div className="card-header">
           <h2 className="text-primary">
+            <i className="fas fa-tasks"></i>{" "}
             {`Calificar ${challenge.name} - ${challenge.categories}`}
           </h2>
         </div>
@@ -246,7 +249,15 @@ const ScoreForm = ({
                   onClick={handleSetTimer}
                   className={!timer ? "btn btn-success m-2" : "btn btn-danger m-2"}
                 >
-                  {!timer ? "Iniciar" : "Parar"}
+                  {!timer ? (
+                    <>
+                      <i className="fas fa-play"></i> Iniciar
+                    </>
+                  ) : (
+                    <>
+                      <i className="fas fa-stop"></i> Parar
+                    </>
+                  )}
                 </button>
                 <button onClick={handleRestartTimer} className="btn btn-warning m-2">
                   Reiniciar
@@ -379,4 +390,4 @@ const actionCreators = {
   updateTeam: teamActions.updateTeam,
 };
 
-export default connect(mapStateToProps, actionCreators)(ScoreForm);
+export default connect(mapStateToProps, actionCreators)(CallengeScoreForm);

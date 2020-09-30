@@ -1,50 +1,88 @@
-import React, { Fragment, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import { deleteUser } from "../../redux/actions/user.actions";
-import { teamActions } from "../../redux/actions";
-import Spinner from "../layout/Spinner";
-import UserCard from "./UserCard";
-import TeamsGrid from "../teams/TeamsGrid";
+import { Link } from "react-router-dom";
 
-const UserPage = ({ auth, team, getTeams, match }) => {
-  const { path } = match;
-  console.log(auth);
-
-  useEffect(() => {
-    if ((auth.role = "User")) {
-      getTeams({ "user._id": auth.id });
-    }
-  }, [getTeams]);
-
+const UserPage = ({ auth: { userAuth, loading } }) => {
   const onDelete = () => {
-    deleteUser(auth.id);
+    deleteUser(userAuth.id);
   };
 
-  return auth === null ? (
-    <Spinner />
-  ) : (
+  return (
     <Fragment>
-      <h2 className="text-primary my-3">Perfil</h2>
-      <UserCard auth={auth} path={path} onDelete={onDelete} auth={auth} />
-      <hr s />
-      <h2 className="text-primary my-3">Mis Equipos</h2>
-      <Link to="/user/teams/add" className="btn btn-primary my-2">
-        Agregar Equipo
-      </Link>
-      <TeamsGrid teams={team.teams} loading={team.loading} auth={auth} />
+      <div className="card shadow my-4">
+        <div className="card-header">
+          <h2 className="text-primary">
+            <i className="fas fa-user"></i> Perfil
+          </h2>
+        </div>
+        <div className="card-body">
+          <div className="row">
+            <div className="col">
+              <div className="row">
+                <p className="col-md-3 text-primary">Nombre:</p>
+                <p className="col-md-6">
+                  {userAuth.firstName} {userAuth.lastName}
+                </p>
+              </div>
+
+              <div className="row">
+                <p className="col-md-3 text-primary">Email:</p>
+                <p className="col-md-6">{userAuth.email}</p>
+              </div>
+
+              <div className="row">
+                <p className="col-md-3 text-primary">Institución Educativa:</p>
+                <p className="col-md-6">{userAuth.institution}</p>
+              </div>
+
+              <div className="row">
+                <p className="col-md-3 text-primary">Ciudad:</p>
+                <p className="col-md-6">{userAuth.city}</p>
+              </div>
+
+              <div className="row">
+                <p className="col-md-3 text-primary">País:</p>
+                <p className="col-md-6">{userAuth.country}</p>
+              </div>
+
+              <div className="row">
+                <p className="col-md-3 text-primary">Acerca de mí:</p>
+                <p className="col-md-6">{userAuth.bio}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="card-footer">
+          <Link to={`/user/edit/${userAuth._id}`} className="btn btn-primary">
+            <i className="fas fa-user"></i> Editar Perfil
+          </Link>
+          <button
+            onClick={onDelete}
+            type="button"
+            className="btn btn-danger mx-1"
+            disabled={loading}
+          >
+            {loading ? (
+              <span className="spinner-border spinner-border-sm m-1"></span>
+            ) : (
+              <i className="fas fa-user-minus"></i>
+            )}{" "}
+            Eliminar Cuenta
+          </button>
+        </div>
+      </div>
     </Fragment>
   );
 };
 
 const mapSateToProps = (state) => ({
-  auth: state.auth.userAuth,
-  team: state.team,
+  auth: state.auth,
 });
 
 const actionCreator = {
   deleteUser,
-  getTeams: teamActions.getTeams,
 };
 
 export default connect(mapSateToProps, actionCreator)(UserPage);

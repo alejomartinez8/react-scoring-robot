@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { loadUser } from "./redux/actions/user.actions";
 import Routes from "./components/routing/Routes";
 import Landing from "./components/layout/Landing";
-import Navbar from "./components/layout/Navbar";
+import Topbar from "./components/layout/Topbar";
 
 const App = ({ loadUser }) => {
   if (localStorage.getItem("token")) {
@@ -14,7 +14,7 @@ const App = ({ loadUser }) => {
   return (
     <BrowserRouter>
       <Fragment>
-        <Navbar />
+        <Topbar />
         <Switch>
           <Route exact path="/" component={Landing} />
           <Route component={Routes} />

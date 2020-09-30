@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
-import EventGrid from "../events/EventsGrid";
+import EventsPage from "../events/EventsPage";
 import ChallengesGrid from "../challenges/ChallengesGrid";
 import ChallengeResults from "../challenges/ChallengeResults";
 import ChallengePlayoffs from "../challenges/ChallengePlayoffs";
@@ -10,7 +10,7 @@ import ChallengeScoreForm from "../challenges/ChallengeScoreForm";
 const Events = () => {
   return (
     <Switch>
-      <Route exact path="/events" component={EventGrid} />
+      <Route exact path="/events" component={EventsPage} />
       {/* Challenges */}
       <Route exact path={"/events/:eventSlug"} component={ChallengesGrid} />
       <Route
