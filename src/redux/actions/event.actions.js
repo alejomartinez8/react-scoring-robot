@@ -1,17 +1,17 @@
 import { eventServices } from "../services";
-import { setAlert } from "./alert.actions";
+import { alertActions } from "./alert.actions";
 import { EventTypes } from "../constants";
 
 const addEvent = (event) => (dispatch) => {
   eventServices
     .addEvent(event)
-    .then((event) => {
+    .then(() => {
       dispatch({ type: EventTypes.CLEAR_EVENTS });
-      dispatch(setAlert("Evento Creado", "success"));
+      dispatch(alertActions.setAlert("Evento Creado", "success"));
     })
     .catch((error) => {
       dispatch({ type: EventTypes.EVENT_ERROR, payload: error });
-      dispatch(setAlert(error.toString(), "danger"));
+      dispatch(alertActions.setAlert(error.toString(), "danger"));
     });
 };
 
@@ -20,11 +20,11 @@ const updateEvent = (id, event) => (dispatch) => {
     .updateEvent(id, event)
     .then((event) => {
       dispatch({ type: EventTypes.EVENT_LOADED, payload: event });
-      dispatch(setAlert("Evento actualizado", "success"));
+      dispatch(alertActions.setAlert("Evento actualizado", "success"));
     })
     .catch((error) => {
       dispatch({ type: EventTypes.EVENT_ERROR, payload: error });
-      dispatch(setAlert(error.toString(), "danger"));
+      dispatch(alertActions.setAlert(error.toString(), "danger"));
     });
 };
 
@@ -38,7 +38,7 @@ const getAllEvents = () => (dispatch) => {
     })
     .catch((error) => {
       dispatch({ type: EventTypes.EVENT_ERROR, payload: error });
-      dispatch(setAlert(error.toString(), "danger"));
+      dispatch(alertActions.setAlert(error.toString(), "danger"));
     });
 };
 
@@ -52,7 +52,7 @@ const getEventById = (id) => (dispatch) => {
     })
     .catch((error) => {
       dispatch({ type: EventTypes.EVENT_ERROR, payload: error });
-      dispatch(setAlert(error.toString(), "danger"));
+      dispatch(alertActions.setAlert(error.toString(), "danger"));
     });
 };
 
@@ -66,7 +66,7 @@ const getEventBySlug = (slug) => (dispatch) => {
     })
     .catch((error) => {
       dispatch({ type: EventTypes.EVENT_ERROR, payload: error });
-      dispatch(setAlert(error.toString(), "danger"));
+      dispatch(alertActions.setAlert(error.toString(), "danger"));
     });
 };
 
@@ -75,12 +75,12 @@ const deleteEvent = (id) => (dispatch) => {
     .deleteEvent(id)
     .then(() => {
       dispatch({ type: EventTypes.EVENT_DELETE, payload: id });
-      dispatch(setAlert("Evento Eliminado", "success"));
+      dispatch(alertActions.setAlert("Evento Eliminado", "success"));
       dispatch(getAllEvents());
     })
     .catch((error) => {
       dispatch({ type: EventTypes.EVENT_ERROR, payload: error });
-      dispatch(setAlert(error.toString(), "danger"));
+      dispatch(alertActions.setAlert(error.toString(), "danger"));
     });
 };
 

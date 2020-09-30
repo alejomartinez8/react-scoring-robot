@@ -4,7 +4,7 @@ import queryString from "query-string";
 import { authServices } from "../../redux/services";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { setAlert } from "../../redux/actions/alert.actions";
+import { alertActions } from "../../redux/actions/";
 import ResetPasswordForm from "./ResetPasswordForm";
 
 const ResetPassword = ({ history, setAlert }) => {
@@ -77,4 +77,8 @@ ResetPassword.propTypes = {
   setAlert: PropTypes.func.isRequired,
 };
 
-export default connect(null, { setAlert })(ResetPassword);
+const actionsCreators = {
+  setAlert: alertActions.setAlert,
+};
+
+export default connect(null, actionsCreators)(ResetPassword);

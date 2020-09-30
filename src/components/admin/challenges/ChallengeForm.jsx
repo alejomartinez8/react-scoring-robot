@@ -17,6 +17,7 @@ const initialState = {
   maxTurns: 0,
   topMaxTurns: 0,
   playoffs: false,
+  finalTeams: 0,
   categories: [],
   available: "",
   maxTime: 0,
@@ -75,6 +76,7 @@ const ChallengeForm = ({
     bonusType,
     maxTime,
     playoffs,
+    finalTeams,
     available,
   } = formData;
 
@@ -156,124 +158,218 @@ const ChallengeForm = ({
             <div className="card-body">
               <h4>Información</h4>
               <form className="form" onSubmit={handleSubmit}>
-                <span>(*) Olbl</span>
-                <div className="form-group">
-                  <label htmlFor="name">Nombre Reto (*)</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="name"
-                    name="name"
-                    value={name}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="slug">Slug Reto (*)</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="slug"
-                    name="slug"
-                    value={slug}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="imageURL">URL Imagen</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="imageURL"
-                    name="imageURL"
-                    value={imageURL}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="description">Descripcion</label>
-                  <textarea
-                    className="form-control"
-                    id="description"
-                    name="description"
-                    value={description}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="maxTeams">No. Equipos Máximo por Reto (*)</label>
-                  <input
-                    type="Number"
-                    className="form-control"
-                    id="maxTeams"
-                    name="maxTeams"
-                    value={maxTeams}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="maxTeams">No. Turnos Máximo por Equipo (*)</label>
-                  <input
-                    type="Number"
-                    className="form-control"
-                    id="maxTurns"
-                    name="maxTurns"
-                    value={maxTurns}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="maxTeams">
-                    Suma de puntajes Top Máximo de Turnos (*)
+                <div className="form-group row">
+                  <label className="col-sm-3 col-form-label" htmlFor="available">
+                    {" "}
+                    Habilitado{" "}
                   </label>
-                  <input
-                    type="Number"
-                    className="form-control"
-                    id="topMaxTurns"
-                    name="topMaxTurns"
-                    value={topMaxTurns}
-                    onChange={handleChange}
-                    required
-                  />
+                  <div className="col-sm">
+                    <input
+                      id="available"
+                      name="available"
+                      type="checkbox"
+                      required
+                      checked={available}
+                      className="form-control-custom"
+                      onChange={() =>
+                        setFormData({
+                          ...formData,
+                          available: !formData.available,
+                        })
+                      }
+                    />
+                  </div>
                 </div>
 
-                <div className="form-group">
-                  <label htmlFor="categories">Categorías: </label>
-                  <Select
-                    isMulti
-                    className="dropdown"
-                    placeholder="Selecciona las categorías permitidas"
-                    options={categoryOptions}
-                    onChange={handleCategoryChange}
-                    value={categoryOptions.filter((elm) =>
-                      selectedCategory.includes(elm.value)
-                    )}
-                  />
+                <div className="form-group row">
+                  <label className="col-sm-3 col-form-label" htmlFor="name">
+                    Nombre Reto (*):
+                  </label>
+                  <div className="col-sm-9">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="name"
+                      name="name"
+                      value={name}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group row">
+                  <label className="col-sm-3 col-form-label" htmlFor="slug">
+                    Slug Reto (*):
+                  </label>
+                  <div className="col-sm-9">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="slug"
+                      name="slug"
+                      value={slug}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group row">
+                  <label className="col-sm-3 col-form-label" htmlFor="imageURL">
+                    URL Imagen:
+                  </label>
+                  <div className="col-sm-9">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="imageURL"
+                      name="imageURL"
+                      value={imageURL}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group row">
+                  <label className="col-sm-3 col-form-label" htmlFor="description">
+                    Descripción:
+                  </label>
+                  <div className="col-sm-9">
+                    <textarea
+                      className="form-control"
+                      id="description"
+                      name="description"
+                      value={description}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group row">
+                  <label className="col-sm-3 col-form-label" htmlFor="categories">
+                    Categorías:{" "}
+                  </label>
+                  <div className="col-sm">
+                    <Select
+                      isMulti
+                      className="dropdown"
+                      placeholder="Selecciona las categorías permitidas"
+                      options={categoryOptions}
+                      onChange={handleCategoryChange}
+                      value={categoryOptions.filter((elm) =>
+                        selectedCategory.includes(elm.value)
+                      )}
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group row">
+                  <label className="col-sm-3 col-form-label" htmlFor="maxTeams">
+                    No. Máximo de Equipos permitido(*)
+                  </label>
+                  <div className="col-sm-3">
+                    <input
+                      type="Number"
+                      className="form-control"
+                      id="maxTeams"
+                      name="maxTeams"
+                      value={maxTeams}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <hr />
+                <h4>Turnos</h4>
+
+                <div className="form-group row">
+                  <label className="col-sm-3 col-form-label" htmlFor="maxTeams">
+                    No. de Turnos por Equipo (*)
+                  </label>
+                  <div className="col-sm-3">
+                    <input
+                      type="Number"
+                      className="form-control"
+                      id="maxTurns"
+                      name="maxTurns"
+                      value={maxTurns}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group row">
+                  <label className="col-sm-3 col-form-label" htmlFor="maxTeams">
+                    No. de Turnos Suma Top para Clasificar (*)
+                  </label>
+                  <div className="col-sm-3">
+                    <input
+                      type="Number"
+                      className="form-control"
+                      id="topMaxTurns"
+                      name="topMaxTurns"
+                      value={topMaxTurns}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <hr />
+                <h4>Finales </h4>
+                <div className="form-group row">
+                  <label className="col-sm-3 col-form-label" htmlFor="playoffs">
+                    PlayOffs
+                  </label>
+                  <div className="col-sm">
+                    <input
+                      type="checkBox"
+                      name="playoffs"
+                      checked={playoffs}
+                      onChange={(e) =>
+                        setFormData({ ...formData, playoffs: e.target.checked })
+                      }
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group row">
+                  <label className="col-sm-3 col-form-label" htmlFor="maxTeams">
+                    No. Equipos Finalistas
+                  </label>
+                  <div className="col-sm-3">
+                    <input
+                      type="Number"
+                      className="form-control"
+                      id="finalTeams"
+                      name="finalTeams"
+                      value={finalTeams}
+                      onChange={handleChange}
+                      disabled={!playoffs}
+                    />
+                  </div>
                 </div>
 
                 <hr />
                 <h4>Tareas</h4>
 
-                <div className="form-group">
-                  <label htmlFor="maxTime">Tiempo Maxímo (segundos)</label>
-                  <input
-                    type="Number"
-                    className="form-control col-sm-3"
-                    id="maxTime"
-                    name="maxTime"
-                    value={maxTime}
-                    onChange={handleChange}
-                  />
+                <div className="form-group row">
+                  <label className="col-sm-3 col-form-label" htmlFor="maxTime">
+                    Tiempo Maxímo (segundos)
+                  </label>
+                  <div className="col-sm-3">
+                    <input
+                      type="Number"
+                      className="form-control"
+                      id="maxTime"
+                      name="maxTime"
+                      value={maxTime}
+                      onChange={handleChange}
+                    />
+                  </div>
                 </div>
 
                 <div className="form-group table-responsive">
@@ -301,69 +397,47 @@ const ChallengeForm = ({
                   </table>
                 </div>
 
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkBox"
-                    name="taskSecuence"
-                    checked={taskSecuence}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        taskSecuence: e.target.checked,
-                      })
-                    }
-                  />{" "}
-                  <label htmlFor="taskSecuence">Tareas en secuencia</label>
+                <div className="form-group row">
+                  <label className="col-sm-3 col-form-label" htmlFor="taskSecuence">
+                    Tareas en secuencia
+                  </label>
+                  <div className="col-sm">
+                    <input
+                      type="checkBox"
+                      name="taskSecuence"
+                      checked={taskSecuence}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          taskSecuence: e.target.checked,
+                        })
+                      }
+                    />
+                  </div>
                 </div>
 
-                <div className="form-group">
-                  <label htmlFor="bonusType">Puntaje Bonus</label>
-                  <select
-                    className="form-control"
-                    name="bonusType"
-                    id="bonustype"
-                    value={bonusType}
-                    onChange={handleChange}
-                  >
-                    <option value="">Ninguno</option>
-                    <option value="timer">Sumar tiempo restante Timer</option>
-                    <option value="manual">Ingresar manualmente</option>
-                  </select>
+                <div className="form-group row">
+                  <label className="col-sm-3 col-form-label" htmlFor="bonusType">
+                    Puntaje Bonus
+                  </label>
+                  <div className="col-sm-6">
+                    <select
+                      className="form-control"
+                      name="bonusType"
+                      id="bonustype"
+                      value={bonusType}
+                      onChange={handleChange}
+                    >
+                      <option value="">Ninguno</option>
+                      <option value="timer">Sumar tiempo restante Timer</option>
+                      <option value="manual">Ingresar manualmente</option>
+                    </select>
+                  </div>
                 </div>
 
                 <hr />
-                <div className="form-group">
-                  <input
-                    type="checkBox"
-                    name="playoffs"
-                    checked={playoffs}
-                    onChange={(e) =>
-                      setFormData({ ...formData, playoffs: e.target.checked })
-                    }
-                  />{" "}
-                  <label htmlFor="playoffs">PlayOffs</label>
-                </div>
 
-                <div className="form-group">
-                  <input
-                    id="available"
-                    name="available"
-                    type="checkbox"
-                    required
-                    checked={available}
-                    className="form-control-custom"
-                    onChange={() =>
-                      setFormData({
-                        ...formData,
-                        available: !formData.available,
-                      })
-                    }
-                  />{" "}
-                  <label htmlFor="available"> Habilitado </label>
-                </div>
-
-                <div className="form-row">
+                <div className="form-group row">
                   <button
                     type="submit"
                     className="btn btn-primary m-1"

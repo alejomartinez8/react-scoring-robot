@@ -1,21 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { alertActions } from "../../redux/actions";
 import { Modal } from "react-bootstrap";
 
-const Alert = ({ alerts }) => {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
+const Alert = ({ alerts, deleteAlert }) => {
   useEffect(() => {
     if (alerts.length > 0) {
       handleShow();
     }
   }, [alerts]);
 
+  const [show, setShow] = useState(false);
+
+  const handleClose = (id) => {
+    setShow(false);
+    deleteAlert(id);
+  };
+
+  const handleShow = () => setShow(true);
+
   return (
     alerts !== null &&
-    alerts.length > 0 && (
+    alerts.length > 0 &&
+    alerts.map((alert) => (
       <Modal
         key={alert.id}
         show={show}
@@ -27,19 +34,17 @@ const Alert = ({ alerts }) => {
           <Modal.Title>Scoring-Robot</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {alerts.map((alert) => (
-            <div key={alert.id} className={`alert alert-${alert.alertType}`}>
-              {alert.msg}
-            </div>
-          ))}
+          <div key={alert.id} className={`alert alert-${alert.alertType}`}>
+            {alert.msg}
+          </div>
         </Modal.Body>
         <Modal.Footer>
-          <button className="btn btn-success" onClick={handleClose}>
+          <button className="btn btn-success" onClick={() => handleClose(alert.id)}>
             Cerrar
           </button>
         </Modal.Footer>
       </Modal>
-    )
+    ))
   );
 };
 
@@ -47,4 +52,8 @@ const mapStateToProps = (state) => ({
   alerts: state.alert,
 });
 
-export default connect(mapStateToProps)(Alert);
+const actionsCreators = {
+  deleteAlert: alertActions.deleteAlert,
+};
+
+export default connect(mapStateToProps, actionsCreators)(Alert);

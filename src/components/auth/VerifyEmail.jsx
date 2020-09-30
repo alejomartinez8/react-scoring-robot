@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import queryString from "query-string";
 import { authServices } from "../../redux/services";
 import { connect } from "react-redux";
-import { setAlert } from "../../redux/actions/alert.actions";
+import { alertActions } from "../../redux/actions/";
 
 const VerifyEmail = ({ setAlert, history }) => {
   useEffect(() => {
@@ -39,4 +39,8 @@ const VerifyEmail = ({ setAlert, history }) => {
   );
 };
 
-export default connect(null, { setAlert })(VerifyEmail);
+const actionsCreators = {
+  setAlert: alertActions.setAlert,
+};
+
+export default connect(null, actionsCreators)(VerifyEmail);

@@ -1,16 +1,16 @@
 import { teamServices } from "../services";
-import { setAlert } from "./alert.actions";
+import { alertActions } from "./alert.actions";
 import { TeamTypes } from "../constants";
 
 const addTeam = (team) => (dispatch) => {
   teamServices
     .addTeam(team)
     .then(() => {
-      dispatch(setAlert("Equipo creado", "success"));
+      dispatch(alertActions.setAlert("Equipo creado", "success"));
     })
     .catch((error) => {
       dispatch({ type: TeamTypes.TEAM_ERROR, payload: error });
-      dispatch(setAlert(error.toString(), "danger"));
+      dispatch(alertActions.setAlert(error.toString(), "danger"));
     });
 };
 
@@ -21,11 +21,11 @@ const updateTeam = (id, team) => (dispatch) => {
     .updateTeam(id, team)
     .then((team) => {
       dispatch({ type: TeamTypes.TEAM_UPDATED, payload: team });
-      dispatch(setAlert("Equipo actualizado", "success"));
+      dispatch(alertActions.setAlert("Equipo actualizado", "success"));
     })
     .catch((error) => {
       dispatch({ type: TeamTypes.TEAM_ERROR, payload: error });
-      dispatch(setAlert(error.toString(), "danger"));
+      dispatch(alertActions.setAlert(error.toString(), "danger"));
     });
 };
 
@@ -39,7 +39,7 @@ const registerTeam = (id) => (dispatch) => {
     })
     .catch((error) => {
       dispatch({ type: TeamTypes.TEAM_ERROR, payload: error });
-      dispatch(setAlert(error.toString(), "danger"));
+      dispatch(alertActions.setAlert(error.toString(), "danger"));
     });
 };
 
@@ -53,7 +53,7 @@ const getTeams = (query) => (dispatch) => {
     })
     .catch((error) => {
       dispatch({ type: TeamTypes.TEAM_ERROR, payload: error });
-      dispatch(setAlert(error.toString(), "danger"));
+      dispatch(alertActions.setAlert(error.toString(), "danger"));
     });
 };
 
@@ -67,7 +67,7 @@ const getTeamById = (id) => (dispatch) => {
     })
     .catch((error) => {
       dispatch({ type: TeamTypes.TEAM_ERROR, payload: error });
-      dispatch(setAlert(error.toString(), "danger"));
+      dispatch(alertActions.setAlert(error.toString(), "danger"));
     });
 };
 
@@ -76,12 +76,12 @@ const deleteTeam = (id) => (dispatch) => {
     .deleteTeam(id)
     .then(() => {
       dispatch({ type: TeamTypes.TEAM_DELETE, payload: id });
-      dispatch(setAlert("Equipo Eliminado", "success"));
+      dispatch(alertActions.setAlert("Equipo Eliminado", "success"));
       dispatch(getTeams());
     })
     .catch((error) => {
       dispatch({ type: TeamTypes.TEAM_ERROR, payload: error });
-      dispatch(setAlert(error.toString(), "danger"));
+      dispatch(alertActions.setAlert(error.toString(), "danger"));
     });
 };
 

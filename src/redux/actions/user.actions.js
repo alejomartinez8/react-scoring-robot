@@ -1,6 +1,6 @@
 import { UserTypes } from "../constants";
 import { userServices } from "../services/";
-import { setAlert } from "./alert.actions";
+import { alertActions } from "./alert.actions";
 import setAuthToken from "../../helpers/setAuthToken";
 
 // load user action
@@ -18,7 +18,7 @@ export const loadUser = () => (dispatch) => {
     })
     .catch((error) => {
       dispatch({ type: UserTypes.AUTH_ERROR, payload: error });
-      dispatch(setAlert(error.toString(), "danger"));
+      dispatch(alertActions.setAlert(error.toString(), "danger"));
     });
 };
 
@@ -35,7 +35,7 @@ export const getAllUsers = () => (dispatch) => {
     })
     .catch((error) => {
       dispatch({ type: UserTypes.USER_ERROR, payload: error });
-      dispatch(setAlert(error.toString(), "danger"));
+      dispatch(alertActions.setAlert(error.toString(), "danger"));
     });
 };
 
@@ -51,7 +51,7 @@ export const getUserById = (id) => (dispatch) => {
     })
     .catch((error) => {
       dispatch({ type: UserTypes.AUTH_ERROR, payload: error });
-      dispatch(setAlert(error.toString(), "danger"));
+      dispatch(alertActions.setAlert(error.toString(), "danger"));
     });
 };
 
@@ -61,11 +61,11 @@ export const createUser = (user) => (dispatch) => {
     .createUser(user)
     .then(() => {
       dispatch({ type: UserTypes.AUTH_REQUEST_SUCCESS });
-      dispatch(setAlert("Usuario Creado", "success"));
+      dispatch(alertActions.setAlert("Usuario Creado", "success"));
     })
     .catch((error) => {
       dispatch({ type: UserTypes.AUTH_ERROR, payload: error });
-      dispatch(setAlert(error.toString(), "danger"));
+      dispatch(alertActions.setAlert(error.toString(), "danger"));
     });
 };
 
@@ -77,11 +77,11 @@ export const updateUser = (id, params) => (dispatch) => {
       dispatch({ type: UserTypes.AUTH_REQUEST_SUCCESS });
       dispatch(loadUser());
       dispatch(getUserById(user.id));
-      dispatch(setAlert("Usuario Actualizado", "success"));
+      dispatch(alertActions.setAlert("Usuario Actualizado", "success"));
     })
     .catch((error) => {
       dispatch({ type: UserTypes.AUTH_ERROR, payload: error });
-      dispatch(setAlert(error.toString(), "danger"));
+      dispatch(alertActions.setAlert(error.toString(), "danger"));
     });
 };
 
@@ -92,11 +92,11 @@ export const deleteUser = (id) => (dispatch) => {
     .then((res) => {
       dispatch({ type: UserTypes.USER_DELETE, payload: id });
       dispatch(getAllUsers());
-      dispatch(setAlert("Usuario Eliminado", "success"));
+      dispatch(alertActions.setAlert("Usuario Eliminado", "success"));
     })
     .catch((error) => {
       dispatch({ type: UserTypes.AUTH_ERROR, payload: error });
-      dispatch(setAlert(error.toString(), "danger"));
+      dispatch(alertActions.setAlert(error.toString(), "danger"));
     });
 };
 
