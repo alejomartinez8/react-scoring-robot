@@ -242,7 +242,9 @@ const CallengeScoreForm = ({
 
             <hr />
             <div className="form-group row my-2 justify-content-center align-items-center">
-              <div className="display-4">{seconds} (s)</div>
+              <div className="display-4">
+                <i className="fas fa-hourglass-start"></i> {seconds} (s)
+              </div>
 
               <div>
                 <button

@@ -11,6 +11,7 @@ const ChallengeResults = ({
   getChallengeBySlug,
   match,
 }) => {
+  /** Get teams */
   useEffect(() => {
     getChallengeBySlug(match.params.challengeSlug);
     getTeams({
@@ -24,12 +25,14 @@ const ChallengeResults = ({
     match.params.challengeSlug,
   ]);
 
+  /** Sum all turns */
   const sumAllTurn = (arr) => {
     return arr.length > 0
       ? arr.map((elm) => elm.totalPoints).reduce((acc, val) => acc + val)
       : 0;
   };
 
+  /** sum Top turns */
   const sumTopTurns = (arr, max) => {
     return arr.length > 0
       ? arr
@@ -40,6 +43,7 @@ const ChallengeResults = ({
       : 0;
   };
 
+  /** Sort Teams */
   const sortTeams = (teams) => {
     let sortedTeams = teams.map((team) => ({
       ...team,
@@ -62,6 +66,7 @@ const ChallengeResults = ({
     // console.log(teams.map((team) => sumTopTurns(team.turns, challenge.topMaxTurns)));
   }
 
+  /** Return */
   return (
     <Fragment>
       {loading ? (
