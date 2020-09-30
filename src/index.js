@@ -32,6 +32,8 @@ if (process.env.NODE_ENV === "development") {
       return Promise.reject(error);
     }
   );
+} else {
+  console.log = () => {};
 }
 
 ReactDOM.render(
