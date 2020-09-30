@@ -16,9 +16,11 @@ const TeamsList = ({ team: { teams, loading }, getTeams, deleteTeam, match }) =>
     deleteTeam(_id);
   };
 
+  console.log(teams);
+
   return (
     <Fragment>
-      {loading ? (
+      {teams.length === 0 ? (
         <Spinner />
       ) : (
         <Fragment>
@@ -54,19 +56,21 @@ const TeamsList = ({ team: { teams, loading }, getTeams, deleteTeam, match }) =>
                     {teams.length > 0 &&
                       teams.map((team) => (
                         <tr key={team._id}>
-                          <td>{team.name}</td>
-                          <td>{team.category}</td>
-                          <td>{team.challenge.name}</td>
-                          <td>{team.user.fullName}</td>
+                          <td>{team.name ? team.name : ""}</td>
+                          <td>{team.category ? team.category : ""}</td>
+                          <td>
+                            {team.challenge !== undefined ? team.challenge.name : ""}
+                          </td>
+                          <td>{team.user ? team.user.fullName : ""}</td>
                           <td>{team.institution}</td>
-                          <td>{team.user.city}</td>
-                          <td>{team.user.country}</td>
+                          <td>{team.user ? team.user.city : ""}</td>
+                          <td>{team.user ? team.user.country : ""}</td>
                           <td style={{ whiteSpace: "nowrap" }}>
                             <Link
                               to={`${path}/edit/${team._id}`}
                               className="btn btn-sm btn-primary mr-1"
                             >
-                              Editar
+                              <i className="fas fa-edit"></i> Editar
                             </Link>
                             <button
                               className="btn btn-sm btn-danger"

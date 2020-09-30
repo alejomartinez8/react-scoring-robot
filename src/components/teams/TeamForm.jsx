@@ -51,9 +51,8 @@ const TeamForm = ({
         }
       }
       setFormData(teamData);
-      console.log(teamData);
 
-      const _event = events.filter((elm) => elm._id === teamData.event._id);
+      const _event = events.filter((elm) => elm._id === teamData.event);
 
       // Set Category Options
       const _categoryOptions = _event.map((event) => event.categories)[0];
@@ -63,7 +62,7 @@ const TeamForm = ({
       if (_event.length > 0) {
         const _challengesOptions = _event[0].challenges
           .filter((elm) => elm.categories.includes(teamData.category))
-          .map((elm) => ({ _id: elm._id, name: elm.name, slug: elm.slug }));
+          .map((elm) => ({ _id: elm._id, name: elm.name }));
         setChallengeOptions(_challengesOptions);
       }
     }
@@ -88,23 +87,18 @@ const TeamForm = ({
   }, [auth]);
 
   const handleChange = (e) => {
-    console.log(e.target.value);
     switch (e.target.name) {
       case "user":
         setFormData({
           ...formData,
-          user: e.target.value
-            ? users.find((elm) => elm.id === e.target.value)
-            : { _id: "" },
+          user: e.target.value,
         });
         break;
 
       case "event":
         setFormData({
           ...formData,
-          event: e.target.value
-            ? events.find((elm) => elm._id === e.target.value)
-            : { _id: "" },
+          event: e.target.value,
         });
         // setCategoryOptions
         const _categoryOptions = events
@@ -117,7 +111,7 @@ const TeamForm = ({
         setFormData({ ...formData, category: e.target.value });
         //setChallengeOptions
         const _challengesOptions = events
-          .filter((elm) => elm._id === event._id)[0]
+          .filter((elm) => elm._id === event)[0]
           .challenges.filter((elm) => elm.categories.includes(e.target.value))
           .map((elm) => ({ _id: elm._id, name: elm.name }));
         setChallengeOptions(_challengesOptions);
@@ -126,9 +120,7 @@ const TeamForm = ({
       case "challenge":
         setFormData({
           ...formData,
-          challenge: e.target.value
-            ? challengeOptions.find((elm) => (elm._id = e.target.value))
-            : { _id: "" },
+          challenge: e.target.value,
         });
         break;
 
@@ -146,27 +138,11 @@ const TeamForm = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const teamToSend = {
-      user: users.find((elm) => elm.id === user._id),
-      // .map((elm) => ({ _id: elm.id, name: elm.name })),
-      event: events
-        .filter((elm) => elm._id === event._id)
-        .map((obj) => ({ _id: obj._id, slug: obj.slug, name: obj.name }))[0],
-      challenge: events
-        .filter((elm) => elm._id === event._id)[0]
-        .challenges.filter((elm) => elm._id === challenge._id)
-        .map((obj) => ({ _id: obj._id, slug: obj.slug, name: obj.name }))[0],
-      name,
-      category,
-      players,
-    };
-
-    console.log(teamToSend);
 
     if (match.params.id) {
-      updateTeamAction(team._id, teamToSend);
+      updateTeamAction(team._id, formData);
     } else {
-      addTeamAction(teamToSend);
+      addTeamAction(formData);
       setFormData(initialState);
     }
   };
@@ -197,7 +173,7 @@ const TeamForm = ({
                         className="form-control"
                         id="user"
                         name="user"
-                        value={user._id}
+                        value={user}
                         onChange={handleChange}
                         required
                       >
@@ -233,7 +209,7 @@ const TeamForm = ({
 
                 <TeamSelectEvents
                   options={events}
-                  event={event._id}
+                  event={event}
                   handleChange={handleChange}
                 />
 
@@ -245,7 +221,7 @@ const TeamForm = ({
 
                 <TeamSelectChallenges
                   options={challengeOptions}
-                  challenge={challenge._id}
+                  challenge={challenge}
                   handleChange={handleChange}
                 />
 
@@ -255,7 +231,6 @@ const TeamForm = ({
                   addPlayer={addPlayer}
                   index={0}
                   player={players[0]}
-                  required={true}
                 />
 
                 <hr />

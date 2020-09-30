@@ -15,11 +15,7 @@ const Alert = ({ alerts }) => {
 
   return (
     alerts !== null &&
-    alerts.length > 0 &&
-    alerts.map((alert) => (
-      // <div key={alert.id} className={`alert alert-${alert.alertType}`}>
-      //   {alert.msg}
-      // </div>
+    alerts.length > 0 && (
       <Modal
         key={alert.id}
         show={show}
@@ -27,17 +23,23 @@ const Alert = ({ alerts }) => {
         size="lg"
         aria-labelledby="example-modal-sizes-title-lg"
       >
-        {/* <Modal.Header closeButton>
-          <Modal.Title></Modal.Title>
-        </Modal.Header> */}
-        <Modal.Body>{alert.msg}</Modal.Body>
+        <Modal.Header closeButton>
+          <Modal.Title>Scoring-Robot</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {alerts.map((alert) => (
+            <div key={alert.id} className={`alert alert-${alert.alertType}`}>
+              {alert.msg}
+            </div>
+          ))}
+        </Modal.Body>
         <Modal.Footer>
           <button className="btn btn-success" onClick={handleClose}>
             Cerrar
           </button>
         </Modal.Footer>
       </Modal>
-    ))
+    )
   );
 };
 

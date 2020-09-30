@@ -7,7 +7,7 @@ import TeamsGrid from "../teams/TeamsGrid";
 const TeamsPage = ({ auth, team, getTeams }) => {
   useEffect(() => {
     if ((auth.role = "User")) {
-      getTeams({ "user._id": auth.id });
+      getTeams({ user: auth.id });
     }
   }, [getTeams, auth.role, auth.id]);
 

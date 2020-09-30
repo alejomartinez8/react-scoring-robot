@@ -21,7 +21,11 @@ const Topbar = ({ isAuth, role, logout }) => {
               <i className="fas fa-tachometer"></i> Dashboard
             </Nav.Link>
           )}
-          {role === "User" && <Nav.Link href="/user/teams">Mis Equipos</Nav.Link>}
+          {role === "User" && (
+            <Nav.Link href="/user/teams">
+              <i className="fas fa-users"></i> Mis Equipos
+            </Nav.Link>
+          )}
           {isAuth && (
             <Nav.Link href="/user">
               <i className="fas fa-user"></i> Perfil
