@@ -7,8 +7,7 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.css";
 import "./index.css";
 
-// axios.defaults.baseURL = "https://api-scoring-robot.herokuapp.com/api";
-axios.defaults.baseURL = "http://localhost:5050/api";
+axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 axios.interceptors.request.use(
