@@ -5,6 +5,8 @@ import { alertActions } from "./alert.actions";
 
 // login action
 export const login = (email, password) => (dispatch) => {
+  dispatch({ type: UserTypes.AUTH_REQUEST });
+
   authServices
     .login(email, password)
     .then((token) => {

@@ -14,4 +14,4 @@ export const UserTypes = {
   USER_DELETE: "USER_DELETE",
   CLEAR_USER: "CLEAR_USER",
   USER_ERROR: "USER_ERROR",
-}
+};

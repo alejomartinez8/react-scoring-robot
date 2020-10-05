@@ -1,4 +1,4 @@
-import { UserTypes } from "../constants/UserTypes"
+import { UserTypes } from "../constants/UserTypes";
 
 const initialState = {
   token: localStorage.getItem("token"),
@@ -15,25 +15,25 @@ const initialState = {
     country: "",
   },
   error: [],
-}
+};
 
 export function auth(state = initialState, action) {
-  const { type, payload } = action
+  const { type, payload } = action;
   // console.log({ payload })
   switch (type) {
     case UserTypes.AUTH_REQUEST:
       return {
         ...state,
         loading: true,
-      }
+      };
     case UserTypes.AUTH_LOGIN_SUCCESS:
-      localStorage.setItem("token", payload.token)
+      localStorage.setItem("token", payload.token);
       return {
         ...state,
         token: payload.token,
         isAuth: true,
         loading: false,
-      }
+      };
 
     case UserTypes.AUTH_USER_LOADED:
       return {
@@ -41,11 +41,11 @@ export function auth(state = initialState, action) {
         isAuth: true,
         loading: false,
         userAuth: payload,
-      }
+      };
 
     case UserTypes.AUTH_ERROR:
     case UserTypes.AUTH_LOGOUT:
-      localStorage.removeItem("token")
+      localStorage.removeItem("token");
       return {
         ...state,
         token: null,
@@ -63,9 +63,9 @@ export function auth(state = initialState, action) {
           country: "",
         },
         error: payload,
-      }
+      };
 
     default:
-      return state
+      return state;
   }
 }
