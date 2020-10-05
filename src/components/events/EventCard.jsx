@@ -9,7 +9,8 @@ const EventCard = ({ auth, event: { _id, slug, name, imageURL, description } }) 
       </div>
 
       <div className="card-body">
-        <img className="card-img-top" src={imageURL} alt=""></img>
+        <img className="img-fluid" src={imageURL} alt=""></img>
+
         <h5 className="card-title">{name}</h5>
         <p className="card-text">Descripción: {description}</p>
       </div>

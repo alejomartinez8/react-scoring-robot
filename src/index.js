@@ -4,7 +4,7 @@ import { store } from "./redux/store/configureStore";
 import { Provider } from "react-redux";
 import App from "./App";
 import axios from "axios";
-import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL;

@@ -8,6 +8,13 @@ body {
   color: #333;
 }
 
+/* Custom */
+.card-img-top {
+  width: auto;
+  height: 20vw;
+  object-fit: cover;
+}
+
 /* Overlay */
 .dark-overlay {
   background-color: rgba(0, 0, 0, 0.7);

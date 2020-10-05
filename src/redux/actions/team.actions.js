@@ -6,7 +6,12 @@ const addTeam = (team) => (dispatch) => {
   teamServices
     .addTeam(team)
     .then(() => {
-      dispatch(alertActions.setAlert("Equipo creado", "success"));
+      dispatch(
+        alertActions.setAlert(
+          "Equipo creado, debes comunicarte con el Administrador del Evento para activar el Equipo",
+          "success"
+        )
+      );
     })
     .catch((error) => {
       dispatch({ type: TeamTypes.TEAM_ERROR, payload: error });

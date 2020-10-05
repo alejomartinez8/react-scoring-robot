@@ -20,10 +20,11 @@ const initalState = {
 };
 
 const CallengeScoreForm = ({
-  getEventBySlug,
+  event: { event },
   challenge: { challenge, loading },
-  getChallengeBySlug,
   teams,
+  getEventBySlug,
+  getChallengeBySlug,
   getTeams,
   updateTeam,
   match,
@@ -32,21 +33,25 @@ const CallengeScoreForm = ({
   useEffect(() => {
     getChallengeBySlug(match.params.challengeSlug);
     getEventBySlug(match.params.eventSlug);
-    getTeams({
-      "event.slug": match.params.eventSlug,
-      "challenge.slug": match.params.challengeSlug,
-    });
   }, [
-    getTeams,
     getChallengeBySlug,
     getEventBySlug,
     match.params.challengeSlug,
     match.params.eventSlug,
   ]);
 
+  useEffect(() => {
+    if (event !== {} && challenge !== {}) {
+      console.log(event._id, challenge._id);
+      getTeams({
+        challenge: challenge._id,
+        event: event._id,
+      });
+    }
+  }, [getTeams, challenge, event]);
+
   // load score form
   useEffect(() => {
-    console.log(challenge, teams);
     if (Object.keys(challenge).length > 0) {
       resetScoreForm();
     }
@@ -380,7 +385,7 @@ const CallengeScoreForm = ({
 };
 
 const mapStateToProps = (state) => ({
-  event: state.event.event,
+  event: state.event,
   challenge: state.challenge,
   teams: state.team.teams,
 });
