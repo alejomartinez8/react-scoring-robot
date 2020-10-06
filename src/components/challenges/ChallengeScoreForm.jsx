@@ -202,7 +202,7 @@ const CallengeScoreForm = ({
   /**** Return *****/
   return (
     <Fragment>
-      <div className="card shadow my-4">
+      <div className="card  my-4">
         <div className="card-header">
           <h2 className="text-primary">
             <i className="fas fa-tasks"></i>{" "}
@@ -254,7 +254,7 @@ const CallengeScoreForm = ({
               <div>
                 <button
                   onClick={handleSetTimer}
-                  className={!timer ? "btn btn-success m-2" : "btn btn-danger m-2"}
+                  className={!timer ? "btn btn-primary m-2" : "btn btn-danger m-2"}
                 >
                   {!timer ? (
                     <>

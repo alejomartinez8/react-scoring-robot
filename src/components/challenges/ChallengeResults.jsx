@@ -73,7 +73,7 @@ const ChallengeResults = ({
       ) : (
         <Fragment>
           <ButtonBack className="btn btn-secondary m-1">Atrás</ButtonBack>
-          <div className="card shadow my-4">
+          <div className="card  my-4">
             <div className="card-header">
               <h2 className="text-primary">
                 <i className="fas fa-list"></i> Puntajes reto {challenge.name}

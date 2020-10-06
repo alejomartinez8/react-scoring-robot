@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 const EventCard = ({ auth, event: { _id, slug, name, imageURL, description } }) => {
   return (
-    <div className="card shadow my-4">
+    <div className="card  my-4">
       <div className="card-header">
-        <h2>{slug}</h2>
+        <h2 className="text-primary">{name}</h2>
       </div>
 
       <div className="card-body">

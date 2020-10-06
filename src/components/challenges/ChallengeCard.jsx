@@ -4,7 +4,7 @@ import { Link, useRouteMatch } from "react-router-dom";
 const ChallengeCard = ({ auth, challenge }) => {
   const match = useRouteMatch();
   return (
-    <div className="card shadow my-4" key={challenge._id}>
+    <div className="card  my-4" key={challenge._id}>
       <div className="card-header">
         <h3 className="text-primary">
           <i className="fas fa-trophy"></i> {challenge.name}
@@ -24,11 +24,12 @@ const ChallengeCard = ({ auth, challenge }) => {
             <p className="text-secondary">{challenge.description}</p>
             <p>
               Categorías:{" "}
-              {challenge.categories.map((category, index) => (
-                <span key={index} className="badge badge-pill badge-info mx-1">
-                  {category}
-                </span>
-              ))}
+              {challenge.categories !== [] &&
+                challenge.categories.map((category, index) => (
+                  <span key={index} className="badge badge-pill badge-info mx-1">
+                    {category}
+                  </span>
+                ))}
             </p>
           </div>
         </div>
@@ -52,7 +53,7 @@ const ChallengeCard = ({ auth, challenge }) => {
         {challenge.playoffs && (
           <Link
             to={`${match.url}/${challenge.slug}/playoffs`}
-            className="btn btn-success m-1"
+            className="btn btn-primary m-1"
           >
             Playoffs
           </Link>

@@ -153,7 +153,7 @@ const EventForm = ({
       ) : (
         <Fragment>
           <ButtonBack className="btn btn-secondary m-1">Atrás</ButtonBack>
-          <div className="card shadow my-2">
+          <div className="card  my-2">
             <div className="card-header">
               <h2 className="text-primary">
                 {!eventUpdate ? "Agregar Evento" : "Editar Evento"}

@@ -5,10 +5,12 @@ import { Navbar, Nav } from "react-bootstrap";
 
 const Topbar = ({ isAuth, role, logout }) => {
   return (
-    <Navbar collapseOnSelect expand="md" bg="dark" variant="dark">
+    <Navbar collapseOnSelect expand="md" bg="secondary" variant="dark">
       <Navbar.Brand href="/">
-        <i className="fas fa-robot"></i>
-        <span> Scoring-Robot</span>
+        <h2>
+          <i className="fas fa-robot"></i>
+          <span> Scoring-Robot</span>
+        </h2>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="user-nav" />
       <Navbar.Collapse id="user-nav">

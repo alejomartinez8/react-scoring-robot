@@ -26,7 +26,7 @@ const ChallengesGrid = ({ auth, event, loading, getEventBySlug, match }) => {
             {auth.isAuth && auth.userAuth.role === "Admin" && (
               <Link
                 to={`/admin/events/edit/${event._id}`}
-                className="btn btn-outline-secondary"
+                className="btn btn-outline-primary"
               >
                 Editar Evento
               </Link>

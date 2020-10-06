@@ -28,11 +28,11 @@ const updateEvent = (id, event) => (dispatch) => {
     });
 };
 
-const getAllEvents = () => (dispatch) => {
+const getEvents = () => (dispatch) => {
   dispatch({ type: EventTypes.GET_EVENTS });
 
   eventServices
-    .getAllEvents()
+    .getEvents()
     .then((events) => {
       dispatch({ type: EventTypes.EVENTS_LOADED, payload: events });
     })
@@ -76,7 +76,7 @@ const deleteEvent = (id) => (dispatch) => {
     .then(() => {
       dispatch({ type: EventTypes.EVENT_DELETE, payload: id });
       dispatch(alertActions.setAlert("Evento Eliminado", "success"));
-      dispatch(getAllEvents());
+      dispatch(getEvents());
     })
     .catch((error) => {
       dispatch({ type: EventTypes.EVENT_ERROR, payload: error });
@@ -87,7 +87,7 @@ const deleteEvent = (id) => (dispatch) => {
 export const eventActions = {
   addEvent,
   updateEvent,
-  getAllEvents,
+  getEvents,
   getEventById,
   getEventBySlug,
   deleteEvent,

@@ -66,7 +66,7 @@ const ChallengeTaskForm = ({
         />
       </td>
       <td>
-        <button className="btn btn-sm btn-success" onClick={handleSubmit}>
+        <button className="btn btn-sm btn-primary" onClick={handleSubmit}>
           {textButton}
         </button>
       </td>

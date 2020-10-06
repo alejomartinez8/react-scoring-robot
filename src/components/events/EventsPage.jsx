@@ -4,10 +4,10 @@ import { connect } from "react-redux";
 import { eventActions } from "../../redux/actions";
 import Spinner from "../layout/Spinner";
 
-const EventsPage = ({ auth, event: { events, loading }, getAllEvents }) => {
+const EventsPage = ({ auth, event: { events, loading }, getEvents }) => {
   useEffect(() => {
-    getAllEvents();
-  }, [getAllEvents]);
+    getEvents();
+  }, [getEvents]);
 
   return (
     <Fragment>
@@ -37,7 +37,7 @@ const mapStateToProps = (state) => ({
 });
 
 const actionCreators = {
-  getAllEvents: eventActions.getAllEvents,
+  getEvents: eventActions.getEvents,
 };
 
 export default connect(mapStateToProps, actionCreators)(EventsPage);

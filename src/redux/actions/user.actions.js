@@ -25,11 +25,11 @@ export const loadUser = () => (dispatch) => {
 /** User Actions */
 
 // get all user actions
-export const getAllUsers = () => (dispatch) => {
+export const getUsers = () => (dispatch) => {
   dispatch({ type: UserTypes.GET_USERS });
 
   userServices
-    .getAllUsers()
+    .getUsers()
     .then((users) => {
       dispatch({ type: UserTypes.USERS_LOADED, payload: users });
     })
@@ -91,7 +91,7 @@ export const deleteUser = (id) => (dispatch) => {
     .deleteUser(id)
     .then((res) => {
       dispatch({ type: UserTypes.USER_DELETE, payload: id });
-      dispatch(getAllUsers());
+      dispatch(getUsers());
       dispatch(alertActions.setAlert("Usuario Eliminado", "success"));
     })
     .catch((error) => {
@@ -106,7 +106,7 @@ export const clearUser = () => (dispatch) => {
 
 export const userActions = {
   loadUser,
-  getAllUsers,
+  getUsers,
   getUserById,
   createUser,
   updateUser,

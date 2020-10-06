@@ -5,7 +5,7 @@ const TeamCard = ({ auth, team }) => {
   console.log(auth);
   return (
     <div className="col-lg-4 col-md-6 my-2">
-      <div className="card shadow h-100 w-100 ">
+      <div className="card  h-100 w-100 ">
         <div className="card-header d-flex flex-column">
           <h3 className="text-center flex-row">{team.name}</h3>
           <h4 className="text-center flex-row">{team.event.slug}</h4>

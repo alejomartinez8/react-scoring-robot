@@ -10,7 +10,7 @@ const UserPage = ({ auth: { userAuth, loading } }) => {
 
   return (
     <Fragment>
-      <div className="card shadow my-4">
+      <div className="card  my-4">
         <div className="card-header">
           <h2 className="text-primary">
             <i className="fas fa-user"></i> Perfil

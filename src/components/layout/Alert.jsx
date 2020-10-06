@@ -39,7 +39,7 @@ const Alert = ({ alerts, deleteAlert }) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <button className="btn btn-success" onClick={() => handleClose(alert.id)}>
+          <button className="btn btn-primary" onClick={() => handleClose(alert.id)}>
             Cerrar
           </button>
         </Modal.Footer>

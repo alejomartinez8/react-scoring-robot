@@ -1,16 +1,16 @@
 import React, { useEffect, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getAllUsers, deleteUser } from "../../../redux/actions/user.actions";
+import { getUsers, deleteUser } from "../../../redux/actions/user.actions";
 import Spinner from "../../layout/Spinner";
 import ButtonBack from "../../layout/ButtonBack";
 
-const UserList = ({ getAllUsers, user: { users, loading }, deleteUser, match }) => {
+const UserList = ({ getUsers, user: { users, loading }, deleteUser, match }) => {
   const { path } = match;
 
   useEffect(() => {
-    getAllUsers();
-  }, [getAllUsers]);
+    getUsers();
+  }, [getUsers]);
 
   const handleDeleteUser = (id) => {
     deleteUser(id);
@@ -23,13 +23,13 @@ const UserList = ({ getAllUsers, user: { users, loading }, deleteUser, match }) 
       ) : (
         <Fragment>
           <ButtonBack className="btn btn-secondary m-1">Atrás</ButtonBack>
-          <div className="card shadow mb-4">
+          <div className="card  mb-4">
             <div className="card-header">
               <h2 className="text-primary">Administrar Usuarios</h2>
             </div>
 
             <div className="card-body mb-2">
-              <Link to={`${path}/add`} className="btn btn-sm btn-success mb-2">
+              <Link to={`${path}/add`} className="btn btn-sm btn-primary mb-2">
                 Agregar Usuario
               </Link>
               <table className="table table-striped table-responsive">
@@ -93,4 +93,4 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps, { getAllUsers, deleteUser })(UserList);
+export default connect(mapStateToProps, { getUsers, deleteUser })(UserList);

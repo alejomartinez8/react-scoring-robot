@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const userServices = {
   loadUser,
-  getAllUsers,
+  getUsers,
   getById,
   createUser,
   updateUser,
@@ -14,8 +14,8 @@ async function loadUser() {
   return axios.get(`/users`).then(handleResponse).catch(handleError);
 }
 
-// getAllUsers
-function getAllUsers() {
+// getUsers
+function getUsers() {
   return axios.get(`/users/getAll`).then(handleResponse).catch(handleError);
 }
 

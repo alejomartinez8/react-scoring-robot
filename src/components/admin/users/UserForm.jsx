@@ -89,7 +89,7 @@ const UserForm = ({
         <Fragment>
           <ButtonBack className="btn btn-secondary m-1">Atrás</ButtonBack>
 
-          <div className="card shadow">
+          <div className="card ">
             <div className="card-header">
               <h2 className="text-primary">
                 {!match.params.id ? "Agregar Usuario" : "Editar Usuario"}

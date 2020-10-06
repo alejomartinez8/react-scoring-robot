@@ -26,14 +26,14 @@ const TeamForm = ({
   getTeamById,
   addTeamAction,
   updateTeamAction,
-  getAllEvents,
-  getAllUsers,
+  getEvents,
+  getUsers,
   match,
 }) => {
   // load events for select
   useEffect(() => {
-    getAllEvents();
-  }, [getAllEvents]);
+    getEvents();
+  }, [getEvents]);
 
   // load team
   useEffect(() => {
@@ -77,7 +77,7 @@ const TeamForm = ({
   // load users if is Admin creator of team
   useEffect(() => {
     if (auth.userAuth.role === "Admin") {
-      getAllUsers();
+      getUsers();
     } else if (auth.userAuth.role === "User") {
       setFormData({
         ...formData,
@@ -155,7 +155,7 @@ const TeamForm = ({
       ) : (
         <Fragment>
           <ButtonBack className="btn btn-secondary m-1">Atrás</ButtonBack>
-          <div className="card shadow mb-2">
+          <div className="card  mb-2">
             <div className="card-header">
               <h2 className="text-primary">
                 {!match.params.id ? "Agregar Equipo" : "Editar Equipo"}
@@ -316,8 +316,8 @@ const actionCreators = {
   getTeamById: teamActions.getTeamById,
   addTeamAction: teamActions.addTeam,
   updateTeamAction: teamActions.updateTeam,
-  getAllUsers: userActions.getAllUsers,
-  getAllEvents: eventActions.getAllEvents,
+  getUsers: userActions.getUsers,
+  getEvents: eventActions.getEvents,
 };
 
 export default connect(mapStateToProps, actionCreators)(TeamForm);

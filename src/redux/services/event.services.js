@@ -3,7 +3,7 @@ import axios from "axios";
 export const eventServices = {
   addEvent,
   updateEvent,
-  getAllEvents,
+  getEvents,
   getEventById,
   getEventBySlug,
   deleteEvent,
@@ -23,7 +23,7 @@ function updateEvent(id, event) {
     .catch(handleError);
 }
 
-function getAllEvents() {
+function getEvents() {
   return axios.get("/events").then(handleResponse).catch(handleError);
 }
 

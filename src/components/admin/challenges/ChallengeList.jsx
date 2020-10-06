@@ -28,13 +28,13 @@ const ChallengesList = ({
       ) : (
         <Fragment>
           <ButtonBack className="btn btn-secondary m-1">Atrás</ButtonBack>
-          <div className="card shadow mb-4">
+          <div className="card  mb-4">
             <div className="card-header">
               <h2 className="text-primary">Administrar Retos</h2>
             </div>
 
             <div className="card-body ">
-              <Link className="btn btn-sm btn-success mb-2" to={`${path}/add`}>
+              <Link className="btn btn-sm btn-primary mb-2" to={`${path}/add`}>
                 Agregar Reto
               </Link>
               <div className="table-responsive">
