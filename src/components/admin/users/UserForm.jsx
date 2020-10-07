@@ -230,15 +230,15 @@ const UserForm = ({
                 <div className="form-row">
                   <button
                     type="submit"
-                    className="btn btn-primary m-1"
+                    className="btn btn-primary mr-2 mb-2"
                     disabled={loading}
                   >
                     {loading && (
-                      <span className="spinner-border spinner-border-sm mr-1"></span>
+                      <span className="spinner-border spinner-border-sm m-1"></span>
                     )}
                     Guardar
                   </button>
-                  <ButtonBack className="btn btn-primary mr-1 my-2">
+                  <ButtonBack className="btn btn-outline-primary mr-2 mb-2">
                     Cancelar
                   </ButtonBack>
                 </div>

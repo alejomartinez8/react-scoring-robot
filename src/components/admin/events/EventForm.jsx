@@ -255,7 +255,7 @@ const EventForm = ({
                 <div className="form-row">
                   <button
                     type="submit"
-                    className="btn btn-primary m-1"
+                    className="btn btn-primary mr-2 mb-2"
                     disabled={eventLoading}
                   >
                     {eventLoading && (
@@ -263,7 +263,7 @@ const EventForm = ({
                     )}
                     Guardar
                   </button>
-                  <ButtonBack className="btn btn-primary mr-1 my-2">
+                  <ButtonBack className="btn btn-outline-primary mr-2 mb-2">
                     Cancelar
                   </ButtonBack>
                 </div>

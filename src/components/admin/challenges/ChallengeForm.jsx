@@ -437,10 +437,10 @@ const ChallengeForm = ({
 
                 <hr />
 
-                <div className="form-group row">
+                <div className="form-group">
                   <button
                     type="submit"
-                    className="btn btn-primary m-1"
+                    className="btn btn-primary mr-2 mb-2"
                     disabled={loading}
                   >
                     {loading && (
@@ -448,7 +448,7 @@ const ChallengeForm = ({
                     )}
                     Guardar
                   </button>
-                  <ButtonBack className="btn btn-primary mr-1 my-2">
+                  <ButtonBack className="btn btn-outline-primary mr-2 mb-2">
                     Cancelar
                   </ButtonBack>
                 </div>
