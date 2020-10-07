@@ -5,16 +5,16 @@ import { Navbar, Nav } from "react-bootstrap";
 
 const Topbar = ({ isAuth, role, logout }) => {
   return (
-    <Navbar collapseOnSelect expand="md" bg="secondary" variant="dark">
-      <Navbar.Brand href="/">
-        <h2>
+    <Navbar collapseOnSelect expand="md" bg="light" variant="light">
+      <Navbar.Toggle aria-controls="user-nav" />
+      <Navbar.Brand href="/" className="text-secondary">
+        <h3>
           <i className="fas fa-robot"></i>
           <span> Scoring-Robot</span>
-        </h2>
+        </h3>
       </Navbar.Brand>
-      <Navbar.Toggle aria-controls="user-nav" />
       <Navbar.Collapse id="user-nav">
-        <Nav className="ml-auto">
+        <Nav className="ml-auto text-secondary">
           <Nav.Link href="/events">
             <i className="fas fa-calendar"></i> Eventos
           </Nav.Link>

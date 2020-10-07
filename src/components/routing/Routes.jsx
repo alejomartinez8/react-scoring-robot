@@ -14,7 +14,7 @@ import Events from "./Events";
 
 const Routes = () => {
   return (
-    <div className="container my-4">
+    <div className="container my-4 ">
       <Alert />
       <Switch>
         {/* Events */}
