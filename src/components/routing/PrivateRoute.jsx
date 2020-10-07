@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import Spinner from "../layout/Spinner";
+import { Spinner } from "react-bootstrap";
 
 const PrivateRoute = ({
   component: Component,
@@ -18,7 +18,7 @@ const PrivateRoute = ({
         // console.log({ isAuth })
 
         if (loading) {
-          return <Spinner />;
+          return <Spinner animation="border" variant="primary" />;
         } else {
           if (!isAuth) {
             // not logged-in, then redirect to login page with the return url

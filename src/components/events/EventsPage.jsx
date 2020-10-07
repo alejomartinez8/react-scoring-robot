@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import EventCard from "./EventCard";
 import { connect } from "react-redux";
 import { eventActions } from "../../redux/actions";
-import Spinner from "../layout/Spinner";
+import { Spinner } from "react-bootstrap";
 
 const EventsPage = ({ auth, event: { events, loading }, getEvents }) => {
   useEffect(() => {
@@ -12,12 +12,12 @@ const EventsPage = ({ auth, event: { events, loading }, getEvents }) => {
   return (
     <Fragment>
       {loading ? (
-        <Spinner />
+        <Spinner animation="border" variant="primary" />
       ) : (
         <Fragment>
-          <h1 className="large text-primary">
+          <h2 className="large text-primary">
             <i className="fas fa-calendar"></i> Eventos
-          </h1>
+          </h2>
           {events.length > 0 ? (
             events.map((event) => (
               <EventCard key={event._id} event={event} auth={auth} />

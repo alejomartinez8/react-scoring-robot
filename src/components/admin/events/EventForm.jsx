@@ -2,7 +2,7 @@ import React, { useState, Fragment, useEffect } from "react";
 import { connect } from "react-redux";
 import { eventActions } from "../../../redux/actions";
 import { challengeActions } from "../../../redux/actions";
-import Spinner from "../../layout/Spinner";
+import { Spinner } from "react-bootstrap";
 import ButtonBack from "../../layout/ButtonBack";
 import Select from "react-select";
 import { CategoriesType } from "../../../helpers";
@@ -149,7 +149,7 @@ const EventForm = ({
   return (
     <Fragment>
       {eventLoading ? (
-        <Spinner />
+        <Spinner animation="border" variant="primary" />
       ) : (
         <Fragment>
           <ButtonBack className="btn btn-primary mr-1 my-2">Atrás</ButtonBack>

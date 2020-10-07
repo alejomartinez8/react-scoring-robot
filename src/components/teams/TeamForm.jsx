@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useEffect } from "react";
 import { connect } from "react-redux";
 import { userActions, teamActions, eventActions } from "../../redux/actions";
-import Spinner from "../layout/Spinner";
+import { Spinner } from "react-bootstrap";
 import ButtonBack from "../layout/ButtonBack";
 import TeamInputPlayers from "./TeamInputPlayers";
 import TeamSelectCategories from "./TeamSelectCategories";
@@ -151,7 +151,7 @@ const TeamForm = ({
   return (
     <Fragment>
       {loading ? (
-        <Spinner />
+        <Spinner animation="border" variant="primary" />
       ) : (
         <Fragment>
           <ButtonBack className="btn btn-primary mr-1 my-2">Atrás</ButtonBack>

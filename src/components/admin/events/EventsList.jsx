@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { eventActions } from "../../../redux/actions";
-import Spinner from "../../layout/Spinner";
+import { Spinner } from "react-bootstrap";
 import ButtonBack from "../../layout/ButtonBack";
 
 const EventsList = ({
@@ -24,7 +24,7 @@ const EventsList = ({
   return (
     <Fragment>
       {loading ? (
-        <Spinner />
+        <Spinner animation="border" variant="primary" />
       ) : (
         <Fragment>
           <ButtonBack className="btn btn-primary mr-1 my-2">Atrás</ButtonBack>

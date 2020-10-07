@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { eventActions, challengeActions, teamActions } from "../../redux/actions";
 import styled from "styled-components";
 import ButtonBack from "../layout/ButtonBack";
-import Spinner from "../layout/Spinner";
+import { Spinner } from "react-bootstrap";
 
 const Input = styled.input`
   width: 30px;
@@ -275,7 +275,7 @@ const CallengeScoreForm = ({
             <hr />
 
             {loading ? (
-              <Spinner />
+              <Spinner animation="border" variant="primary" />
             ) : challenge.tasks && challenge.tasks.length > 0 ? (
               <div className="table-responsive">
                 <table className="table table-striped ">

@@ -9,7 +9,7 @@ const VerifyEmail = ({ setAlert, history }) => {
     const { token } = queryString.parse(history.location.search);
 
     //remove token from url
-    // history.replace(history.location.pathname)
+    history.replace(history.location.pathname);
 
     authServices
       .verifyEmail(token)
@@ -26,13 +26,13 @@ const VerifyEmail = ({ setAlert, history }) => {
   }, []);
 
   return (
-    <div className="container d-flex flex-column ">
-      <div className="row justify-content-center">
-        <div className="col-md-5">
-          <div className="text-center">
+    <div className="d-flex justify-content-center align-items-center">
+      <div className="col-lg-6">
+        <div className="card">
+          <div className="card-header">
             <h3 className="m-3">Verificar Email</h3>
-            Verificando...
           </div>
+          <div className="card-body">Verificando...</div>
         </div>
       </div>
     </div>

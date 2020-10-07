@@ -9,7 +9,7 @@ const initialState = {
   email: "",
 };
 
-const ForgotPassword = ({ loading, forgotPassword, history }) => {
+const ForgotPassword = ({ auth, forgotPassword, history }) => {
   const [formData, setformData] = useState(initialState);
   const { email } = formData;
 
@@ -34,43 +34,45 @@ const ForgotPassword = ({ loading, forgotPassword, history }) => {
   };
 
   return (
-    <div className="container d-flex flex-column my-5">
-      <div className="row justify-content-center">
-        <div className="col-md-5">
-          <div className="text-center">
-            <h1 className="display-4 mb-3">Recuperar Contraseña</h1>
+    <div className="d-flex justify-content-center align-items-center">
+      <div className="col-lg-6">
+        <div className="card">
+          <div className="card-header">
+            <h2 className="text-primary">Recuperar Contraseña</h2>
           </div>
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input
-                className="form-control"
-                type="email"
-                placeholder="name@example.com"
-                name="email"
-                value={email}
-                onChange={handleChange}
-                required
-              ></input>
-            </div>
+          <div className="card-body">
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input
+                  className="form-control"
+                  type="email"
+                  placeholder="name@example.com"
+                  name="email"
+                  value={email}
+                  onChange={handleChange}
+                  required
+                ></input>
+              </div>
 
-            <div className="form-group">
-              <button
-                className="btn btn-lg btn-block btn-primary mb-3"
-                disabled={loading}
-              >
-                {loading && (
-                  <span className="spinner-border spinner-border-sm mr-1"></span>
-                )}
-                Enviar
-              </button>
-              <p className="text-center">
-                <small className="text-muted">
-                  <Link to="login">Cancelar</Link>
-                </small>
-              </p>
-            </div>
-          </form>
+              <div className="form-group">
+                <button
+                  className="btn btn-lg btn-block btn-primary mb-3"
+                  disabled={auth.loading}
+                >
+                  {auth.loading && (
+                    <span className="spinner-border spinner-border-sm mr-1"></span>
+                  )}
+                  Enviar
+                </button>
+                <p className="text-center">
+                  <small className="text-muted">
+                    <Link to="login">Cancelar</Link>
+                  </small>
+                </p>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -78,12 +80,12 @@ const ForgotPassword = ({ loading, forgotPassword, history }) => {
 };
 
 ForgotPassword.propTypes = {
-  loading: PropTypes.bool.isRequired,
+  auth: PropTypes.object.isRequired,
   forgotPassword: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  loading: state.auth.loading,
+  auth: state.auth,
 });
 
 const actionCreators = {

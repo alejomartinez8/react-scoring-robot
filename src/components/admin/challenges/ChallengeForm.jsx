@@ -2,7 +2,7 @@ import React, { useState, Fragment, useEffect } from "react";
 import { connect } from "react-redux";
 import { challengeActions } from "../../../redux/actions";
 import { CategoriesType } from "../../../helpers";
-import Spinner from "../../layout/Spinner";
+import { Spinner } from "react-bootstrap";
 import ButtonBack from "../../layout/ButtonBack";
 import Select from "react-select";
 import ChallengeTaskItem from "./ChallengeTaskItem";
@@ -145,7 +145,7 @@ const ChallengeForm = ({
   return (
     <Fragment>
       {loading ? (
-        <Spinner />
+        <Spinner animation="border" variant="primary" />
       ) : (
         <Fragment>
           <ButtonBack className="btn btn-primary mr-1 my-2">Atrás</ButtonBack>

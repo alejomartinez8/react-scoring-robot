@@ -2,7 +2,7 @@ import React, { useEffect, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getUsers, deleteUser } from "../../../redux/actions/user.actions";
-import Spinner from "../../layout/Spinner";
+import { Spinner } from "react-bootstrap";
 import ButtonBack from "../../layout/ButtonBack";
 
 const UserList = ({ getUsers, user: { users, loading }, deleteUser, match }) => {
@@ -19,7 +19,7 @@ const UserList = ({ getUsers, user: { users, loading }, deleteUser, match }) => 
   return (
     <Fragment>
       {loading ? (
-        <Spinner />
+        <Spinner animation="border" variant="primary" />
       ) : (
         <Fragment>
           <ButtonBack className="btn btn-primary mr-1 my-2">Atrás</ButtonBack>

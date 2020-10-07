@@ -26,6 +26,13 @@ export function auth(state = initialState, action) {
         ...state,
         loading: true,
       };
+
+    case UserTypes.AUTH_REQUEST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+
     case UserTypes.AUTH_LOGIN_SUCCESS:
       localStorage.setItem("token", payload.token);
       return {

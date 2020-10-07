@@ -26,6 +26,8 @@ export const logout = () => (dispatch) => {
 
 // register action
 export const register = (user) => (dispatch) => {
+  dispatch({ type: UserTypes.AUTH_REQUEST });
+
   authServices
     .register(user)
     .then((res) => {
@@ -40,6 +42,8 @@ export const register = (user) => (dispatch) => {
 
 // forgot password action send an email
 export const forgotPassword = (email) => (dispatch) => {
+  dispatch({ type: UserTypes.AUTH_REQUEST });
+
   authServices
     .forgotPassword(email)
     .then((res) => {
@@ -56,6 +60,8 @@ export const forgotPassword = (email) => (dispatch) => {
 export const resetPassword = ({ token, password, confirmPassword }) => (
   dispatch
 ) => {
+  dispatch({ type: UserTypes.AUTH_REQUEST });
+
   authServices
     .resetPassword({ token, password, confirmPassword })
     .then((res) => {

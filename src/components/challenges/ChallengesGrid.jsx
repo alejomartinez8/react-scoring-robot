@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { eventActions } from "../../redux/actions";
-import Spinner from "../layout/Spinner";
+import { Spinner } from "react-bootstrap";
 import ButtonBack from "../layout/ButtonBack";
 import ChallengeCard from "./ChallengeCard";
 
@@ -18,7 +18,7 @@ const ChallengesGrid = ({ auth, event, loading, getEventBySlug, match }) => {
   return (
     <Fragment>
       {loading ? (
-        <Spinner />
+        <Spinner animation="border" variant="primary" />
       ) : (
         <Fragment>
           <div className="my-2">

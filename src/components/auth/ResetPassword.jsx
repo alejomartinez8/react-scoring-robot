@@ -7,13 +7,13 @@ import PropTypes from "prop-types";
 import { alertActions } from "../../redux/actions/";
 import ResetPasswordForm from "./ResetPasswordForm";
 
-const ResetPassword = ({ history, setAlert }) => {
-  const TokenStatus = {
-    Validating: "Validating",
-    Valid: "Valid",
-    Invalid: "Invalid",
-  };
+const TokenStatus = {
+  Validating: "Validating",
+  Valid: "Valid",
+  Invalid: "Invalid",
+};
 
+const ResetPassword = ({ history, setAlert }) => {
   const [token, setToken] = useState(null);
   const [tokenStatus, setTokenStatus] = useState(TokenStatus.Validating);
 
@@ -60,13 +60,13 @@ const ResetPassword = ({ history, setAlert }) => {
 
   // return Component
   return (
-    <div className="container d-flex flex-column">
-      <div className="row justify-content-center">
-        <div className="col-md-5">
-          <div className="text-center">
-            <h1 className="display-4 mb-3">Restablecer Contraseña</h1>
-            {getBody()}
+    <div className="d-flex justify-content-center align-items-center">
+      <div className="col-lg-6">
+        <div className="card">
+          <div className="card-header">
+            <h2 className="text-primary">Restablecer Contraseña</h2>
           </div>
+          <div className="card-body">{getBody()}</div>
         </div>
       </div>
     </div>

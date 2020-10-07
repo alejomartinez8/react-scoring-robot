@@ -5,7 +5,7 @@ import {
   getUserById,
   updateUser,
 } from "../../../redux/actions/user.actions";
-import Spinner from "../../layout/Spinner";
+import { Spinner } from "react-bootstrap";
 import ButtonBack from "../../layout/ButtonBack";
 
 // inistal data
@@ -84,7 +84,7 @@ const UserForm = ({
   return (
     <Fragment>
       {loading ? (
-        <Spinner />
+        <Spinner animation="border" variant="primary" />
       ) : (
         <Fragment>
           <ButtonBack className="btn btn-primary mr-1 my-2">Atrás</ButtonBack>

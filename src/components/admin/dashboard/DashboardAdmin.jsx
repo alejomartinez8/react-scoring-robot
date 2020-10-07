@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from "react";
 import { connect } from "react-redux";
-import Spinner from "../../layout/Spinner";
+import { Spinner } from "react-bootstrap";
 import DashboardAdminItem from "./DashboardAdminItem";
 import {
   challengeActions,
@@ -32,7 +32,7 @@ const DashboardAdmin = ({
   }, []);
 
   return events === [] && challenges === [] && users === [] && teams === [] ? (
-    <Spinner />
+    <Spinner animation="border" variant="primary" />
   ) : (
     <Fragment>
       <h2 className="text-primary">

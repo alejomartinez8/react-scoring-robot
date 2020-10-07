@@ -1,15 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Landing = () => {
+const Landing = function () {
   return (
     <section className="landing">
       <div className="dark-overlay">
         <div className="landing-inner">
-          <h1 className="x-large">
-            {/* <i className='fas fa-trophy'></i> */}
-            <i className="fas fa-robot"></i> Scoring-Robot
-          </h1>
+          <h1 className="x-large">Scoring-Robot</h1>
           <p className="lead">
             Plataforma de sistema de puntajes para competencias de robótica educativa
           </p>

@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import { connect } from "react-redux";
 import { teamActions, challengeActions } from "../../redux/actions";
 import ButtonBack from "../layout/ButtonBack";
-import Spinner from "../layout/Spinner";
+import { Spinner } from "react-bootstrap";
 
 const ChallengeResults = ({
   team: { teams },
@@ -69,7 +69,7 @@ const ChallengeResults = ({
   return (
     <Fragment>
       {sortedTeams.length === 0 ? (
-        <Spinner />
+        <Spinner animation="border" variant="primary" />
       ) : (
         <Fragment>
           <ButtonBack className="btn btn-primary mr-1 my-2">Atrás</ButtonBack>
@@ -83,7 +83,7 @@ const ChallengeResults = ({
             <div className="card-body">
               <div className="table-responsive">
                 <table className="table table-striped ">
-                  <thead className="thead-dark">
+                  <thead className="thead-dark bg-secondary">
                     <tr>
                       <th>Puesto</th>
                       <th>Nombre Equipo</th>

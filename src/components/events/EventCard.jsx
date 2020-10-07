@@ -5,7 +5,7 @@ const EventCard = ({ auth, event: { _id, slug, name, imageURL, description } }) 
   return (
     <div className="card  my-4">
       <div className="card-header">
-        <h2 className="text-primary">{name}</h2>
+        <h3 className="text-primary">{name}</h3>
       </div>
 
       <div className="card-body">

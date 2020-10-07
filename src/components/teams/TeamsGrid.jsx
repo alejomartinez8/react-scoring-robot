@@ -1,12 +1,12 @@
 import React, { Fragment } from "react";
 import TeamCard from "./TeamCard";
-import Spinner from "../layout/Spinner";
+import { Spinner } from "react-bootstrap";
 
 const TeamsGrid = ({ auth, teams = [], loading }) => {
   return (
     <Fragment>
       {loading ? (
-        <Spinner />
+        <Spinner animation="border" variant="primary" />
       ) : (
         <div className="row my-4">
           {teams.length > 0 ? (
