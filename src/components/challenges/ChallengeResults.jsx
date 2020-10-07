@@ -72,7 +72,7 @@ const ChallengeResults = ({
         <Spinner />
       ) : (
         <Fragment>
-          <ButtonBack className="btn btn-secondary m-1">Atrás</ButtonBack>
+          <ButtonBack className="btn btn-primary mr-1 my-2">Atrás</ButtonBack>
           <div className="card  my-4">
             <div className="card-header">
               <h2 className="text-primary">

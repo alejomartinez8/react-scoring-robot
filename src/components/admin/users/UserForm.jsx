@@ -87,7 +87,7 @@ const UserForm = ({
         <Spinner />
       ) : (
         <Fragment>
-          <ButtonBack className="btn btn-secondary m-1">Atrás</ButtonBack>
+          <ButtonBack className="btn btn-primary mr-1 my-2">Atrás</ButtonBack>
 
           <div className="card ">
             <div className="card-header">
@@ -238,7 +238,9 @@ const UserForm = ({
                     )}
                     Guardar
                   </button>
-                  <ButtonBack className="btn btn-secondary m-1">Cancelar</ButtonBack>
+                  <ButtonBack className="btn btn-primary mr-1 my-2">
+                    Cancelar
+                  </ButtonBack>
                 </div>
               </form>
             </div>

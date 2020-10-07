@@ -27,7 +27,7 @@ const EventsList = ({
         <Spinner />
       ) : (
         <Fragment>
-          <ButtonBack className="btn btn-secondary m-1">Atrás</ButtonBack>
+          <ButtonBack className="btn btn-primary mr-1 my-2">Atrás</ButtonBack>
           <div className="card  mb-4">
             <div className="card-header">
               <h2 className="text-primary">Administrar Eventos</h2>

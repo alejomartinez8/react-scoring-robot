@@ -22,7 +22,7 @@ const ChallengesGrid = ({ auth, event, loading, getEventBySlug, match }) => {
       ) : (
         <Fragment>
           <div className="my-2">
-            <ButtonBack className="btn btn-secondary m-1">Atrás</ButtonBack>
+            <ButtonBack className="btn btn-primary mr-1 my-2">Atrás</ButtonBack>
             {auth.isAuth && auth.userAuth.role === "Admin" && (
               <Link
                 to={`/admin/events/edit/${event._id}`}
