@@ -124,7 +124,8 @@ const ChallengeForm = ({
     setFormData({ ...formData, tasks: newTasks });
   };
 
-  const deleteTask = (index) => {
+  const deleteTask = (e, index) => {
+    e.preventDefault();
     let newTasks = tasks;
     newTasks.splice(index, 1);
     setFormData({ ...formData, tasks: newTasks });
@@ -387,7 +388,7 @@ const ChallengeForm = ({
                         <ChallengeTaskItem
                           key={index}
                           task={task}
-                          index={index}
+                          order={index}
                           deleteTask={deleteTask}
                           updateTask={updateTask}
                         />

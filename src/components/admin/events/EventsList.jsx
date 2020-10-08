@@ -21,6 +21,19 @@ const EventsList = ({
     deleteEvent(id);
   };
 
+  const getStage = (stage) => {
+    switch (stage) {
+      case "registration":
+        return "Registro Equipos";
+      case "scoring":
+        return "Calificando";
+      case "finished":
+        return "Finalizado";
+      default:
+        return "";
+    }
+  };
+
   return (
     <Fragment>
       {loading ? (
@@ -44,7 +57,7 @@ const EventsList = ({
                       <th>Nombre Evento</th>
                       <th>Nombre Corto</th>
                       <th>Año</th>
-                      <th>Descripción</th>
+                      <th>Etapa</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -55,7 +68,7 @@ const EventsList = ({
                           <td>{event.name}</td>
                           <td>{event.slug}</td>
                           <td>{event.year}</td>
-                          <td>{event.description}</td>
+                          <td>{getStage(event.stage)}</td>
                           <td style={{ whiteSpace: "nowrap" }}>
                             <Link
                               to={`${path}/edit/${event._id}`}

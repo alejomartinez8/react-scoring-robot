@@ -16,7 +16,7 @@ const TeamsList = ({
 
   useEffect(() => {
     getTeams();
-  }, [getTeams, teams]);
+  }, [getTeams]);
 
   const handleDeleteTeam = (_id) => {
     deleteTeam(_id);
@@ -72,13 +72,13 @@ const TeamsList = ({
                           <td>{team.user ? team.user.city : ""}</td>
                           <td>{team.user ? team.user.country : ""}</td>
                           <td className="text-center">
-                            <label class="switch">
+                            <label className="switch">
                               <input
                                 type="checkbox"
                                 checked={team.registered}
                                 onChange={() => handleRegisterTeam(team._id)}
                               />
-                              <span class="slider round"></span>
+                              <span className="slider round"></span>
                             </label>
                           </td>
                           <td style={{ whiteSpace: "nowrap" }}>

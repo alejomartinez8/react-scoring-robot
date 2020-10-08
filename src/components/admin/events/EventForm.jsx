@@ -15,6 +15,7 @@ const initialState = {
   description: "",
   categories: [],
   challenges: [],
+  stage: "registration",
 };
 
 /** Component */
@@ -66,7 +67,7 @@ const EventForm = ({
 
   // form data use state
   const [eventFormData, setEventFormData] = useState(initialState);
-  const { name, slug, year, imageURL, description } = eventFormData;
+  const { name, slug, year, imageURL, description, stage } = eventFormData;
 
   // select use state
   const [challengeOptions, setChallengeOptions] = useState([]);
@@ -222,6 +223,21 @@ const EventForm = ({
                     onChange={handleChange}
                     required
                   />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="stage">Etapa</label>
+                  <select
+                    className="form-control"
+                    name="stage"
+                    id="stage"
+                    value={stage}
+                    onChange={handleChange}
+                  >
+                    <option value="registration">Registro Equipos</option>
+                    <option value="scoring">Calificando</option>
+                    <option value="finished">Terminado</option>
+                  </select>
                 </div>
 
                 <div className="form-group">

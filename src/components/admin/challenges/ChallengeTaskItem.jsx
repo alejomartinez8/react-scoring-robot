@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ChallengeTaskForm from "./ChallengeTaskForm";
 
-const ChallengeTaskItem = ({ index, task, updateTask, deleteTask }) => {
+const ChallengeTaskItem = ({ order, task, updateTask, deleteTask }) => {
   const [edit, setEdit] = useState(false);
 
   const handleEdit = (e) => {
@@ -26,7 +26,7 @@ const ChallengeTaskItem = ({ index, task, updateTask, deleteTask }) => {
               </button>
               <button
                 className="btn btn-sm btn-danger m-1"
-                onClick={(e) => deleteTask(e, index)}
+                onClick={(e) => deleteTask(e, order)}
               >
                 <i className="fas fa-trash-alt mx-1"></i>
               </button>
@@ -35,7 +35,7 @@ const ChallengeTaskItem = ({ index, task, updateTask, deleteTask }) => {
         </tr>
       ) : (
         <ChallengeTaskForm
-          index={index}
+          index={order}
           task={task}
           updateTask={updateTask}
           textButton="Guardar"

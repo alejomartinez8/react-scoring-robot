@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { teamActions, challengeActions } from "../../redux/actions";
 import ButtonBack from "../layout/ButtonBack";
@@ -65,6 +65,17 @@ const ChallengeResults = ({
     sortedTeams = sortTeams(teams);
   }
 
+  //** Handle Expander */
+  const [expanded, setExpanded] = useState(false);
+  const toggleExpander = (e) => {
+    console.log(e.target.value);
+    if (!expanded) {
+      setExpanded(true);
+    } else {
+      setExpanded(false);
+    }
+  };
+
   /** Return */
   return (
     <Fragment>
@@ -82,8 +93,8 @@ const ChallengeResults = ({
 
             <div className="card-body">
               <div className="table-responsive">
-                <table className="table table-striped ">
-                  <thead className="thead-dark bg-secondary">
+                <table className="table ">
+                  <thead className="">
                     <tr>
                       <th>Puesto</th>
                       <th>Nombre Equipo</th>
@@ -97,7 +108,7 @@ const ChallengeResults = ({
                   <tbody>
                     {teams.length > 0 &&
                       sortedTeams.map((team, index) => (
-                        <tr key={team._id}>
+                        <tr key={index} onClick={toggleExpander}>
                           <td>{index + 1}</td>
                           <td>{team.name}</td>
                           <td>{team.user.institution}</td>

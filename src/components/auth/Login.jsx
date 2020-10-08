@@ -26,8 +26,8 @@ const Login = ({ isAuth, login, loading }) => {
   }
 
   return (
-    <div className="d-flex justify-content-center align-items-center">
-      <div className="col-lg-6">
+    <div className="d-flex justify-content-center align-items-center m-0">
+      <div className="col-lg-6 col-sm-12">
         <div className="card">
           <div className="card-header">
             <h2 className="text-primary">Ingreso</h2>

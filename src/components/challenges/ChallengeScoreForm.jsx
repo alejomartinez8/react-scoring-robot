@@ -1,6 +1,11 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { eventActions, challengeActions, teamActions } from "../../redux/actions";
+import {
+  eventActions,
+  challengeActions,
+  teamActions,
+  alertActions,
+} from "../../redux/actions";
 import styled from "styled-components";
 import ButtonBack from "../layout/ButtonBack";
 import { Spinner } from "react-bootstrap";
@@ -27,6 +32,7 @@ const CallengeScoreForm = ({
   getChallengeBySlug,
   getTeams,
   updateTeam,
+  setAlert,
   match,
 }) => {
   // load team
@@ -127,6 +133,16 @@ const CallengeScoreForm = ({
     }
   };
 
+  const handleTeams = (e) => {
+    const verifyTeam = teams.find((team) => team._id === e.target.value);
+
+    if (!!verifyTeam && verifyTeam.turnCounter >= challenge.maxTurns) {
+      setAlert("Este equipo ha alcanzado el máximo de turnos posible", "danger");
+    } else {
+      setTeam(e.target.value);
+    }
+  };
+
   // Disable next or before input
   const checkDisabledTask = (index) => {
     return (
@@ -219,7 +235,7 @@ const CallengeScoreForm = ({
                   name="team"
                   id="team"
                   value={team}
-                  onChange={(e) => setTeam(e.target.value)}
+                  onChange={handleTeams}
                   required
                 >
                   <option value=""></option>
@@ -395,6 +411,7 @@ const actionCreators = {
   getChallengeBySlug: challengeActions.getChallengeBySlug,
   getTeams: teamActions.getTeams,
   updateTeam: teamActions.updateTeam,
+  setAlert: alertActions.setAlert,
 };
 
 export default connect(mapStateToProps, actionCreators)(CallengeScoreForm);
