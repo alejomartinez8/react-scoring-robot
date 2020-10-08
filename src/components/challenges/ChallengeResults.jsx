@@ -1,20 +1,28 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect } from "react";
 import { connect } from "react-redux";
-import { teamActions, challengeActions } from "../../redux/actions";
+import { teamActions, challengeActions, eventActions } from "../../redux/actions";
 import ButtonBack from "../layout/ButtonBack";
 import { Spinner } from "react-bootstrap";
+import ChallengeResultTeamIteam from "./ChallengeResultTeamIteam";
 
 const ChallengeResults = ({
-  team: { teams },
+  userAuth,
+  team: { teams, loading },
   getTeams,
+  event,
+  getEventBySlug,
   challenge,
   getChallengeBySlug,
   match,
 }) => {
   /** Get teams */
+
+  const { eventSlug, challengeSlug } = match.params;
+
   useEffect(() => {
-    getChallengeBySlug(match.params.challengeSlug);
-  }, [getChallengeBySlug, match.params.challengeSlug]);
+    getEventBySlug(eventSlug);
+    getChallengeBySlug(challengeSlug);
+  }, [getEventBySlug, getChallengeBySlug, eventSlug, challengeSlug]);
 
   useEffect(() => {
     if (!challenge.loading && challenge._id) {
@@ -65,17 +73,6 @@ const ChallengeResults = ({
     sortedTeams = sortTeams(teams);
   }
 
-  //** Handle Expander */
-  const [expanded, setExpanded] = useState(false);
-  const toggleExpander = (e) => {
-    console.log(e.target.value);
-    if (!expanded) {
-      setExpanded(true);
-    } else {
-      setExpanded(false);
-    }
-  };
-
   /** Return */
   return (
     <Fragment>
@@ -93,8 +90,8 @@ const ChallengeResults = ({
 
             <div className="card-body">
               <div className="table-responsive">
-                <table className="table ">
-                  <thead className="">
+                <table className="table table-hover">
+                  <thead className="thead-light">
                     <tr>
                       <th>Puesto</th>
                       <th>Nombre Equipo</th>
@@ -106,22 +103,24 @@ const ChallengeResults = ({
                     </tr>
                   </thead>
                   <tbody>
-                    {teams.length > 0 &&
+                    {loading ? (
+                      <tr>
+                        <td colSpan={7}>
+                          <Spinner />
+                        </td>
+                      </tr>
+                    ) : (
                       sortedTeams.map((team, index) => (
-                        <tr key={index} onClick={toggleExpander}>
-                          <td>{index + 1}</td>
-                          <td>{team.name}</td>
-                          <td>{team.user.institution}</td>
-                          <td>{team.user.city}</td>
-                          <td className="text-center">
-                            {sumTopTurns(team.turns, challenge.topMaxTurns)}
-                          </td>
-                          <td className="text-center">{sumAllTurn(team.turns)}</td>
-                          <td>
-                            {team.turns.length} de {challenge.maxTurns}
-                          </td>
-                        </tr>
-                      ))}
+                        <ChallengeResultTeamIteam
+                          key={team._id}
+                          index={index + 1}
+                          team={team}
+                          challenge={challenge}
+                          event={event}
+                          userAuth={userAuth}
+                        />
+                      ))
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -134,12 +133,15 @@ const ChallengeResults = ({
 };
 
 const mapStateToProps = (state) => ({
+  userAuth: state.auth.userAuth,
   team: state.team,
+  event: state.event.event,
   challenge: state.challenge.challenge,
 });
 
 const actionCreators = {
   getTeams: teamActions.getTeams,
+  getEventBySlug: eventActions.getEventBySlug,
   getChallengeBySlug: challengeActions.getChallengeBySlug,
 };
 
