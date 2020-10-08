@@ -25,13 +25,14 @@ const ChallengeResults = ({
   }, [getEventBySlug, getChallengeBySlug, eventSlug, challengeSlug]);
 
   useEffect(() => {
-    if (!challenge.loading && challenge._id) {
+    if (!challenge.loading && !event.loading) {
       getTeams({
+        event: event._id,
         challenge: challenge._id,
         registered: true,
       });
     }
-  }, [challenge.loading, challenge._id, getTeams]);
+  }, [challenge.loading, event.loading, challenge._id, event._id, getTeams]);
 
   /** Sum all turns */
   const sumAllTurn = (arr) => {
@@ -53,18 +54,18 @@ const ChallengeResults = ({
 
   /** Sort Teams */
   const sortTeams = (teams) => {
-    let sortedTeams = teams.map((team) => ({
+    let sortTeams = teams.map((team) => ({
       ...team,
       topPoints: sumTopTurns(team.turns, challenge.topMaxTurns),
       totalPoints: sumAllTurn(team.turns),
     }));
 
-    sortedTeams = sortedTeams.sort((a, b) =>
+    sortTeams = sortTeams.sort((a, b) =>
       b.topPoints - a.topPoints === 0
         ? b.totalPoints - a.totalPoints
         : b.topPoints - a.topPoints
     );
-    return sortedTeams;
+    return sortTeams;
   };
 
   let sortedTeams = [];
@@ -76,7 +77,7 @@ const ChallengeResults = ({
   /** Return */
   return (
     <Fragment>
-      {sortedTeams.length === 0 ? (
+      {loading || event.loading || challenge.loading ? (
         <Spinner animation="border" variant="primary" />
       ) : (
         <Fragment>
@@ -103,24 +104,16 @@ const ChallengeResults = ({
                     </tr>
                   </thead>
                   <tbody>
-                    {loading ? (
-                      <tr>
-                        <td colSpan={7}>
-                          <Spinner />
-                        </td>
-                      </tr>
-                    ) : (
-                      sortedTeams.map((team, index) => (
-                        <ChallengeResultTeamIteam
-                          key={team._id}
-                          index={index + 1}
-                          team={team}
-                          challenge={challenge}
-                          event={event}
-                          userAuth={userAuth}
-                        />
-                      ))
-                    )}
+                    {sortedTeams.map((team, index) => (
+                      <ChallengeResultTeamIteam
+                        key={team._id}
+                        index={index + 1}
+                        team={team}
+                        challenge={challenge}
+                        event={event}
+                        userAuth={userAuth}
+                      />
+                    ))}
                   </tbody>
                 </table>
               </div>

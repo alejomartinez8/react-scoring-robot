@@ -7,6 +7,7 @@ export const teamServices = {
   getTeams,
   getTeamById,
   deleteTeam,
+  addScoreToTeam,
 };
 
 async function addTeam(team) {
@@ -25,6 +26,13 @@ async function updateTeam(id, team) {
 
 async function registerTeam(id) {
   return axios.put(`/teams/register/${id}`).then(handleResponse).catch(handleError);
+}
+
+async function addScoreToTeam(id, params) {
+  return axios
+    .post(`/teams/addscore/${id}`, JSON.stringify(params))
+    .then(handleResponse)
+    .catch(handleError);
 }
 
 async function getTeams(query) {

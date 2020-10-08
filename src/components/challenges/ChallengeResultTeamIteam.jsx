@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 const ChallengeResultTeamIteam = ({ userAuth, index, team, event, challenge }) => {
   //** Handle Expander */
   const [expanded, setExpanded] = useState(false);
+
   const toggleExpander = (e) => {
-    console.log(index);
     if (!expanded) {
       setExpanded(true);
     } else {
@@ -28,7 +28,7 @@ const ChallengeResultTeamIteam = ({ userAuth, index, team, event, challenge }) =
     expanded && (
       <tr key="tr-expander">
         <td className="bg-light" colSpan={7}>
-          <div className="container m-2 d-flex justify-content-center">
+          <div className="container m-2 d-flex justify-content-md-center">
             <div className="card w-50">
               <div className="card-body">
                 <h5 className="text-primary">Turnos Calificados {team.name}</h5>
@@ -39,11 +39,17 @@ const ChallengeResultTeamIteam = ({ userAuth, index, team, event, challenge }) =
                       <span>
                         <strong>Turno {index + 1}:</strong> {turn.totalPoints} pts{" "}
                         {userAuth.role === "Admin" && (
-                          <Link
-                            to={`/${event.slug}/${challenge.slug}/score/${turn._id}`}
-                          >
-                            Editar
-                          </Link>
+                          <span>
+                            <Link
+                              className="btn btn-sm btn-primary m-1"
+                              to={`/events/${event.slug}/${challenge.slug}/score/${turn._id}`}
+                            >
+                              Editar
+                            </Link>{" "}
+                            <button className="btn btn-sm btn-danger m-1">
+                              Eliminar
+                            </button>
+                          </span>
                         )}
                       </span>
                     </div>

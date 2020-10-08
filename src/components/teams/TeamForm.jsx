@@ -232,7 +232,7 @@ const TeamForm = ({
                       Registrar
                     </label>
                     <div className="col-md">
-                      <label class="switch">
+                      <label className="switch">
                         <input
                           type="checkbox"
                           checked={registered}
@@ -243,7 +243,7 @@ const TeamForm = ({
                             })
                           }
                         />
-                        <span class="slider round"></span>
+                        <span className="slider round"></span>
                       </label>
                     </div>
                   </div>

@@ -23,7 +23,14 @@ const Events = () => {
       />
       <PrivateRoute
         roles={["Admin", "Judge"]}
+        exact
         path={"/events/:eventSlug/:challengeSlug/score"}
+        component={ChallengeScoreForm}
+      />
+      <PrivateRoute
+        roles={["Admin"]}
+        exact
+        path={"/events/:eventSlug/:challengeSlug/score/:turnId"}
         component={ChallengeScoreForm}
       />
     </Switch>
