@@ -33,7 +33,7 @@ if (process.env.NODE_ENV === "development") {
     }
   );
 } else {
-  // console.log = () => {};
+  console.log = () => {};
 }
 
 ReactDOM.render(

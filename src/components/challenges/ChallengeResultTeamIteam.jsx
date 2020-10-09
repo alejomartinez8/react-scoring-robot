@@ -37,7 +37,10 @@ const ChallengeResultTeamIteam = ({
 
   return (
     <>
-      <tr key="tr-main" onClick={toggleExpander}>
+      <tr key="tr-main" onClick={toggleExpander} className="tr-results">
+        <td>
+          <i className="fas fa-angle-down text-primary"></i>
+        </td>
         <td>{index + 1}</td>
         <td>{"name" in team && team.name}</td>
         <td>

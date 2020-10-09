@@ -114,6 +114,7 @@ const ChallengeResults = ({
                 <table className="table table-hover">
                   <thead className="thead-light">
                     <tr>
+                      <th></th>
                       <th>Puesto</th>
                       <th>Nombre Equipo</th>
                       <th>Institución</th>
