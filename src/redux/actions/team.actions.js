@@ -90,14 +90,46 @@ const deleteTeam = (id) => (dispatch) => {
     });
 };
 
-const addScoreToTeam = (id, params) => (dispatch) => {
+const addScore = (id, params) => (dispatch) => {
   dispatch({ type: TeamTypes.ADD_SCORE });
 
   teamServices
-    .addScoreToTeam(id, params)
+    .addScore(id, params)
     .then(() => {
       dispatch({ type: TeamTypes.SCORE_SUCCESS });
       dispatch(alertActions.setAlert("Puntaje Recibido", "success"));
+    })
+    .catch((error) => {
+      dispatch({ type: TeamTypes.TEAM_ERROR, payload: error });
+      dispatch(alertActions.setAlert(error.toString(), "danger"));
+    });
+};
+
+const updateScore = (scoreId, params, postQuery) => (dispatch) => {
+  dispatch({ type: TeamTypes.UPDATE_SCORE });
+
+  teamServices
+    .updateScore(scoreId, params)
+    .then(() => {
+      dispatch({ type: TeamTypes.SCORE_SUCCESS });
+      dispatch(alertActions.setAlert("Puntaje actualizado", "success"));
+      dispatch(getTeams(postQuery));
+    })
+    .catch((error) => {
+      dispatch({ type: TeamTypes.TEAM_ERROR, payload: error });
+      dispatch(alertActions.setAlert(error.toString(), "danger"));
+    });
+};
+
+const deleteScore = (scoreId, postQuery) => (dispatch) => {
+  dispatch({ type: TeamTypes.DELETE_SCORE });
+
+  teamServices
+    .deleteScore(scoreId)
+    .then(() => {
+      dispatch({ type: TeamTypes.SCORE_SUCCESS });
+      dispatch(alertActions.setAlert("Puntaje eliminado", "success"));
+      dispatch(getTeams(postQuery));
     })
     .catch((error) => {
       dispatch({ type: TeamTypes.TEAM_ERROR, payload: error });
@@ -112,5 +144,7 @@ export const teamActions = {
   getTeams,
   getTeamById,
   deleteTeam,
-  addScoreToTeam,
+  addScore,
+  updateScore,
+  deleteScore,
 };

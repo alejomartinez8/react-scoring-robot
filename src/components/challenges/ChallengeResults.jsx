@@ -13,6 +13,8 @@ const ChallengeResults = ({
   getEventBySlug,
   challenge,
   getChallengeBySlug,
+  deleteScore,
+  updateScore,
   match,
 }) => {
   /** Get teams */
@@ -25,14 +27,14 @@ const ChallengeResults = ({
   }, [getEventBySlug, getChallengeBySlug, eventSlug, challengeSlug]);
 
   useEffect(() => {
-    if (!challenge.loading && !event.loading) {
+    if (Object.keys(challenge).length > 0 && Object.keys(event).length > 0) {
       getTeams({
         event: event._id,
         challenge: challenge._id,
         registered: true,
       });
     }
-  }, [challenge.loading, event.loading, challenge._id, event._id, getTeams]);
+  }, [challenge, event, challenge._id, event._id, getTeams]);
 
   /** Sum all turns */
   const sumAllTurn = (arr) => {
@@ -74,6 +76,24 @@ const ChallengeResults = ({
     sortedTeams = sortTeams(teams);
   }
 
+  const handleDeleteScore = (scoreId) => {
+    const postQuery = {
+      event: event._id,
+      challenge: challenge._id,
+      registered: true,
+    };
+    deleteScore(scoreId, postQuery);
+  };
+
+  const handleUpdateScore = (scoreId, params) => {
+    const postQuery = {
+      event: event._id,
+      challenge: challenge._id,
+      registered: true,
+    };
+    updateScore(scoreId, params, postQuery);
+  };
+
   /** Return */
   return (
     <Fragment>
@@ -112,6 +132,8 @@ const ChallengeResults = ({
                         challenge={challenge}
                         event={event}
                         userAuth={userAuth}
+                        handleDeleteScore={handleDeleteScore}
+                        handleUpdateScore={handleUpdateScore}
                       />
                     ))}
                   </tbody>
@@ -136,6 +158,8 @@ const actionCreators = {
   getTeams: teamActions.getTeams,
   getEventBySlug: eventActions.getEventBySlug,
   getChallengeBySlug: challengeActions.getChallengeBySlug,
+  updateScore: teamActions.updateScore,
+  deleteScore: teamActions.deleteScore,
 };
 
 export default connect(mapStateToProps, actionCreators)(ChallengeResults);

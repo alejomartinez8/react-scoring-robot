@@ -2,7 +2,12 @@ import React from "react";
 import { Modal, Button } from "react-bootstrap";
 import ChallengeScoreForm from "../ChallengeScoreForm";
 
-const ModalEditScoringTurn = ({ showEdit, setShowEdit }) => {
+const ModalEditScoringTurn = ({
+  showEdit,
+  setShowEdit,
+  turn,
+  handleUpdateScore,
+}) => {
   return (
     <Modal
       size="lg"
@@ -14,12 +19,13 @@ const ModalEditScoringTurn = ({ showEdit, setShowEdit }) => {
       <Modal.Header closeButton>
         <Modal.Title>Modificar Turno</Modal.Title>
       </Modal.Header>
-      <Modal.Body>{/* <ChallengeScoreForm /> */}</Modal.Body>
+      <Modal.Body>
+        <ChallengeScoreForm turn={turn} handleUpdateScore={handleUpdateScore} />
+      </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={() => setShowEdit(false)}>
           Cerrar
         </Button>
-        <Button variant="primary">Actualizar</Button>
       </Modal.Footer>
     </Modal>
   );

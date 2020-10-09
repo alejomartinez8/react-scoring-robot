@@ -1,9 +1,25 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import ModalEditScoringTurn from "./modals/ModalEditScoringTurn";
 
-const ChallengeResultTeamIteam = ({ userAuth, index, team, event, challenge }) => {
+const ChallengeResultTeamIteam = ({
+  userAuth,
+  index,
+  team,
+  event,
+  challenge,
+  handleDeleteScore,
+  handleUpdateScore,
+}) => {
   //** Handle Expander */
   const [expanded, setExpanded] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+
+  const [turn, setTurn] = useState({
+    _id: "",
+    tasks: [],
+    penalites: [],
+    bonusPoint: 0,
+  });
 
   const toggleExpander = (e) => {
     if (!expanded) {
@@ -13,7 +29,21 @@ const ChallengeResultTeamIteam = ({ userAuth, index, team, event, challenge }) =
     }
   };
 
+  const handleShowEdit = (id) => {
+    const turn = team.turns.find((elm) => elm._id === id);
+    console.log(turn);
+    setTurn({ ...turn, teamId: team._id });
+    setShowEdit(true);
+  };
+
   return [
+    <ModalEditScoringTurn
+      key="modal-edit"
+      showEdit={showEdit}
+      setShowEdit={setShowEdit}
+      turn={turn}
+      handleUpdateScore={handleUpdateScore}
+    />,
     <tr key="tr-main" onClick={toggleExpander}>
       <td>{index + 1}</td>
       <td>{team.name}</td>
@@ -29,7 +59,7 @@ const ChallengeResultTeamIteam = ({ userAuth, index, team, event, challenge }) =
       <tr key="tr-expander">
         <td className="bg-light" colSpan={7}>
           <div className="container m-2 d-flex justify-content-md-center">
-            <div className="card w-50">
+            <div className="card w-75">
               <div className="card-body">
                 <h5 className="text-primary">Turnos Calificados {team.name}</h5>
 
@@ -40,13 +70,16 @@ const ChallengeResultTeamIteam = ({ userAuth, index, team, event, challenge }) =
                         <strong>Turno {index + 1}:</strong> {turn.totalPoints} pts{" "}
                         {userAuth.role === "Admin" && (
                           <span>
-                            <Link
+                            <button
                               className="btn btn-sm btn-primary m-1"
-                              to={`/events/${event.slug}/${challenge.slug}/score/${turn._id}`}
+                              onClick={() => handleShowEdit(turn._id)}
                             >
                               Editar
-                            </Link>{" "}
-                            <button className="btn btn-sm btn-danger m-1">
+                            </button>{" "}
+                            <button
+                              className="btn btn-sm btn-danger m-1"
+                              onClick={() => handleDeleteScore(turn._id)}
+                            >
                               Eliminar
                             </button>
                           </span>

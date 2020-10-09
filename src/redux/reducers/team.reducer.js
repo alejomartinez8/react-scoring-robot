@@ -15,6 +15,7 @@ export function team(state = intialState, action) {
     case TeamTypes.GET_TEAMS:
     case TeamTypes.UPDATE_TEAM:
     case TeamTypes.ADD_SCORE:
+    case TeamTypes.UPDATE_SCORE:
       return {
         ...state,
         loading: true,

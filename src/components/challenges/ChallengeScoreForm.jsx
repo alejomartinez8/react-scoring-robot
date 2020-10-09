@@ -25,23 +25,29 @@ const initalState = {
 };
 
 const CallengeScoreForm = ({
-  event: { event },
-  challenge: { challenge, loading },
+  event,
+  eventLoading,
+  challenge,
+  challengeLoading,
   teams,
+  teamsLoading,
   getEventBySlug,
   getChallengeBySlug,
   getTeams,
-  addScoreToTeam,
+  addScore,
   setAlert,
+  turn = {},
+  handleUpdateScore,
   match,
 }) => {
   // load event and challenge by slug
-  const { challengeSlug, eventSlug, turnId } = match.params;
-  const eventLoading = Object.keys(event).length === 0;
-  const challengeLoading = Object.keys(challenge).length === 0;
-  const teamsLoading = Object.keys(teams).length === 0;
+  let challengeSlug = "";
+  let eventSlug = "";
 
-  console.log(eventLoading, challengeLoading, teamsLoading);
+  if (Object.keys(turn).length === 0) {
+    challengeSlug = match.params.challengeSlug;
+    eventSlug = match.params.eventSlug;
+  }
 
   // use states vars
   const [formData, setFormData] = useState(initalState);
@@ -49,18 +55,22 @@ const CallengeScoreForm = ({
   const [team, setTeam] = useState("");
   const { tasks, penalties, taskPoints, bonusPoints, totalPoints } = formData;
 
+  // get Event and Challenge by Slug
   useEffect(() => {
-    getChallengeBySlug(challengeSlug);
-    getEventBySlug(eventSlug);
+    if (Object.keys(turn).length === 0) {
+      getEventBySlug(eventSlug);
+      getChallengeBySlug(challengeSlug);
+    }
+    // eslint-disable-next-line
   }, [getChallengeBySlug, getEventBySlug, challengeSlug, eventSlug]);
 
   // load teams to qualify
   useEffect(() => {
     if (!eventLoading && !challengeLoading) {
-      if (turnId) {
-        getTeams({
-          "turns._id": turnId,
-        });
+      if (Object.keys(turn).length > 0) {
+        setFormData({ ...formData, ...turn });
+        setTeam(turn.teamId);
+        console.log("LoadTurnScore", turn);
       } else {
         getTeams({
           challenge: challenge._id,
@@ -69,23 +79,20 @@ const CallengeScoreForm = ({
       }
     }
     // eslint-disable-next-line
-  }, [getTeams, eventLoading, challengeLoading, turnId]);
+  }, [getTeams, eventLoading, challengeLoading]);
 
   // load task challenge score form
   useEffect(() => {
-    if (!teamsLoading) {
-      if (turnId) {
-        const turn = teams[0].turns.find((turn) => turn._id === turnId);
-        setTeam(teams[0]._id);
-        setFormData(turn);
+    if (!teamsLoading && !challengeLoading) {
+      if (Object.keys(turn).length > 0) {
       } else {
         resetTaskToForm();
       }
     }
     // eslint-disable-next-line
-  }, [teams, turnId]);
+  }, [teams]);
 
-  function resetTaskToForm(turn) {
+  function resetTaskToForm() {
     const _tasks = [];
     const _penalties = [];
     for (const key in challenge.tasks) {
@@ -100,9 +107,11 @@ const CallengeScoreForm = ({
       totalPoints: 0,
     });
 
-    setPenaltyFlag(
-      !!challenge.tasks.map((elm) => elm.penalty).reduce((acc, elm) => acc + elm)
-    );
+    if (typeof challenge === "undefined") {
+      setPenaltyFlag(
+        !!challenge.tasks.map((elm) => elm.penalty).reduce((acc, elm) => acc + elm)
+      );
+    }
 
     setSeconds(challenge.maxTime);
     setTimer(false);
@@ -214,17 +223,18 @@ const CallengeScoreForm = ({
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // send Score turn
-    addScoreToTeam(team, formData);
-
-    // get Teams again
-    getTeams({
-      challenge: challenge._id,
-      event: event._id,
-    });
-    // resetForm
-
-    resetTaskToForm();
+    if (Object.keys(turn).length === 0) {
+      // send Score turn
+      addScore(team, formData);
+      getTeams({
+        challenge: challenge._id,
+        event: event._id,
+      });
+      resetTaskToForm();
+    } else {
+      handleUpdateScore(turn._id, formData);
+      console.log("acutalizar turno", formData);
+    }
   };
 
   /**** Return *****/
@@ -237,83 +247,87 @@ const CallengeScoreForm = ({
           <div className="card  my-4">
             <div className="card-header">
               <h2 className="text-primary">
-                {turnId
-                  ? `Editar Turno ${challenge.name} - ${teams[0].name}`
+                {Object.keys(turn).length > 0
+                  ? `Editar Turno`
                   : `Calificar ${challenge.name} - ${challenge.categories}`}
               </h2>
             </div>
 
             <div className="card-body">
               <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <label htmlFor="team">Equipo</label>
-                  <div className="col-sm-4">
-                    <select
-                      className="form-control"
-                      name="team"
-                      id="team"
-                      value={team}
-                      onChange={handleTeams}
-                      required
-                    >
-                      <option value=""></option>
-                      {teams.map((team) => (
-                        <option key={team._id} value={team._id}>
-                          {team.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
+                {!Object.keys(turn).length && (
+                  <Fragment>
+                    <div className="form-group">
+                      <label htmlFor="team">Equipo</label>
+                      <div className="col-sm-4">
+                        <select
+                          className="form-control"
+                          name="team"
+                          id="team"
+                          value={team}
+                          onChange={handleTeams}
+                          required
+                        >
+                          <option value=""></option>
+                          {teams.map((team) => (
+                            <option key={team._id} value={team._id}>
+                              {team.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
 
-                <hr />
-                <div className="form-group my-2 text-center">
-                  <div className="lead">
-                    Turno(s):{" "}
-                    {team !== ""
-                      ? teams
-                          .filter((elm) => elm._id === team)
-                          .map((elm) => elm.turnCounter)[0]
-                      : 0}{" "}
-                    de {challenge.maxTurns}
-                  </div>
-                </div>
+                    <hr />
+                    <div className="form-group my-2 text-center">
+                      <div className="lead">
+                        Turno(s):{" "}
+                        {team !== ""
+                          ? teams
+                              .filter((elm) => elm._id === team)
+                              .map((elm) => elm.turnCounter)[0]
+                          : 0}{" "}
+                        de {challenge.maxTurns}
+                      </div>
+                    </div>
 
-                <hr />
-                <div className="form-group row my-2 justify-content-center align-items-center">
-                  <div className="display-4">
-                    <i className="fas fa-hourglass-start"></i> {seconds} (s)
-                  </div>
+                    <hr />
+                    <div className="form-group row my-2 justify-content-center align-items-center">
+                      <div className="display-4">
+                        <i className="fas fa-hourglass-start"></i> {seconds} (s)
+                      </div>
 
-                  <div>
-                    <button
-                      onClick={handleSetTimer}
-                      className={
-                        !timer ? "btn btn-primary m-2" : "btn btn-danger m-2"
-                      }
-                    >
-                      {!timer ? (
-                        <>
-                          <i className="fas fa-play"></i> Iniciar
-                        </>
-                      ) : (
-                        <>
-                          <i className="fas fa-stop"></i> Parar
-                        </>
-                      )}
-                    </button>
-                    <button
-                      onClick={handleRestartTimer}
-                      className="btn btn-warning m-2"
-                    >
-                      Reiniciar
-                    </button>
-                  </div>
-                </div>
+                      <div>
+                        <button
+                          onClick={handleSetTimer}
+                          className={
+                            !timer ? "btn btn-primary m-2" : "btn btn-danger m-2"
+                          }
+                        >
+                          {!timer ? (
+                            <>
+                              <i className="fas fa-play"></i> Iniciar
+                            </>
+                          ) : (
+                            <>
+                              <i className="fas fa-stop"></i> Parar
+                            </>
+                          )}
+                        </button>
+                        <button
+                          onClick={handleRestartTimer}
+                          className="btn btn-warning m-2"
+                        >
+                          Reiniciar
+                        </button>
+                      </div>
+                    </div>
 
-                <hr />
+                    <hr />
+                  </Fragment>
+                )}
 
-                {loading ? (
+                {challengeLoading ? (
                   <Spinner animation="border" variant="primary" />
                 ) : challenge.tasks && challenge.tasks.length > 0 ? (
                   <div className="table-responsive">
@@ -336,7 +350,10 @@ const CallengeScoreForm = ({
                                   checked={tasks[index]}
                                   type="checkBox"
                                   onChange={(e) => handleChangeTasks(e, tasks)}
-                                  disabled={checkDisabledTask(index) && !turnId}
+                                  disabled={
+                                    checkDisabledTask(index) &&
+                                    !Object.keys(turn).length
+                                  }
                                 />
                                 <label
                                   htmlFor={index}
@@ -407,16 +424,18 @@ const CallengeScoreForm = ({
                   <button
                     type="submit"
                     className="btn btn-primary mx-1"
-                    // disabled={loading}
+                    disabled={teamsLoading}
                   >
-                    {/* {loading && (
-              <span className="spinner-border spinner-border-sm m-1"></span>
-            )} */}
+                    {teamsLoading && (
+                      <span className="spinner-border spinner-border-sm m-1"></span>
+                    )}
                     Guardar
                   </button>
-                  <ButtonBack className="btn btn-primary mr-1 my-2">
-                    Cancelar
-                  </ButtonBack>
+                  {Object.keys(turn).length === 0 && (
+                    <ButtonBack className="btn btn-outline-primary mr-1 my-2">
+                      Cancelar
+                    </ButtonBack>
+                  )}
                 </div>
               </form>
             </div>
@@ -428,16 +447,19 @@ const CallengeScoreForm = ({
 };
 
 const mapStateToProps = (state) => ({
-  event: state.event,
-  challenge: state.challenge,
+  event: state.event.event,
+  eventLoading: state.event.loading,
+  challenge: state.challenge.challenge,
+  challengeLoading: state.challenge.loading,
   teams: state.team.teams,
+  teamsLoading: state.team.loading,
 });
 
 const actionCreators = {
   getEventBySlug: eventActions.getEventBySlug,
   getChallengeBySlug: challengeActions.getChallengeBySlug,
   getTeams: teamActions.getTeams,
-  addScoreToTeam: teamActions.addScoreToTeam,
+  addScore: teamActions.addScore,
   setAlert: alertActions.setAlert,
 };
 
