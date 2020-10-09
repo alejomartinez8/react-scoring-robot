@@ -127,7 +127,7 @@ const ChallengeResults = ({
                     {sortedTeams.map((team, index) => (
                       <ChallengeResultTeamIteam
                         key={team._id}
-                        index={index + 1}
+                        index={index}
                         team={team}
                         challenge={challenge}
                         event={event}

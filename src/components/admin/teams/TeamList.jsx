@@ -6,7 +6,7 @@ import { Spinner } from "react-bootstrap";
 import ButtonBack from "../../layout/ButtonBack";
 
 const TeamsList = ({
-  team: { teams },
+  team: { teams, loading },
   getTeams,
   registerTeam,
   deleteTeam,
@@ -29,7 +29,7 @@ const TeamsList = ({
 
   return (
     <Fragment>
-      {teams.length === 0 ? (
+      {loading === 0 ? (
         <Spinner animation="border" variant="primary" />
       ) : (
         <Fragment>
