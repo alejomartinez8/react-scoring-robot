@@ -49,7 +49,7 @@ const ChallengeResults = ({
       ? arr
           .map((elm) => elm.totalPoints)
           .sort((a, b) => b - a)
-          .slice(-max)
+          .slice(0, max)
           .reduce((acc, val) => acc + val)
       : 0;
   };

@@ -35,8 +35,6 @@ const ChallengeResultTeamIteam = ({
     setShowEdit(true);
   };
 
-  console.log(team);
-
   return (
     <>
       <tr key="tr-main" onClick={toggleExpander}>
