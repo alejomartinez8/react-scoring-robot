@@ -131,35 +131,38 @@ const UserForm = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Institución Educativa</label>
+                  <label>Institución Educativa*</label>
                   <input
                     className="form-control"
                     type="text"
                     name="institution"
                     value={institution}
                     onChange={handleChange}
+                    required
                   />
                 </div>
 
                 <div className="form-group">
-                  <label>Ciudad</label>
+                  <label>Ciudad*</label>
                   <input
                     className="form-control"
                     type="text"
                     name="city"
                     value={city}
                     onChange={handleChange}
+                    required
                   />
                 </div>
 
                 <div className="form-group">
-                  <label>País</label>
+                  <label>País*</label>
                   <input
                     className="form-control"
                     type="text"
                     name="country"
                     value={country}
                     onChange={handleChange}
+                    required
                   />
                 </div>
                 {userAuth.role === "Admin" && (

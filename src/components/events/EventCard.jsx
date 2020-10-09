@@ -1,18 +1,33 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const EventCard = ({ auth, event: { _id, slug, name, imageURL, description } }) => {
+const EventCard = ({
+  auth,
+  event: { _id, slug, name, imageURL, description, year, challenges },
+}) => {
   return (
-    <div className="card  my-4">
+    <div className="card my-4">
       <div className="card-header">
         <h3 className="text-primary">{name}</h3>
       </div>
 
       <div className="card-body">
-        <img className="img-fluid" src={imageURL} alt=""></img>
-
-        <h5 className="card-title">{name}</h5>
-        <p className="card-text">Descripción: {description}</p>
+        <div className="row">
+          <div className="col-sm-4">
+            <img className="img-thumbnail" src={imageURL} alt={name}></img>
+          </div>
+          <div className="col-sm">
+            <p className="card-text">Descripción: {description}</p>
+            <p className="card-text">Año: {year}</p>
+            <p className="card-text">
+              Retos:{" "}
+              {challenges &&
+                challenges.map((challenge) => (
+                  <span className="badge badge-primary">{challenge.name}</span>
+                ))}
+            </p>
+          </div>
+        </div>
       </div>
       <div className="card-footer">
         {auth.isAuth && auth.userAuth.role === "Admin" && (

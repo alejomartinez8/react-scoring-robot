@@ -167,7 +167,7 @@ const TeamForm = ({
                 {auth.userAuth.role === "Admin" && (
                   <div className="form-group row">
                     <label className="col-md-4 col-form-group" htmlFor="user">
-                      Entrenador
+                      Entrenador (*)
                     </label>
                     <div className="col-md">
                       <select

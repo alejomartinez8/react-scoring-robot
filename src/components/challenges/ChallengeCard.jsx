@@ -4,7 +4,7 @@ import { Link, useRouteMatch } from "react-router-dom";
 const ChallengeCard = ({ auth, challenge }) => {
   const match = useRouteMatch();
   return (
-    <div className="card  my-4" key={challenge._id}>
+    <div className="card my-4">
       <div className="card-header">
         <h3 className="text-primary">
           <i className="fas fa-trophy"></i> {challenge.name}
