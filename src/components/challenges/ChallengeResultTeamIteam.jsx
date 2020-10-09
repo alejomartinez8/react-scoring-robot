@@ -5,7 +5,6 @@ const ChallengeResultTeamIteam = ({
   userAuth,
   index,
   team,
-  event,
   challenge,
   handleDeleteScore,
   handleUpdateScore,
@@ -37,22 +36,18 @@ const ChallengeResultTeamIteam = ({
   };
 
   return [
-    <ModalEditScoringTurn
-      key="modal-edit"
-      showEdit={showEdit}
-      setShowEdit={setShowEdit}
-      turn={turn}
-      handleUpdateScore={handleUpdateScore}
-    />,
     <tr key="tr-main" onClick={toggleExpander}>
       <td>{index + 1}</td>
-      <td>{team.name}</td>
-      <td>{team.user.institution}</td>
-      <td>{team.user.city}</td>
-      <td className="text-center">{team.topPoints}</td>
-      <td className="text-center">{team.totalPoints}</td>
+      <td>{"name" in team && team.name}</td>
       <td>
-        {team.turns.length} de {challenge.maxTurns}
+        {"user" in team && "institution" in team.user && team.user.institution}
+      </td>
+      <td>{"user" in team && "city" in team.user && team.user.city}</td>
+      <td className="text-center">{"topPoints" in team && team.topPoints}</td>
+      <td className="text-center">{"totalPoints" in team && team.totalPoints}</td>
+      <td>
+        {"turns" in team && team.turns.length} de{" "}
+        {"maxTurns" in challenge && challenge.maxTurns}
       </td>
     </tr>,
     expanded && (
@@ -63,29 +58,33 @@ const ChallengeResultTeamIteam = ({
               <div className="card-body">
                 <h5 className="text-primary">Turnos Calificados {team.name}</h5>
 
-                {team.turns.length > 0 &&
+                {"turns" in team &&
+                  team.turns.length > 0 &&
                   team.turns.map((turn, index) => (
-                    <div key={turn._id} className="d-flex justify-content-center">
-                      <span>
-                        <strong>Turno {index + 1}:</strong> {turn.totalPoints} pts{" "}
-                        {userAuth.role === "Admin" && (
-                          <span>
-                            <button
-                              className="btn btn-sm btn-primary m-1"
-                              onClick={() => handleShowEdit(turn._id)}
-                            >
-                              Editar
-                            </button>{" "}
-                            <button
-                              className="btn btn-sm btn-danger m-1"
-                              onClick={() => handleDeleteScore(turn._id)}
-                            >
-                              Eliminar
-                            </button>
-                          </span>
-                        )}
-                      </span>
-                    </div>
+                    <>
+                      <div key={turn._id} className="d-flex justify-content-center">
+                        <span>
+                          <strong>Turno {index + 1}:</strong>{" "}
+                          {"totalPoints" in team && team.totalPoints} pts{" "}
+                          {userAuth.role === "Admin" && (
+                            <span>
+                              <button
+                                className="btn btn-sm btn-primary m-1"
+                                onClick={() => handleShowEdit(turn._id)}
+                              >
+                                Editar
+                              </button>{" "}
+                              <button
+                                className="btn btn-sm btn-danger m-1"
+                                onClick={() => handleDeleteScore(turn._id)}
+                              >
+                                Eliminar
+                              </button>
+                            </span>
+                          )}
+                        </span>
+                      </div>
+                    </>
                   ))}
               </div>
             </div>
@@ -93,6 +92,13 @@ const ChallengeResultTeamIteam = ({
         </td>
       </tr>
     ),
+    <ModalEditScoringTurn
+      key="modal-edit"
+      showEdit={showEdit}
+      setShowEdit={setShowEdit}
+      turn={turn}
+      handleUpdateScore={handleUpdateScore}
+    />,
   ];
 };
 

@@ -244,7 +244,9 @@ const CallengeScoreForm = ({
         <Spinner animation="border" variant="primary" />
       ) : (
         <Fragment>
-          <div className="card  my-4">
+          <ButtonBack className="btn btn-primary mr-1 my-2">Atrás</ButtonBack>
+
+          <div className="card mb-4">
             <div className="card-header">
               <h2 className="text-primary">
                 {Object.keys(turn).length > 0
