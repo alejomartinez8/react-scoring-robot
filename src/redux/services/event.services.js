@@ -7,6 +7,7 @@ export const eventServices = {
   getEventById,
   getEventBySlug,
   deleteEvent,
+  toggleActiveEvent,
 };
 
 function addEvent(event) {
@@ -37,6 +38,10 @@ function getEventBySlug(slug) {
 
 function deleteEvent(id) {
   return axios.delete(`/events/${id}`).then(handleResponse).catch(handleError);
+}
+
+function toggleActiveEvent(id) {
+  return axios.put(`/events/active/${id}`).then(handleResponse).catch(handleError);
 }
 
 // handleResponse

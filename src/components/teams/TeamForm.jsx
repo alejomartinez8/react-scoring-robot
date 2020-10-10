@@ -209,7 +209,7 @@ const TeamForm = ({
                 </div>
 
                 <TeamSelectEvents
-                  options={events}
+                  options={events.filter((event) => event.active)}
                   event={event}
                   handleChange={handleChange}
                 />

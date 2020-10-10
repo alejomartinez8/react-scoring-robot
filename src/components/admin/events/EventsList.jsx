@@ -4,11 +4,13 @@ import { connect } from "react-redux";
 import { eventActions } from "../../../redux/actions";
 import { Spinner } from "react-bootstrap";
 import ButtonBack from "../../layout/ButtonBack";
+import ToggleButton from "../../layout/ToggleButton";
 
 const EventsList = ({
   event: { events, loading },
   getEvents,
   deleteEvent,
+  toggleActiveEvent,
   match,
 }) => {
   const { path } = match;
@@ -19,6 +21,11 @@ const EventsList = ({
 
   const handleDeleteEvent = (id) => {
     deleteEvent(id);
+  };
+
+  const handleToggleActiveEvent = (id) => {
+    toggleActiveEvent(id);
+    getEvents();
   };
 
   const getStage = (stage) => {
@@ -58,33 +65,40 @@ const EventsList = ({
                       <th>Nombre Corto</th>
                       <th>Año</th>
                       <th>Etapa</th>
-                      <th></th>
+                      <th>Activo</th>
+                      <th>Editar/Eliminar</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {events &&
-                      events.map((event) => (
-                        <tr key={event._id}>
-                          <td>{event.name}</td>
-                          <td>{event.slug}</td>
-                          <td>{event.year}</td>
-                          <td>{getStage(event.stage)}</td>
-                          <td style={{ whiteSpace: "nowrap" }}>
-                            <Link
-                              to={`${path}/edit/${event._id}`}
-                              className="btn btn-sm btn-primary mr-1"
-                            >
-                              Editar
-                            </Link>
-                            <button
-                              className="btn btn-sm btn-danger"
-                              onClick={() => handleDeleteEvent(event._id)}
-                            >
-                              <span>Eliminar</span>
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
+                    {events.map((event) => (
+                      <tr key={event._id}>
+                        <td>{event.name}</td>
+                        <td>{event.slug}</td>
+                        <td>{event.year}</td>
+                        <td>{getStage(event.stage)}</td>
+                        <td>
+                          <ToggleButton
+                            toggle={event.active}
+                            toggleId={event._id}
+                            handleToggle={handleToggleActiveEvent}
+                          />
+                        </td>
+                        <td style={{ whiteSpace: "nowrap" }}>
+                          <Link
+                            to={`${path}/edit/${event._id}`}
+                            className="btn btn-sm btn-primary mr-1"
+                          >
+                            Editar
+                          </Link>
+                          <button
+                            className="btn btn-sm btn-danger"
+                            onClick={() => handleDeleteEvent(event._id)}
+                          >
+                            <span>Eliminar</span>
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
@@ -103,6 +117,7 @@ const mapStateToProps = (state) => ({
 const actionCreators = {
   getEvents: eventActions.getEvents,
   deleteEvent: eventActions.deleteEvent,
+  toggleActiveEvent: eventActions.toggleActiveEvent,
 };
 
 export default connect(mapStateToProps, actionCreators)(EventsList);

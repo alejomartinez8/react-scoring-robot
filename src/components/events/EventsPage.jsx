@@ -18,10 +18,12 @@ const EventsPage = ({ auth, event: { events, loading }, getEvents }) => {
           <h2 className="large text-primary">
             <i className="fas fa-calendar"></i> Eventos
           </h2>
-          {events.length > 0 ? (
-            events.map((event) => (
-              <EventCard key={event._id} event={event} auth={auth} />
-            ))
+          {events.length > 0 && events.filter((event) => event.active).length > 0 ? (
+            events
+              .filter((event) => event.active)
+              .map((event) => (
+                <EventCard key={event._id} event={event} auth={auth} />
+              ))
           ) : (
             <h4>Todavía no hay eventos</h4>
           )}

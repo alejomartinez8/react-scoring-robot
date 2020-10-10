@@ -84,6 +84,20 @@ const deleteEvent = (id) => (dispatch) => {
     });
 };
 
+const toggleActiveEvent = (id) => (dispatch) => {
+  dispatch({ type: EventTypes.TOGGLE_EVENT_ACTIVE });
+
+  eventServices
+    .toggleActiveEvent(id)
+    .then((event) => {
+      dispatch({ type: EventTypes.EVENT_ACTIVE_TOGGLE, payload: event });
+    })
+    .catch((error) => {
+      dispatch({ type: EventTypes.EVENT_ERROR, payload: error });
+      dispatch(alertActions.setAlert(error.toString(), "danger"));
+    });
+};
+
 export const eventActions = {
   addEvent,
   updateEvent,
@@ -91,4 +105,5 @@ export const eventActions = {
   getEventById,
   getEventBySlug,
   deleteEvent,
+  toggleActiveEvent,
 };

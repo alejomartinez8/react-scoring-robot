@@ -13,9 +13,16 @@ export function event(state = intialState, action) {
   switch (type) {
     case EventTypes.GET_EVENT:
     case EventTypes.GET_EVENTS:
+    case EventTypes.TOGGLE_EVENT_ACTIVE:
       return {
         ...state,
         loading: true,
+      };
+
+    case EventTypes.EVENT_ACTIVE_TOGGLE:
+      return {
+        ...state,
+        loading: false,
       };
 
     case EventTypes.EVENTS_LOADED:

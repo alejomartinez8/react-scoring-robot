@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { teamActions } from "../../../redux/actions";
 import { Spinner } from "react-bootstrap";
 import ButtonBack from "../../layout/ButtonBack";
+import ToggleButton from "../../layout/ToggleButton";
 
 const TeamsList = ({
   team: { teams, loading },
@@ -72,14 +73,19 @@ const TeamsList = ({
                           <td>{team.user ? team.user.city : ""}</td>
                           <td>{team.user ? team.user.country : ""}</td>
                           <td className="text-center">
-                            <label className="switch">
+                            <ToggleButton
+                              toggle={team.registered}
+                              toggleId={team._id}
+                              handleToggle={handleRegisterTeam}
+                            />
+                            {/* <label className="switch">
                               <input
                                 type="checkbox"
                                 checked={team.registered}
                                 onChange={() => handleRegisterTeam(team._id)}
                               />
                               <span className="slider round"></span>
-                            </label>
+                            </label> */}
                           </td>
                           <td style={{ whiteSpace: "nowrap" }}>
                             <Link

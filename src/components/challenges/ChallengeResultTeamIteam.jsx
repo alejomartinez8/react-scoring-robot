@@ -21,11 +21,7 @@ const ChallengeResultTeamIteam = ({
   });
 
   const toggleExpander = (e) => {
-    if (!expanded) {
-      setExpanded(true);
-    } else {
-      setExpanded(false);
-    }
+    setExpanded(!expanded);
   };
 
   const handleShowEdit = (id) => {
@@ -39,7 +35,13 @@ const ChallengeResultTeamIteam = ({
     <>
       <tr key="tr-main" onClick={toggleExpander} className="tr-results">
         <td>
-          <i className="fas fa-angle-down text-primary"></i>
+          <i
+            className={
+              expanded
+                ? "fas fa-angle-up text-primary"
+                : "fas fa-angle-down text-primary"
+            }
+          ></i>
         </td>
         <td>{index + 1}</td>
         <td>{"name" in team && team.name}</td>
