@@ -3,8 +3,21 @@ import { Link } from "react-router-dom";
 
 const EventCard = ({
   auth,
-  event: { _id, slug, name, imageURL, description, year, challenges },
+  event: { _id, slug, name, imageURL, description, year, stage, challenges },
 }) => {
+  const getStage = (stage) => {
+    switch (stage) {
+      case "registration":
+        return "Registro Equipos";
+      case "scoring":
+        return "Calificando";
+      case "finished":
+        return "Finalizado";
+      default:
+        return "";
+    }
+  };
+
   return (
     <>
       <div className="card my-4">
@@ -28,12 +41,16 @@ const EventCard = ({
               </p>
               <p className="card-text">
                 <strong>Retos: </strong>
-                {challenges &&
+                {challenges.lenght > 0 &&
                   challenges.map((challenge) => (
                     <span className="badge badge-primary m-1" key={challenge._id}>
                       {challenge.name}
                     </span>
                   ))}
+              </p>
+              <p className="card-text">
+                <strong>Etapa: </strong>
+                {getStage(stage)}
               </p>
             </div>
           </div>

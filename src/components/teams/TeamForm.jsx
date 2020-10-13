@@ -148,6 +148,29 @@ const TeamForm = ({
     }
   };
 
+  const setPlayersFrom = (eventId) => {
+    const _event = events.find((event) => event._id === eventId);
+    if (_event) {
+      let player = [];
+      for (let index = 0; index < _event.maxPlayersTeam; index++) {
+        player[index] = (
+          <Fragment key={index}>
+            <hr />
+            <h5>Integrante Equipo #{index + 1}</h5>
+            <TeamInputPlayers
+              key={index}
+              addPlayer={addPlayer}
+              index={index}
+              player={players[index]}
+              required={index < _event.minPlayersTeam}
+            />
+          </Fragment>
+        );
+      }
+      return player;
+    }
+  };
+
   return (
     <Fragment>
       {loading ? (
@@ -209,7 +232,9 @@ const TeamForm = ({
                 </div>
 
                 <TeamSelectEvents
-                  options={events.filter((event) => event.active)}
+                  options={events.filter(
+                    (event) => event.active && event.stage === "registration"
+                  )}
                   event={event}
                   handleChange={handleChange}
                 />
@@ -249,40 +274,9 @@ const TeamForm = ({
                   </div>
                 )}
 
-                <hr />
-                <h5>Integrante Equipo #1</h5>
-                <TeamInputPlayers
-                  addPlayer={addPlayer}
-                  index={0}
-                  player={players[0]}
-                />
+                {setPlayersFrom(event)}
 
                 <hr />
-                <h5>Integrante Equipo #2</h5>
-                <TeamInputPlayers
-                  addPlayer={addPlayer}
-                  index={1}
-                  player={players[1]}
-                />
-
-                <hr />
-                <h5>Integrante Equipo #3</h5>
-                <TeamInputPlayers
-                  addPlayer={addPlayer}
-                  index={2}
-                  player={players[2]}
-                />
-
-                <hr />
-                <h5>Integrante Equipo #4</h5>
-                <TeamInputPlayers
-                  addPlayer={addPlayer}
-                  index={3}
-                  player={players[3]}
-                />
-
-                <hr />
-
                 <div className="form-row">
                   <button
                     type="submit"

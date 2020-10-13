@@ -63,29 +63,23 @@ const TeamsList = ({
                     {teams.length > 0 &&
                       teams.map((team) => (
                         <tr key={team._id}>
-                          <td>{team.name ? team.name : ""}</td>
-                          <td>{team.category ? team.category : ""}</td>
+                          <td>{"name" in team ? team.name : ""}</td>
+                          <td>{"category" in team ? team.category : ""}</td>
+                          <td>{"challenge" in team ? team.challenge.name : ""}</td>
                           <td>
-                            {team.challenge !== undefined ? team.challenge.name : ""}
+                            {"user" in team && "fullName" in team.user
+                              ? team.user.fullName
+                              : ""}
                           </td>
-                          <td>{team.user ? team.user.fullName : ""}</td>
-                          <td>{team.institution}</td>
-                          <td>{team.user ? team.user.city : ""}</td>
-                          <td>{team.user ? team.user.country : ""}</td>
+                          <td>{"user" in team ? team.user.institution : ""}</td>
+                          <td>{"user" in team ? team.user.city : ""}</td>
+                          <td>{"user" in team ? team.user.country : ""}</td>
                           <td className="text-center">
                             <ToggleButton
                               toggle={team.registered}
                               toggleId={team._id}
                               handleToggle={handleRegisterTeam}
                             />
-                            {/* <label className="switch">
-                              <input
-                                type="checkbox"
-                                checked={team.registered}
-                                onChange={() => handleRegisterTeam(team._id)}
-                              />
-                              <span className="slider round"></span>
-                            </label> */}
                           </td>
                           <td style={{ whiteSpace: "nowrap" }}>
                             <Link

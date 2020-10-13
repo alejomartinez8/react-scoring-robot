@@ -16,6 +16,8 @@ const initialState = {
   categories: [],
   challenges: [],
   stage: "registration",
+  maxPlayersTeam: 1,
+  minPlayersTeam: 1,
 };
 
 /** Component */
@@ -67,7 +69,16 @@ const EventForm = ({
 
   // form data use state
   const [eventFormData, setEventFormData] = useState(initialState);
-  const { name, slug, year, imageURL, description, stage } = eventFormData;
+  const {
+    name,
+    slug,
+    year,
+    imageURL,
+    description,
+    stage,
+    maxPlayersTeam,
+    minPlayersTeam,
+  } = eventFormData;
 
   // select use state
   const [challengeOptions, setChallengeOptions] = useState([]);
@@ -82,10 +93,21 @@ const EventForm = ({
 
   // handle changes in fields of event form
   const handleChange = (e) => {
-    if (e.target.name === "slug") {
-      setEventFormData({ ...eventFormData, slug: e.target.value.trim() });
-    } else {
-      setEventFormData({ ...eventFormData, [e.target.name]: e.target.value });
+    switch (e.target.name) {
+      case "slug":
+        setEventFormData({ ...eventFormData, slug: e.target.value.trim() });
+        break;
+      case "minPlayersTeam":
+        if (e.target.value > maxPlayersTeam) {
+          alert("El valor mínimo no debe superar el valor máximo");
+          setEventFormData({ ...eventFormData, minPlayersTeam: maxPlayersTeam });
+        } else {
+          setEventFormData({ ...eventFormData, [e.target.name]: e.target.value });
+        }
+        break;
+      default:
+        setEventFormData({ ...eventFormData, [e.target.name]: e.target.value });
+        break;
     }
   };
 
@@ -175,6 +197,7 @@ const EventForm = ({
                     required
                   />
                 </div>
+
                 <div className="form-group">
                   <label htmlFor="slug">Nombre Corto(url)</label>
                   <input
@@ -238,6 +261,38 @@ const EventForm = ({
                     <option value="scoring">Calificando</option>
                     <option value="finished">Terminado</option>
                   </select>
+                </div>
+
+                <div className="form-row">
+                  <div className="form-group col-md-6">
+                    <label htmlFor="maxPlayersTeam">
+                      Máximo de participantes por equipo
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="maxPlayersTeam"
+                      name="maxPlayersTeam"
+                      value={maxPlayersTeam}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+
+                  <div className="form-group col-md-6">
+                    <label htmlFor="minPlayersTeam">
+                      Mínimo de participantes por equipo
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="minPlayersTeam"
+                      name="minPlayersTeam"
+                      value={minPlayersTeam}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
                 </div>
 
                 <div className="form-group">

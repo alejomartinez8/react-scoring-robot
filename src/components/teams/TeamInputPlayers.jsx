@@ -50,7 +50,7 @@ const TeamInputPlayers = ({ addPlayer, index, player, required = false }) => {
 
       <div className="form-group row">
         <label className="col-md-4 col-form-group" htmlFor="legalId">
-          Fecha de Nacimiento:
+          Fecha de Nacimiento: {required && "*"}
         </label>
         <div className="col-md">
           <input
@@ -60,6 +60,7 @@ const TeamInputPlayers = ({ addPlayer, index, player, required = false }) => {
             name="birthday"
             value={birthday}
             onChange={handleChange}
+            required={required}
           />
         </div>
       </div>
