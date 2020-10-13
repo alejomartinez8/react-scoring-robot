@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Landing = function () {
   return (
-    <section className="landing">
+    <section className="landing" style={{ marginTop: "60px" }}>
       <div className="dark-overlay">
         <div className="landing-inner">
           <h1 className="x-large">Scoring-Robot</h1>

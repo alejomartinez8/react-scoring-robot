@@ -6,6 +6,7 @@ import App from "./App";
 import axios from "axios";
 // import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
+import "./bootstrap-theme.css";
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL;
 axios.defaults.headers.post["Content-Type"] = "application/json";

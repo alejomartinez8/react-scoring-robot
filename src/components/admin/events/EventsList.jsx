@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { eventActions } from "../../../redux/actions";
 import { Spinner } from "react-bootstrap";
-import ButtonBack from "../../layout/ButtonBack";
 import ToggleButton from "../../layout/ToggleButton";
 
 const EventsList = ({
@@ -47,7 +46,6 @@ const EventsList = ({
         <Spinner animation="border" variant="primary" />
       ) : (
         <Fragment>
-          <ButtonBack className="btn btn-primary mr-1 my-2">Atrás</ButtonBack>
           <div className="card  mb-4">
             <div className="card-header">
               <h2 className="text-primary">Administrar Eventos</h2>

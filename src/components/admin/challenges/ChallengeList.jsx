@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { challengeActions } from "../../../redux/actions";
 import { Spinner } from "react-bootstrap";
-import ButtonBack from "../../layout/ButtonBack";
 
 const ChallengesList = ({
   challenge: { challenges, loading },
@@ -27,7 +26,6 @@ const ChallengesList = ({
         <Spinner animation="border" variant="primary" />
       ) : (
         <Fragment>
-          <ButtonBack className="btn btn-primary mr-1 my-2">Atrás</ButtonBack>
           <div className="card  mb-4">
             <div className="card-header">
               <h2 className="text-primary">Administrar Retos</h2>

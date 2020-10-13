@@ -5,7 +5,14 @@ import { Navbar, Nav } from "react-bootstrap";
 
 const Topbar = ({ isAuth, role, logout }) => {
   return (
-    <Navbar collapseOnSelect expand="md" bg="light" variant="light" id="mainNav">
+    <Navbar
+      collapseOnSelect
+      expand="md"
+      bg="light"
+      variant="light"
+      // id="mainNav"
+      className="topbar"
+    >
       <div className="container align-items-center">
         <Navbar.Toggle aria-controls="user-nav" />
         <Navbar.Brand href="/">
@@ -18,7 +25,7 @@ const Topbar = ({ isAuth, role, logout }) => {
             </Nav.Link>
             {role === "Admin" && (
               <Nav.Link href="/admin">
-                <i className="fas fa-tachometer"></i> Dashboard
+                <i className="fas fa-tachometer"></i> Admin
               </Nav.Link>
             )}
             {role === "User" && (

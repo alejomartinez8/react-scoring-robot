@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { teamActions } from "../../../redux/actions";
 import { Spinner } from "react-bootstrap";
-import ButtonBack from "../../layout/ButtonBack";
 import ToggleButton from "../../layout/ToggleButton";
 
 const TeamsList = ({
@@ -34,7 +33,6 @@ const TeamsList = ({
         <Spinner animation="border" variant="primary" />
       ) : (
         <Fragment>
-          <ButtonBack className="btn btn-primary mr-1 my-2">Atrás</ButtonBack>
           <div className="card  mb-4">
             <div className="card-header">
               <h2 className="text-primary">Administrar Equipos</h2>
@@ -52,9 +50,6 @@ const TeamsList = ({
                       <th>Categoría</th>
                       <th>Reto</th>
                       <th>Entrenador</th>
-                      <th>Institución</th>
-                      <th>Ciudad</th>
-                      <th>País</th>
                       <th>Registrado</th>
                       <th>Acciones</th>
                     </tr>
@@ -71,9 +66,7 @@ const TeamsList = ({
                               ? team.user.fullName
                               : ""}
                           </td>
-                          <td>{"user" in team ? team.user.institution : ""}</td>
-                          <td>{"user" in team ? team.user.city : ""}</td>
-                          <td>{"user" in team ? team.user.country : ""}</td>
+
                           <td className="text-center">
                             <ToggleButton
                               toggle={team.registered}

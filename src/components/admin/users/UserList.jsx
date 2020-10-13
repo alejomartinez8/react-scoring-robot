@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getUsers, deleteUser } from "../../../redux/actions/user.actions";
 import { Spinner } from "react-bootstrap";
-import ButtonBack from "../../layout/ButtonBack";
 
 const UserList = ({ getUsers, user: { users, loading }, deleteUser, match }) => {
   const { path } = match;
@@ -22,7 +21,6 @@ const UserList = ({ getUsers, user: { users, loading }, deleteUser, match }) => 
         <Spinner animation="border" variant="primary" />
       ) : (
         <Fragment>
-          <ButtonBack className="btn btn-primary mr-1 my-2">Atrás</ButtonBack>
           <div className="card  mb-4">
             <div className="card-header">
               <h2 className="text-primary">Administrar Usuarios</h2>
@@ -32,55 +30,52 @@ const UserList = ({ getUsers, user: { users, loading }, deleteUser, match }) => 
               <Link to={`${path}/add`} className="btn btn-sm btn-primary mb-2">
                 Agregar Usuario
               </Link>
-              <table className="table table-striped table-responsive">
-                <thead className="thead-dark">
-                  <tr>
-                    <th>Nombre Completo</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Institución</th>
-                    <th>Ciudad</th>
-                    <th>País</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {users &&
-                    users.map((user) => (
-                      <tr key={user.id}>
-                        <td>
-                          {user.firstName} {user.lastName}
-                        </td>
-                        <td>{user.email}</td>
-                        <td>{user.role}</td>
-                        <td>{user.institution}</td>
-                        <td>{user.city}</td>
-                        <td>{user.country}</td>
-                        <td style={{ whiteSpace: "nowrap" }}>
-                          <Link
-                            to={`${path}/edit/${user.id}`}
-                            className="btn btn-sm btn-primary mr-1"
-                          >
-                            Editar
-                          </Link>
-                          <button
-                            onClick={() => handleDeleteUser(user.id)}
-                            className="btn btn-sm btn-danger"
-                          >
-                            <span>Eliminar</span>
-                          </button>
+              <div className="table-responsive">
+                <table className="table table-striped ">
+                  <thead className="thead-dark">
+                    <tr>
+                      <th>Nombre Completo</th>
+                      <th>Email</th>
+                      <th>Role</th>
+
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {users &&
+                      users.map((user) => (
+                        <tr key={user.id}>
+                          <td>
+                            {user.firstName} {user.lastName}
+                          </td>
+                          <td>{user.email}</td>
+                          <td>{user.role}</td>
+                          <td style={{ whiteSpace: "nowrap" }}>
+                            <Link
+                              to={`${path}/edit/${user.id}`}
+                              className="btn btn-sm btn-primary mr-1"
+                            >
+                              Editar
+                            </Link>
+                            <button
+                              onClick={() => handleDeleteUser(user.id)}
+                              className="btn btn-sm btn-danger"
+                            >
+                              <span>Eliminar</span>
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    {!users && (
+                      <tr>
+                        <td colSpan="4" className="text-center">
+                          <span className="spinner-border spinner-border-lg align-center"></span>
                         </td>
                       </tr>
-                    ))}
-                  {!users && (
-                    <tr>
-                      <td colSpan="4" className="text-center">
-                        <span className="spinner-border spinner-border-lg align-center"></span>
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </Fragment>
