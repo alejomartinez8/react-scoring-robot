@@ -21,6 +21,7 @@ const EventsPage = ({ auth, event: { events, loading }, getEvents }) => {
           {events.length > 0 && events.filter((event) => event.active).length > 0 ? (
             events
               .filter((event) => event.active)
+              .sort((a, b) => b.year - a.year)
               .map((event) => (
                 <EventCard key={event._id} event={event} auth={auth} />
               ))

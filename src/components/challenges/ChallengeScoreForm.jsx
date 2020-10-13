@@ -77,9 +77,17 @@ const CallengeScoreForm = ({
           event: event._id,
         });
       }
+
+      if ("tasks" in challenge) {
+        setPenaltyFlag(
+          challenge.tasks
+            .map((task) => parseInt(task.penalty))
+            .reduce((acc, elm) => acc + elm) > 0
+        );
+      }
     }
     // eslint-disable-next-line
-  }, [getTeams, eventLoading, challengeLoading]);
+  }, [getTeams, eventLoading, challengeLoading, challenge]);
 
   // load task challenge score form
   useEffect(() => {
@@ -106,12 +114,6 @@ const CallengeScoreForm = ({
       bonusPoints: 0,
       totalPoints: 0,
     });
-
-    if (typeof challenge === "undefined") {
-      setPenaltyFlag(
-        !!challenge.tasks.map((elm) => elm.penalty).reduce((acc, elm) => acc + elm)
-      );
-    }
 
     setSeconds(challenge.maxTime);
     setTimer(false);

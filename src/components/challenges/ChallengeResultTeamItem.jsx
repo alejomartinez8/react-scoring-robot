@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import ModalEditScoringTurn from "./modals/ModalEditScoringTurn";
 
-const ChallengeResultTeamIteam = ({
+const ChallengeResultTeamItem = ({
   userAuth,
   index,
   team,
@@ -32,8 +32,8 @@ const ChallengeResultTeamIteam = ({
   };
 
   return (
-    <>
-      <tr key="tr-main" onClick={toggleExpander} className="tr-results">
+    <Fragment key={team._id}>
+      <tr key={`tr-${team._id}`} onClick={toggleExpander} className="tr-results">
         <td>
           <i
             className={
@@ -56,9 +56,9 @@ const ChallengeResultTeamIteam = ({
           {"maxTurns" in challenge && challenge.maxTurns}
         </td>
       </tr>
-      <>
+      <Fragment>
         {expanded && (
-          <tr key={team._id}>
+          <tr key={`expanded-${team._id}`}>
             <td className="bg-light" colSpan={7}>
               <div className="container m-2 d-flex justify-content-md-center">
                 <div className="card w-75">
@@ -102,16 +102,16 @@ const ChallengeResultTeamIteam = ({
             </td>
           </tr>
         )}
-      </>
+      </Fragment>
       <ModalEditScoringTurn
-        key="modal-edit"
+        key={`modal-edit-${team._id}`}
         showEdit={showEdit}
         setShowEdit={setShowEdit}
         turn={turn}
         handleUpdateScore={handleUpdateScore}
       />
-    </>
+    </Fragment>
   );
 };
 
-export default ChallengeResultTeamIteam;
+export default ChallengeResultTeamItem;

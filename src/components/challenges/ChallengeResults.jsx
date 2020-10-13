@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { teamActions, challengeActions, eventActions } from "../../redux/actions";
 import ButtonBack from "../layout/ButtonBack";
 import { Spinner } from "react-bootstrap";
-import ChallengeResultTeamIteam from "./ChallengeResultTeamIteam";
+import ChallengeResultTeamItem from "./ChallengeResultTeamItem";
 
 const ChallengeResults = ({
   userAuth,
@@ -126,8 +126,8 @@ const ChallengeResults = ({
                   </thead>
                   <tbody>
                     {sortedTeams.map((team, index) => (
-                      <ChallengeResultTeamIteam
-                        key={team._id}
+                      <ChallengeResultTeamItem
+                        key={`crti-${team._id}`}
                         index={index}
                         team={team}
                         challenge={challenge}
