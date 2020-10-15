@@ -93,7 +93,6 @@ export const deleteUser = (id) => (dispatch) => {
     .deleteUser(id)
     .then((res) => {
       dispatch({ type: UserTypes.USER_DELETE, payload: id });
-      dispatch(getUsers());
       dispatch(alertActions.setAlert("Usuario Eliminado", "success"));
     })
     .catch((error) => {
@@ -113,4 +112,5 @@ export const userActions = {
   createUser,
   updateUser,
   deleteUser,
+  clearUser,
 };

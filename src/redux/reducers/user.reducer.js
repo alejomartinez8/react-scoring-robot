@@ -1,14 +1,14 @@
-import { UserTypes } from "../constants/UserTypes"
+import { UserTypes } from "../constants/UserTypes";
 
 const initialState = {
   loading: false,
   user: {},
   users: [],
   error: [],
-}
+};
 
 export function user(state = initialState, action) {
-  const { type, payload } = action
+  const { type, payload } = action;
   // console.log({ payload })
   switch (type) {
     case UserTypes.GET_USER:
@@ -16,21 +16,21 @@ export function user(state = initialState, action) {
       return {
         ...state,
         loading: true,
-      }
+      };
 
     case UserTypes.USERS_LOADED:
       return {
         ...state,
         loading: false,
         users: payload,
-      }
+      };
 
     case UserTypes.USER_LOADED:
       return {
         ...state,
         loading: false,
         user: payload,
-      }
+      };
 
     case UserTypes.USER_DELETE:
       return {
@@ -38,7 +38,7 @@ export function user(state = initialState, action) {
         users: state.users.map((user) =>
           user.id === payload ? { ...user, deleting: true } : user
         ),
-      }
+      };
 
     case UserTypes.CLEAR_USER:
       return {
@@ -46,7 +46,7 @@ export function user(state = initialState, action) {
         loading: false,
         user: {},
         users: [],
-      }
+      };
 
     case UserTypes.USER_ERROR:
       return {
@@ -55,9 +55,9 @@ export function user(state = initialState, action) {
         user: {},
         users: [],
         error: payload,
-      }
+      };
 
     default:
-      return state
+      return state;
   }
 }

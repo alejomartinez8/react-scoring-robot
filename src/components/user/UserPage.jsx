@@ -1,12 +1,36 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
-import { deleteUser } from "../../redux/actions/user.actions";
-import { Link } from "react-router-dom";
+import { userActions, authActions } from "../../redux/actions/";
+import { Link, Redirect } from "react-router-dom";
+import ConfirmModal from "../layout/ConfirmModal";
 
-const UserPage = ({ auth: { userAuth, loading } }) => {
-  const onDelete = () => {
-    deleteUser(userAuth.id);
+const UserPage = ({
+  auth: { isAuth, userAuth, loading },
+  deleteUser,
+  clearUser,
+  logout,
+}) => {
+  const [showConfirm, SetShowConfirm] = useState(false);
+
+  const handleDeleteUser = (e) => {
+    e.preventDefault();
+    SetShowConfirm(true);
   };
+
+  const handleClose = () => {
+    SetShowConfirm(false);
+  };
+
+  const handleConfirm = (id) => {
+    SetShowConfirm(false);
+    deleteUser(id);
+    clearUser();
+    logout();
+  };
+
+  if (isAuth) {
+    Redirect("/auth/login");
+  }
 
   return (
     <Fragment>
@@ -55,22 +79,32 @@ const UserPage = ({ auth: { userAuth, loading } }) => {
         </div>
 
         <div className="card-footer">
-          <Link to={`/user/edit/${userAuth._id}`} className="btn btn-primary">
+          <Link
+            to={`/user/edit/${userAuth._id}`}
+            className="btn btn-primary mb-1 mr-1"
+          >
             <i className="fas fa-user"></i> Editar Perfil
           </Link>
           <button
-            onClick={onDelete}
+            onClick={handleDeleteUser}
             type="button"
-            className="btn btn-danger mx-1"
+            className="btn btn-danger mb-1 mr-1"
             disabled={loading}
           >
             {loading ? (
-              <span className="spinner-border spinner-border-sm m-1"></span>
+              <span className="spinner-border spinner-border-sm"></span>
             ) : (
               <i className="fas fa-user-minus"></i>
             )}{" "}
             Eliminar Cuenta
           </button>
+          <ConfirmModal
+            show={showConfirm}
+            msg={`¿Deseas eliminar tu cuenta?`}
+            alertType="warning"
+            onClose={handleClose}
+            onConfirm={() => handleConfirm(userAuth.id)}
+          />
         </div>
       </div>
     </Fragment>
@@ -82,7 +116,9 @@ const mapSateToProps = (state) => ({
 });
 
 const actionCreator = {
-  deleteUser,
+  deleteUser: userActions.deleteUser,
+  clearUser: userActions.clearUser,
+  logout: authActions.logout,
 };
 
 export default connect(mapSateToProps, actionCreator)(UserPage);
