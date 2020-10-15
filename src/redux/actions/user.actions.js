@@ -9,7 +9,7 @@ export const loadUser = () => (dispatch) => {
     setAuthToken(localStorage.token);
   }
 
-  dispatch({ type: UserTypes.AUTH_REQUEST });
+  dispatch({ type: UserTypes.AUTH_USER_LOAD_REQUEST });
 
   userServices
     .loadUser()
@@ -71,12 +71,14 @@ export const createUser = (user) => (dispatch) => {
 
 // update user action
 export const updateUser = (id, params) => (dispatch) => {
+  dispatch({ type: UserTypes.AUTH_REQUEST });
+
   userServices
     .updateUser(id, params)
     .then((user) => {
       dispatch({ type: UserTypes.AUTH_REQUEST_SUCCESS });
-      dispatch(loadUser());
-      dispatch(getUserById(user.id));
+      // dispatch(loadUser());
+      dispatch(getUserById(id));
       dispatch(alertActions.setAlert("Usuario Actualizado", "success"));
     })
     .catch((error) => {

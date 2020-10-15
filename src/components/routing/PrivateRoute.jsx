@@ -9,14 +9,10 @@ const PrivateRoute = ({
   auth: { isAuth, loading, userAuth },
   ...rest
 }) => {
-  // console.log(roles, roles.indexOf(userAuth.role));
   return (
     <Route
       {...rest}
       render={(props) => {
-        // console.log({ loading })
-        // console.log({ isAuth })
-
         if (loading) {
           return <Spinner animation="border" variant="primary" />;
         } else {

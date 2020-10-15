@@ -74,13 +74,14 @@ const UserForm = ({
     e.preventDefault();
     if (match.params.id) {
       console.log("updateUser");
-      updateUser(user.id, formData);
+      updateUser(user._id, formData);
     } else {
       console.log("createUser");
       createUser(formData);
       setFormData(initialState);
     }
   };
+
   return (
     <Fragment>
       {loading ? (
@@ -182,7 +183,7 @@ const UserForm = ({
                   </div>
                 )}
 
-                {userAuth.id === user.id && (
+                {userAuth.id === user._id && (
                   <div className="form-group">
                     <label>Cuéntanos un poco sobre ti</label>
                     <textarea

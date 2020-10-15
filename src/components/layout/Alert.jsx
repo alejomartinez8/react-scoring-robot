@@ -27,20 +27,30 @@ const Alert = ({ alerts, deleteAlert }) => {
         key={alert.id}
         show={show}
         onHide={handleClose}
-        size="lg"
+        size="md"
         aria-labelledby="example-modal-sizes-title-lg"
       >
-        <Modal.Header closeButton>
-          <Modal.Title>Scoring-Robot</Modal.Title>
+        <Modal.Header
+          closeButton
+          className={`bg-${alert.alertType} text-center display-3 text-white`}
+        >
+          <i
+            className={`fas ${
+              alert.alertType === "success"
+                ? "fa-check-circle"
+                : "fa-exclamation-circle"
+            }`}
+          ></i>
         </Modal.Header>
-        <Modal.Body>
-          <div key={alert.id} className={`alert alert-${alert.alertType}`}>
-            {alert.msg}
-          </div>
+        <Modal.Body className="text-center">
+          <div>{alert.msg}</div>
         </Modal.Body>
         <Modal.Footer>
-          <button className="btn btn-primary" onClick={() => handleClose(alert.id)}>
-            Cerrar
+          <button
+            className={`btn btn-${alert.alertType}`}
+            onClick={() => handleClose(alert.id)}
+          >
+            OK
           </button>
         </Modal.Footer>
       </Modal>

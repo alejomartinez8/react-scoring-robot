@@ -1,51 +1,109 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { authActions, layoutActions } from "../../redux/actions";
+import { useMediaQuery } from "react-responsive";
 
-const Sidebar = () => {
+const Sidebar = ({ isAuth, role, logout, toggleSidenavAction }) => {
+  const isTabletOrMobileDevice = useMediaQuery({
+    query: "(max-device-width: 1224px)",
+  });
+
+  const handleClick = () => {
+    if (isTabletOrMobileDevice) {
+      console.log("toggle Sidenav");
+      toggleSidenavAction();
+    }
+  };
+
   return (
     <div id="sidebar_nav">
       <div className="sidebar bg-dark">
         <div className="sidebar-menu">
           <div className="nav">
-            <Link className="nav-link" to="/admin/">
-              <div className="sb-nav-link-icon">
-                <i className="fas fa-tachometer"></i> Dashboard
-              </div>
-            </Link>
-            <Link className="nav-link" to="/admin/events">
+            <Link className="nav-link" to="/events" onClick={handleClick}>
               <div className="sb-nav-link-icon">
                 <i className="fas fa-calendar"></i> Eventos
               </div>
             </Link>
-            <Link className="nav-link" to="/admin/challenges">
-              <div className="sb-nav-link-icon">
-                <i className="fas fa-trophy"></i> Retos
-              </div>
-            </Link>
 
-            <Link className="nav-link" to="/admin/users">
-              <div className="sb-nav-link-icon">
-                <i className="fas fa-user"></i> Usuarios
-              </div>
-            </Link>
+            {role === "Admin" && (
+              <>
+                <div className="sidenav-menu-heading">Admin</div>
+                <Link className="nav-link" to="/admin/" onClick={handleClick}>
+                  <div className="sb-nav-link-icon">
+                    <i className="fas fa-tachometer"></i> Dashboard
+                  </div>
+                </Link>
+                <Link className="nav-link" to="/admin/events" onClick={handleClick}>
+                  <div className="sb-nav-link-icon">
+                    <i className="fas fa-calendar"></i> Eventos
+                  </div>
+                </Link>
+                <Link
+                  className="nav-link"
+                  to="/admin/challenges"
+                  onClick={handleClick}
+                >
+                  <div className="sb-nav-link-icon">
+                    <i className="fas fa-trophy"></i> Retos
+                  </div>
+                </Link>
 
-            <Link className="nav-link" to="/admin/teams">
-              <div className="sb-nav-link-icon">
-                <i className="fas fa-users"></i> Equipos
-              </div>
-            </Link>
+                <Link className="nav-link" to="/admin/users" onClick={handleClick}>
+                  <div className="sb-nav-link-icon">
+                    <i className="fas fa-user"></i> Usuarios
+                  </div>
+                </Link>
 
-            <Link className="nav-link" to="/user">
-              <div className="sb-nav-link-icon">
-                <i className="fas fa-user"></i> Perfil
-              </div>
-            </Link>
+                <Link className="nav-link" to="/admin/teams" onClick={handleClick}>
+                  <div className="sb-nav-link-icon">
+                    <i className="fas fa-users"></i> Equipos
+                  </div>
+                </Link>
 
-            <Link className="nav-link" to="/admin/configuration">
-              <div className="sb-nav-link-icon">
-                <i className="fas fa-cog"></i> Configuración
-              </div>
-            </Link>
+                <Link
+                  className="nav-link"
+                  to="/admin/configuration"
+                  onClick={handleClick}
+                >
+                  <div className="sb-nav-link-icon">
+                    <i className="fas fa-cog"></i> Configuración
+                  </div>
+                </Link>
+              </>
+            )}
+
+            {isAuth ? (
+              <>
+                <div className="sidenav-menu-heading">Usuario</div>
+                {role === "User" && (
+                  <Link className="nav-link" to="/users/teams" onClick={handleClick}>
+                    <div className="sb-nav-link-icon">
+                      <i className="fas fa-users"></i> Mis Equipos
+                    </div>
+                  </Link>
+                )}
+
+                <Link className="nav-link" to="/user" onClick={handleClick}>
+                  <div className="sb-nav-link-icon">
+                    <i className="fas fa-user"></i> Perfil
+                  </div>
+                </Link>
+
+                <Link className="nav-link" to="#" onClick={logout}>
+                  <div className="sb-nav-link-icon">
+                    <i className="fas fa-sign-out"></i> Salir
+                  </div>
+                </Link>
+              </>
+            ) : (
+              <Link className="nav-link" to="/auth/login" onClick={handleClick}>
+                <div className="sb-nav-link-icon">
+                  <i className="fas fa-sign-in"></i> Login
+                </div>
+              </Link>
+            )}
           </div>
         </div>
       </div>
@@ -53,4 +111,15 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+const mapStateToProps = (state) => ({
+  isAuth: state.auth.isAuth,
+  role: state.auth.userAuth.role,
+  toggleSidenav: state.layout.toggleSidenav,
+});
+
+const actionCreators = {
+  logout: authActions.logout,
+  toggleSidenavAction: layoutActions.toggleSidenavAction,
+};
+
+export default connect(mapStateToProps, actionCreators)(Sidebar);

@@ -14,7 +14,7 @@ const Auth = ({ history, match, isAuth }) => {
 
   useEffect(() => {
     if (isAuth) {
-      history.push("/");
+      history.push("/events");
     }
   }, [isAuth, history]);
 

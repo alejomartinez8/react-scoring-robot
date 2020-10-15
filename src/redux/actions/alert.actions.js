@@ -1,11 +1,12 @@
 import { v4 as uuidv4 } from "uuid";
 import { AlertTypes } from "../constants/AlertTypes";
 
-const setAlert = (msg, alertType) => (dispatch) => {
+const setAlert = (msg, alertType, callback) => (dispatch) => {
   const id = uuidv4();
+
   dispatch({
     type: AlertTypes.SET_ALERT,
-    payload: { msg, alertType, id },
+    payload: { id, msg, alertType, callback },
   });
 };
 

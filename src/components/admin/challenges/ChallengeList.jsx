@@ -1,8 +1,9 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { challengeActions } from "../../../redux/actions";
 import { Spinner } from "react-bootstrap";
+import ConfirmModal from "../../layout/ConfirmModal";
 
 const ChallengesList = ({
   challenge: { challenges, loading },
@@ -11,12 +12,23 @@ const ChallengesList = ({
   match,
 }) => {
   const { path } = match;
+  const [showConfirm, SetShowConfirm] = useState(false);
 
   useEffect(() => {
     getChallenges();
   }, [getChallenges]);
 
-  const handleDeleteChallenge = (id) => {
+  const handleDeleteChallenge = (e) => {
+    e.preventDefault();
+    SetShowConfirm(true);
+  };
+
+  const handleClose = () => {
+    SetShowConfirm(false);
+  };
+
+  const handleConfirm = (id) => {
+    SetShowConfirm(false);
     deleteChallenge(id);
   };
 
@@ -82,10 +94,17 @@ const ChallengesList = ({
                             </Link>
                             <button
                               className="btn btn-sm btn-danger"
-                              onClick={() => handleDeleteChallenge(challenge._id)}
+                              onClick={handleDeleteChallenge}
                             >
-                              <span>Eliminar</span>
+                              Eliminar
                             </button>
+                            <ConfirmModal
+                              show={showConfirm}
+                              msg="¿Deseas borrar este reto?"
+                              alertType="warning"
+                              onClose={handleClose}
+                              onConfirm={() => handleConfirm(challenge._id)}
+                            />
                           </td>
                         </tr>
                       ))}

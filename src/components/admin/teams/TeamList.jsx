@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { teamActions } from "../../../redux/actions";
 import { Spinner } from "react-bootstrap";
-import ToggleButton from "../../layout/ToggleButton";
+import TeamListItem from "./TeamListItem";
 
 const TeamsList = ({
   team: { teams, loading },
@@ -17,10 +17,6 @@ const TeamsList = ({
   useEffect(() => {
     getTeams();
   }, [getTeams]);
-
-  const handleDeleteTeam = (_id) => {
-    deleteTeam(_id);
-  };
 
   const handleRegisterTeam = (id) => {
     registerTeam(id);
@@ -57,39 +53,11 @@ const TeamsList = ({
                   <tbody>
                     {teams.length > 0 &&
                       teams.map((team) => (
-                        <tr key={team._id}>
-                          <td>{"name" in team ? team.name : ""}</td>
-                          <td>{"category" in team ? team.category : ""}</td>
-                          <td>{"challenge" in team ? team.challenge.name : ""}</td>
-                          <td>
-                            {"user" in team && "fullName" in team.user
-                              ? team.user.fullName
-                              : ""}
-                          </td>
-
-                          <td className="text-center">
-                            <ToggleButton
-                              toggle={team.registered}
-                              toggleId={team._id}
-                              handleToggle={handleRegisterTeam}
-                            />
-                          </td>
-                          <td style={{ whiteSpace: "nowrap" }}>
-                            <Link
-                              to={`${path}/edit/${team._id}`}
-                              className="btn btn-sm btn-primary m-1"
-                            >
-                              <i className="fas fa-edit"></i> Editar
-                            </Link>
-
-                            <button
-                              className="btn btn-sm btn-danger m-1"
-                              onClick={() => handleDeleteTeam(team._id)}
-                            >
-                              <span>Eliminar</span>
-                            </button>
-                          </td>
-                        </tr>
+                        <TeamListItem
+                          team={team}
+                          actionConfirm={deleteTeam}
+                          handleRegisterTeam={handleRegisterTeam}
+                        />
                       ))}
                   </tbody>
                 </table>

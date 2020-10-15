@@ -6,6 +6,7 @@ import { user } from "./user.reducer";
 import { event } from "./event.reducer";
 import { challenge } from "./challenge.reducer";
 import { team } from "./team.reducer";
+import { layout } from "./layout.reducer";
 
 const rootReducer = combineReducers({
   alert,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   event,
   challenge,
   team,
+  layout,
 });
 
 export default rootReducer;

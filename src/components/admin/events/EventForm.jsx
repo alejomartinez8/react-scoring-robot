@@ -1,7 +1,6 @@
 import React, { useState, Fragment, useEffect } from "react";
 import { connect } from "react-redux";
-import { eventActions } from "../../../redux/actions";
-import { challengeActions } from "../../../redux/actions";
+import { eventActions, challengeActions } from "../../../redux/actions";
 import { Spinner } from "react-bootstrap";
 import ButtonBack from "../../layout/ButtonBack";
 import Select from "react-select";
@@ -157,8 +156,6 @@ const EventForm = ({
   // handleSubtmit
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(JSON.stringify(eventFormData));
-
     if (eventUpdate) {
       updateEvent(eventState._id, eventFormData);
     } else {
@@ -184,7 +181,7 @@ const EventForm = ({
             </div>
             <div className="card-body">
               {/* Form */}
-              <form className="form" onSubmit={handleSubmit}>
+              <form className="form">
                 <div className="form-group">
                   <label htmlFor="name">Nombre Evento</label>
                   <input
@@ -325,9 +322,9 @@ const EventForm = ({
 
                 <div className="form-row">
                   <button
-                    type="submit"
                     className="btn btn-primary mr-2 mb-2"
                     disabled={eventLoading}
+                    onClick={handleSubmit}
                   >
                     {eventLoading && (
                       <span className="spinner-border spinner-border-sm mr-1"></span>

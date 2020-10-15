@@ -22,6 +22,8 @@ export function auth(state = initialState, action) {
   // console.log({ payload })
   switch (type) {
     case UserTypes.AUTH_REQUEST:
+    case UserTypes.AUTH_LOGIN_REQUEST:
+    case UserTypes.AUTH_USER_LOAD_REQUEST:
       return {
         ...state,
         loading: true,

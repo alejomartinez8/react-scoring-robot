@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { authActions } from "../../redux/actions/";
@@ -20,10 +19,6 @@ const Login = ({ isAuth, login, loading }) => {
     e.preventDefault();
     login(email, password);
   };
-
-  if (isAuth) {
-    return <Redirect to="/events" />;
-  }
 
   return (
     <div className="d-flex justify-content-center align-items-center m-0">

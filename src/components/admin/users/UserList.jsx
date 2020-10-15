@@ -3,21 +3,18 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getUsers, deleteUser } from "../../../redux/actions/user.actions";
 import { Spinner } from "react-bootstrap";
+import UserListItem from "./UserListItem";
 
-const UserList = ({ getUsers, user: { users, loading }, deleteUser, match }) => {
+const UserList = ({ getUsers, users, loadingUsers, deleteUser, match }) => {
   const { path } = match;
 
   useEffect(() => {
     getUsers();
   }, [getUsers]);
 
-  const handleDeleteUser = (id) => {
-    deleteUser(id);
-  };
-
   return (
     <Fragment>
-      {loading ? (
+      {loadingUsers ? (
         <Spinner animation="border" variant="primary" />
       ) : (
         <Fragment>
@@ -37,35 +34,17 @@ const UserList = ({ getUsers, user: { users, loading }, deleteUser, match }) => 
                       <th>Nombre Completo</th>
                       <th>Email</th>
                       <th>Role</th>
-
-                      <th></th>
+                      <th>Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {users &&
-                      users.map((user) => (
-                        <tr key={user.id}>
-                          <td>
-                            {user.firstName} {user.lastName}
-                          </td>
-                          <td>{user.email}</td>
-                          <td>{user.role}</td>
-                          <td style={{ whiteSpace: "nowrap" }}>
-                            <Link
-                              to={`${path}/edit/${user.id}`}
-                              className="btn btn-sm btn-primary mr-1"
-                            >
-                              Editar
-                            </Link>
-                            <button
-                              onClick={() => handleDeleteUser(user.id)}
-                              className="btn btn-sm btn-danger"
-                            >
-                              <span>Eliminar</span>
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
+                    {users.map((user) => (
+                      <UserListItem
+                        key={user._id}
+                        user={user}
+                        actionConfirm={deleteUser}
+                      />
+                    ))}
                     {!users && (
                       <tr>
                         <td colSpan="4" className="text-center">
@@ -85,7 +64,8 @@ const UserList = ({ getUsers, user: { users, loading }, deleteUser, match }) => 
 };
 
 const mapStateToProps = (state) => ({
-  user: state.user,
+  users: state.user.users,
+  loadingUsers: state.user.loading,
 });
 
 export default connect(mapStateToProps, { getUsers, deleteUser })(UserList);
