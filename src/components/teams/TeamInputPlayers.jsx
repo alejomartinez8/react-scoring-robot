@@ -1,28 +1,25 @@
 import React, { useState, Fragment, useEffect } from "react";
+import moment from "moment";
 
-const initialState = {
-  name: "",
-  legalId: "",
-  gender: "",
-  birthday: "",
-};
+// const initialState = {
+//   name: "",
+//   legalId: "",
+//   gender: "",
+//   birthday: "",
+// };
 
 const TeamInputPlayers = ({ addPlayer, index, player, required = false }) => {
-  const [playerData, setPlayerData] = useState(initialState);
+  const [playerData, setPlayerData] = useState(player);
   const { name, legalId, gender, birthday } = playerData;
 
-  // load form fields
   useEffect(() => {
-    if (player) {
-      const _player = { ...initialState };
-      for (const key in player) {
-        if (key in _player) {
-          _player[key] = player[key] ? player[key] : "";
-        }
-      }
-      setPlayerData(_player);
-    }
-  }, [player]);
+    // Save date in db is different format, but moment delete one day so it's need add 1 day
+    setPlayerData({
+      ...playerData,
+      birthday: moment(birthday).add(1, "day").format("YYYY-MM-DD"),
+    });
+    // eslint-disable-next-line
+  }, []);
 
   const handleChange = (e) => {
     setPlayerData({ ...playerData, [e.target.name]: e.target.value });
@@ -58,7 +55,7 @@ const TeamInputPlayers = ({ addPlayer, index, player, required = false }) => {
             className="form-control"
             id="birthday"
             name="birthday"
-            value={birthday}
+            value={moment(birthday).format("YYYY-MM-DD")}
             onChange={handleChange}
             required={required}
           />

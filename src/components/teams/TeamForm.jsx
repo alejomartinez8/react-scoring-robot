@@ -30,6 +30,11 @@ const TeamForm = ({
   getUsers,
   match,
 }) => {
+  const [formData, setFormData] = useState(initialState);
+  const { user, event, challenge, name, category, players, registered } = formData;
+  const [categoryOptions, setCategoryOptions] = useState([]);
+  const [challengeOptions, setChallengeOptions] = useState([]);
+
   // load events for select
   useEffect(() => {
     getEvents();
@@ -68,11 +73,6 @@ const TeamForm = ({
       }
     }
   }, [team, events, match.params.id]);
-
-  const [formData, setFormData] = useState(initialState);
-  const { user, event, challenge, name, category, players, registered } = formData;
-  const [categoryOptions, setCategoryOptions] = useState([]);
-  const [challengeOptions, setChallengeOptions] = useState([]);
 
   // load users if is Admin creator of team
   useEffect(() => {
@@ -142,6 +142,8 @@ const TeamForm = ({
 
     if (match.params.id) {
       updateTeamAction(team._id, formData);
+      setFormData(initialState);
+      getTeamById(match.params.id);
     } else {
       addTeamAction(formData);
       setFormData(initialState);
@@ -161,7 +163,7 @@ const TeamForm = ({
               key={index}
               addPlayer={addPlayer}
               index={index}
-              playersTemp={playersTemp[index]}
+              player={players[index]}
               required={index < eventSelected.minPlayersTeam}
             />
           </Fragment>
