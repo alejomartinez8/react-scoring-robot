@@ -149,25 +149,25 @@ const TeamForm = ({
   };
 
   const setPlayersFrom = (eventId) => {
-    const _event = events.find((event) => event._id === eventId);
-    if (_event) {
-      let player = [];
-      for (let index = 0; index < _event.maxPlayersTeam; index++) {
-        player[index] = (
+    const eventSelected = events.find((event) => event._id === eventId);
+    if (eventSelected) {
+      let playersTemp = [];
+      for (let index = 0; index < eventSelected.maxPlayersTeam; index++) {
+        playersTemp[index] = (
           <Fragment key={index}>
             <hr />
-            <h5>Integrante Equipo #{index + 1}</h5>
+            <h5>Integrante #{index + 1}</h5>
             <TeamInputPlayers
               key={index}
               addPlayer={addPlayer}
               index={index}
-              player={players[index]}
-              required={index < _event.minPlayersTeam}
+              playersTemp={playersTemp[index]}
+              required={index < eventSelected.minPlayersTeam}
             />
           </Fragment>
         );
       }
-      return player;
+      return playersTemp;
     }
   };
 

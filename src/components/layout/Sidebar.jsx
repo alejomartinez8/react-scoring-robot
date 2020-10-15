@@ -78,7 +78,7 @@ const Sidebar = ({ isAuth, role, logout, toggleSidenavAction }) => {
               <>
                 <div className="sidenav-menu-heading">Usuario</div>
                 {role === "User" && (
-                  <Link className="nav-link" to="/users/teams" onClick={handleClick}>
+                  <Link className="nav-link" to="/user/teams" onClick={handleClick}>
                     <div className="sb-nav-link-icon">
                       <i className="fas fa-users"></i> Mis Equipos
                     </div>

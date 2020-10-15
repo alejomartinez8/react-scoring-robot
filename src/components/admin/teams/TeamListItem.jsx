@@ -24,6 +24,7 @@ const TeamListItem = ({ team, actionConfirm, handleRegisterTeam }) => {
     <tr key={team._id}>
       <td>{"name" in team ? team.name : ""}</td>
       <td>{"category" in team ? team.category : ""}</td>
+      <td>{"event" in team && team.event.name}</td>
       <td>{"challenge" in team ? team.challenge.name : ""}</td>
       <td>{"user" in team && "fullName" in team.user ? team.user.fullName : ""}</td>
 
