@@ -24,6 +24,16 @@ const TeamsList = ({
   }, [getTeams, getEvents]);
 
   useEffect(() => {
+    queryTeam();
+    // eslint-disable-next-line
+  }, [query]);
+
+  const handleRegisterTeam = (id) => {
+    registerTeam(id);
+    queryTeam();
+  };
+
+  function queryTeam() {
     const _query = {};
     if (query.event !== "") {
       _query.event = query.event;
@@ -31,14 +41,9 @@ const TeamsList = ({
     if (query.challenge !== "") {
       _query.challenge = query.challenge;
     }
-    console.log(_query);
-    getTeams(_query);
-  }, [query, getTeams]);
 
-  const handleRegisterTeam = (id) => {
-    registerTeam(id);
-    getTeams();
-  };
+    getTeams(_query);
+  }
 
   const handleInputChange = (e) => {
     switch (e.target.name) {
@@ -80,7 +85,7 @@ const TeamsList = ({
                 <Link className="btn btn-primary mr-2" to={`${path}/add`}>
                   Agregar Equipos
                 </Link>
-                <div className="form-group mb-2">
+                <div className="form-group">
                   <label className="mx-1">Evento: </label>
                   <select
                     name="event"
@@ -98,7 +103,7 @@ const TeamsList = ({
                     ))}
                   </select>
                 </div>
-                <div className="form-group mx-sm-3 mb-2">
+                <div className="form-group mx-sm-3">
                   <label className="mx-1">Reto: </label>
                   <select
                     name="challenge"

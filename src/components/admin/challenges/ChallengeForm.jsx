@@ -161,7 +161,6 @@ const ChallengeForm = ({
               <form className="form" onSubmit={handleSubmit}>
                 <div className="form-group row">
                   <label className="col-sm-3 col-form-label" htmlFor="available">
-                    {" "}
                     Habilitado{" "}
                   </label>
                   <div className="col-sm">
@@ -169,7 +168,6 @@ const ChallengeForm = ({
                       id="available"
                       name="available"
                       type="checkbox"
-                      required
                       checked={available}
                       className="form-control-custom"
                       onChange={() =>
