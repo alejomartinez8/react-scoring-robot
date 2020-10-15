@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
-import ModalEditScoringTurn from "./modals/ModalEditScoringTurn";
+import ChallengeResultTurnItem from "./ChallengeResultTurnItem";
+import ModalEditScoringTurn from "./ModalEditScoringTurn";
 
 const ChallengeResultTeamItem = ({
   userAuth,
@@ -68,33 +69,15 @@ const ChallengeResultTeamItem = ({
                     {"turns" in team &&
                       team.turns.length > 0 &&
                       team.turns.map((turn, index) => (
-                        <>
-                          <div
-                            key={turn._id}
-                            className="d-flex justify-content-center"
-                          >
-                            <span>
-                              <strong>Turno {index + 1}:</strong> {turn.totalPoints}{" "}
-                              pts{" "}
-                              {userAuth.role === "Admin" && (
-                                <span>
-                                  <button
-                                    className="btn btn-sm btn-primary m-1"
-                                    onClick={() => handleShowEdit(turn._id)}
-                                  >
-                                    Editar
-                                  </button>{" "}
-                                  <button
-                                    className="btn btn-sm btn-danger m-1"
-                                    onClick={() => handleDeleteScore(turn._id)}
-                                  >
-                                    Eliminar
-                                  </button>
-                                </span>
-                              )}
-                            </span>
-                          </div>
-                        </>
+                        <ChallengeResultTurnItem
+                          team={team}
+                          turn={turn}
+                          key={turn._id}
+                          index={index}
+                          userAuth={userAuth}
+                          handleShowEdit={handleShowEdit}
+                          actionConfirm={handleDeleteScore}
+                        />
                       ))}
                   </div>
                 </div>
