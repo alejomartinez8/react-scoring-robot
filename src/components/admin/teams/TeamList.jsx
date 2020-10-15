@@ -20,9 +20,20 @@ const TeamsList = ({
   const { event, challenge } = query;
 
   useEffect(() => {
-    getTeams();
     getEvents();
   }, [getTeams, getEvents]);
+
+  useEffect(() => {
+    const _query = {};
+    if (query.event !== "") {
+      _query.event = query.event;
+    }
+    if (query.challenge !== "") {
+      _query.challenge = query.challenge;
+    }
+    console.log(_query);
+    getTeams(_query);
+  }, [query, getTeams]);
 
   const handleRegisterTeam = (id) => {
     registerTeam(id);
@@ -53,8 +64,6 @@ const TeamsList = ({
     }
   };
 
-  const filterTeams = (teams) => {};
-
   return (
     <Fragment>
       {loading === 0 ? (
@@ -71,38 +80,42 @@ const TeamsList = ({
                 <Link className="btn btn-primary mr-2" to={`${path}/add`}>
                   Agregar Equipos
                 </Link>
-                <label className="ml-1">Evento: </label>
-                <select
-                  name="event"
-                  id="event"
-                  disabled={events.length === 0}
-                  className="form-control"
-                  value={event}
-                  onChange={handleInputChange}
-                >
-                  <option></option>
-                  {events.map((elm) => (
-                    <option key={elm._id} value={elm._id}>
-                      {elm.name}
-                    </option>
-                  ))}
-                </select>
-                <label className="ml-1">Reto: </label>
-                <select
-                  name="challenge"
-                  id="challenge"
-                  disabled={events.length === 0}
-                  className="form-control"
-                  value={challenge}
-                  onChange={handleInputChange}
-                >
-                  <option></option>
-                  {challengeOptions.map((elm) => (
-                    <option key={elm._id} value={elm._id}>
-                      {elm.name}
-                    </option>
-                  ))}
-                </select>
+                <div className="form-group mb-2">
+                  <label className="mx-1">Evento: </label>
+                  <select
+                    name="event"
+                    id="event"
+                    disabled={events.length === 0}
+                    className="form-control"
+                    value={event}
+                    onChange={handleInputChange}
+                  >
+                    <option></option>
+                    {events.map((elm) => (
+                      <option key={elm._id} value={elm._id}>
+                        {elm.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-group mx-sm-3 mb-2">
+                  <label className="mx-1">Reto: </label>
+                  <select
+                    name="challenge"
+                    id="challenge"
+                    disabled={events.length === 0}
+                    className="form-control"
+                    value={challenge}
+                    onChange={handleInputChange}
+                  >
+                    <option></option>
+                    {challengeOptions.map((elm) => (
+                      <option key={elm._id} value={elm._id}>
+                        {elm.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </form>
               <div className="table-responsive">
                 <table className="table table-striped ">
