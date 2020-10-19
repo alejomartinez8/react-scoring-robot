@@ -3,6 +3,7 @@ import axios from "axios";
 export const authServices = {
   login,
   loginGoogle,
+  loginFacebook,
   register,
   verifyEmail,
   forgotPassword,
@@ -22,6 +23,14 @@ async function login(email, password) {
 async function loginGoogle(access_token) {
   return axios
     .post("/auth/google/token", JSON.stringify({ access_token }))
+    .then(handleResponse)
+    .catch(handleError);
+}
+
+// login facebook
+async function loginFacebook(access_token) {
+  return axios
+    .post("/auth/facebook/token", JSON.stringify({ access_token }))
     .then(handleResponse)
     .catch(handleError);
 }

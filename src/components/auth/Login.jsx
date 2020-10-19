@@ -4,8 +4,9 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { authActions } from "../../redux/actions/";
 import GoogleLogin from "react-google-login";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
-const Login = ({ isAuth, login, loginGoogle, loading }) => {
+const Login = ({ login, loginGoogle, loginFacebook, loading }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -21,13 +22,20 @@ const Login = ({ isAuth, login, loginGoogle, loading }) => {
     login(email, password);
   };
 
-  const responeGoogle = (response) => {
-    console.log(response.tokenObj);
-    loginGoogle(response.tokenObj.access_token);
+  const responeGoogle = (res) => {
+    console.log(res.tokenObj);
+    loginGoogle(res.tokenObj.access_token);
   };
 
-  const handleLoginFailure = (response) => {
-    alert("Failed to log in");
+  const handleGoogleFailure = (res) => {
+    alert("Failed to log in with Google", res);
+  };
+
+  const responseFacebook = (res) => {
+    console.log(res);
+    if (res.accessToken) {
+      loginFacebook(res.accessToken);
+    }
   };
 
   return (
@@ -38,17 +46,41 @@ const Login = ({ isAuth, login, loginGoogle, loading }) => {
             <h2 className="text-primary">Ingreso</h2>
           </div>
           <div className="card-body">
-            <form className="form" onSubmit={handleSubmit}>
+            <form className="form user" onSubmit={handleSubmit}>
               <div className="form-group">
                 <GoogleLogin
                   clientId={process.env.REACT_APP_GOOGLE_ID}
-                  buttonText="Login"
+                  render={(renderProps) => (
+                    <button
+                      className="btn btn-google btn-user btn-block"
+                      onClick={renderProps.onClick}
+                      disabled={renderProps.disabled}
+                    >
+                      <i className="fab fa-google fa-fw"></i> Ingresar con Google
+                    </button>
+                  )}
                   onSuccess={responeGoogle}
-                  onFailure={handleLoginFailure}
+                  onFailure={handleGoogleFailure}
                   cookiePolicy={"single_host_origin"}
                   responseType="code,token"
                 />
+                <FacebookLogin
+                  appId={process.env.REACT_APP_FACEBOOK_ID}
+                  fields="name,email,picture"
+                  callback={responseFacebook}
+                  render={(renderProps) => (
+                    <button
+                      className="btn btn-facebook btn-user btn-block"
+                      onClick={renderProps.onClick}
+                    >
+                      <i className="fab fa-facebook-f fa-fw"></i> Ingresar con
+                      Facebook
+                    </button>
+                  )}
+                />
               </div>
+
+              <hr />
               <div className="form-group">
                 <label htmlFor="email">Email</label>
                 <input
@@ -105,7 +137,6 @@ const Login = ({ isAuth, login, loginGoogle, loading }) => {
 };
 
 Login.propTypes = {
-  isAuth: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   login: PropTypes.func.isRequired,
 };
@@ -118,6 +149,7 @@ const mapStateToProps = (state) => ({
 const actionCreators = {
   login: authActions.login,
   loginGoogle: authActions.loginGoogle,
+  loginFacebook: authActions.loginFacebook,
 };
 
 export default connect(mapStateToProps, actionCreators)(Login);

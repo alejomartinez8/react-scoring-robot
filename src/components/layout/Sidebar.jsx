@@ -3,8 +3,11 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { authActions, layoutActions } from "../../redux/actions";
 import { useMediaQuery } from "react-responsive";
+import { useHistory } from "react-router-dom";
 
 const Sidebar = ({ isAuth, role, logout, toggleSidenavAction }) => {
+  let history = useHistory();
+
   const isTabletOrMobileDevice = useMediaQuery({
     query: "(max-device-width: 1224px)",
   });
@@ -14,6 +17,11 @@ const Sidebar = ({ isAuth, role, logout, toggleSidenavAction }) => {
       console.log("toggle Sidenav");
       toggleSidenavAction();
     }
+  };
+
+  const handleLogout = () => {
+    logout();
+    history.push("/auth/login");
   };
 
   return (
@@ -91,7 +99,7 @@ const Sidebar = ({ isAuth, role, logout, toggleSidenavAction }) => {
                   </div>
                 </Link>
 
-                <Link className="nav-link" to="#" onClick={logout}>
+                <Link className="nav-link" to="#" onClick={handleLogout}>
                   <div className="sb-nav-link-icon">
                     <i className="fas fa-sign-out"></i> Salir
                   </div>

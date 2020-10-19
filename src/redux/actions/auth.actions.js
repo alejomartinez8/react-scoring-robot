@@ -34,6 +34,21 @@ export const loginGoogle = (access_token) => (dispatch) => {
     });
 };
 
+export const loginFacebook = (access_token) => (dispatch) => {
+  dispatch({ type: UserTypes.AUTH_LOGIN_REQUEST });
+
+  authServices
+    .loginFacebook(access_token)
+    .then((token) => {
+      dispatch({ type: UserTypes.AUTH_LOGIN_SUCCESS, payload: token });
+      dispatch(loadUser());
+    })
+    .catch((error) => {
+      dispatch({ type: UserTypes.AUTH_ERROR, payload: error });
+      dispatch(alertActions.setAlert(error.toString(), "danger"));
+    });
+};
+
 // logout action
 export const logout = () => (dispatch) => {
   dispatch({ type: UserTypes.AUTH_LOGOUT });
@@ -97,6 +112,7 @@ export const resetPassword = ({ token, password, confirmPassword }) => (
 export const authActions = {
   login,
   loginGoogle,
+  loginFacebook,
   logout,
   register,
   forgotPassword,
