@@ -5,7 +5,6 @@ import { layoutActions, userActions } from "./redux/actions";
 import Routes from "./components/routing/Routes";
 import Landing from "./components/layout/Landing";
 import Topbar from "./components/layout/Topbar";
-import Sidebar from "./components/layout/Sidebar";
 
 const App = ({ loadUser, toggleSidenav, toggleSidenavAction }) => {
   if (localStorage.getItem("token")) {
@@ -15,21 +14,11 @@ const App = ({ loadUser, toggleSidenav, toggleSidenavAction }) => {
   return (
     <BrowserRouter>
       <Fragment>
-        <div className={toggleSidenav ? "sidenav-toggled" : ""}>
-          <Topbar
-            toggleSidenav={toggleSidenav}
-            toggleSidenavAction={toggleSidenavAction}
-          />
-          <div id="layoutSidenav">
-            <Sidebar />
-            <div id="content">
-              <Switch>
-                <Route exact path="/" component={Landing} />
-                <Route component={Routes} />
-              </Switch>
-            </div>
-          </div>
-        </div>
+        <Topbar />
+        <Switch>
+          <Route exact path="/" component={Landing} />
+          <Route component={Routes} />
+        </Switch>
       </Fragment>
     </BrowserRouter>
   );

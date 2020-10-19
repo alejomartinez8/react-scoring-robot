@@ -185,7 +185,7 @@ form.user .btn-user {
 }
 
 /********** topbar && sidebar ************/
-.topbar {
+/* .topbar {
   padding-left: 0;
   height: 60px;
   z-index: 1039;
@@ -317,4 +317,4 @@ form.user .btn-user {
   .sidenav-toggled #layoutSidenav #content:before {
     display: none;
   }
-}
+} */
