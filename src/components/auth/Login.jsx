@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { authActions } from "../../redux/actions/";
+import FacebookLogin from "react-facebook-login";
 
 const Login = ({ isAuth, login, loading }) => {
   const [formData, setFormData] = useState({
@@ -20,6 +21,10 @@ const Login = ({ isAuth, login, loading }) => {
     login(email, password);
   };
 
+  const responseFacebook = (response) => {
+    console.log(response);
+  };
+
   return (
     <div className="d-flex justify-content-center align-items-center m-0">
       <div className="col-lg-6 col-sm-12">
@@ -29,6 +34,15 @@ const Login = ({ isAuth, login, loading }) => {
           </div>
           <div className="card-body">
             <form className="form" onSubmit={handleSubmit}>
+              <div className="form-group">
+                <FacebookLogin
+                  appId={process.env.FACEBOOK_ID}
+                  autoLoad={true}
+                  fields="name,email,picture"
+                  callback={responseFacebook}
+                  icon="fa-facebook"
+                />
+              </div>
               <div className="form-group">
                 <label htmlFor="email">Email</label>
                 <input
