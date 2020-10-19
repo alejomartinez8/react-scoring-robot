@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const authServices = {
   login,
+  loginGoogle,
   register,
   verifyEmail,
   forgotPassword,
@@ -13,6 +14,14 @@ export const authServices = {
 async function login(email, password) {
   return axios
     .post("/auth/login", JSON.stringify({ email, password }))
+    .then(handleResponse)
+    .catch(handleError);
+}
+
+// login google
+async function loginGoogle(access_token) {
+  return axios
+    .post("/auth/google/token", JSON.stringify({ access_token }))
     .then(handleResponse)
     .catch(handleError);
 }

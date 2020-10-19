@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { authActions } from "../../redux/actions/";
-import FacebookLogin from "react-facebook-login";
+import GoogleLogin from "react-google-login";
 
-const Login = ({ isAuth, login, loading }) => {
+const Login = ({ isAuth, login, loginGoogle, loading }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -21,8 +21,13 @@ const Login = ({ isAuth, login, loading }) => {
     login(email, password);
   };
 
-  const responseFacebook = (response) => {
-    console.log(response);
+  const responeGoogle = (response) => {
+    console.log(response.tokenObj);
+    loginGoogle(response.tokenObj.access_token);
+  };
+
+  const handleLoginFailure = (response) => {
+    alert("Failed to log in");
   };
 
   return (
@@ -35,12 +40,13 @@ const Login = ({ isAuth, login, loading }) => {
           <div className="card-body">
             <form className="form" onSubmit={handleSubmit}>
               <div className="form-group">
-                <FacebookLogin
-                  appId={process.env.FACEBOOK_ID}
-                  autoLoad={true}
-                  fields="name,email,picture"
-                  callback={responseFacebook}
-                  icon="fa-facebook"
+                <GoogleLogin
+                  clientId={process.env.REACT_APP_GOOGLE_ID}
+                  buttonText="Login"
+                  onSuccess={responeGoogle}
+                  onFailure={handleLoginFailure}
+                  cookiePolicy={"single_host_origin"}
+                  responseType="code,token"
                 />
               </div>
               <div className="form-group">
@@ -111,6 +117,7 @@ const mapStateToProps = (state) => ({
 
 const actionCreators = {
   login: authActions.login,
+  loginGoogle: authActions.loginGoogle,
 };
 
 export default connect(mapStateToProps, actionCreators)(Login);
