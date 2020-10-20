@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import EventsPage from "../events/EventsPage";
 import ChallengesGrid from "../challenges/ChallengesGrid";
-import ChallengeResults from "../challenges/ChallengeResults";
+import ChallengeResults from "../challenges/ChallengeResults/ChallengeResults";
 import ChallengePlayoffs from "../challenges/ChallengePlayoffs";
 import ChallengeScoreForm from "../challenges/ChallengeScoreForm";
 

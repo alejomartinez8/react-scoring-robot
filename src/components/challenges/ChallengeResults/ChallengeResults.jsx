@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import { connect } from "react-redux";
-import { teamActions, challengeActions, eventActions } from "../../redux/actions";
-import ButtonBack from "../layout/ButtonBack";
+import { teamActions, challengeActions, eventActions } from "../../../redux/actions";
+import ButtonBack from "../../layout/ButtonBack";
 import { Spinner } from "react-bootstrap";
 import ChallengeResultTeamItem from "./ChallengeResultTeamItem";
 

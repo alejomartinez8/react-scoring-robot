@@ -23,6 +23,7 @@ const initialState = {
   maxTime: 0,
   tasks: [],
   taskSecuence: true,
+  stopTime: true,
   bonusType: "",
 };
 
@@ -73,6 +74,7 @@ const ChallengeForm = ({
     topMaxTurns,
     tasks,
     taskSecuence,
+    stopTime,
     bonusType,
     maxTime,
     playoffs,
@@ -409,6 +411,25 @@ const ChallengeForm = ({
                         setFormData({
                           ...formData,
                           taskSecuence: e.target.checked,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group row">
+                  <label className="col-sm-3 col-form-label" htmlFor="stopTime">
+                    Detener tiempo última tarea
+                  </label>
+                  <div className="col-sm">
+                    <input
+                      type="checkBox"
+                      name="stopTime"
+                      checked={stopTime}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          stopTime: e.target.checked,
                         })
                       }
                     />

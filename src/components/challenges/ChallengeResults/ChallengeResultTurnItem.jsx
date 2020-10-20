@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ConfirmModal from "../layout/ConfirmModal";
+import ConfirmModal from "../../layout/ConfirmModal";
 
 const ChallengeResultTurnItem = ({
   team,

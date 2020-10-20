@@ -138,7 +138,10 @@ const CallengeScoreForm = ({
       });
 
       if (tasks[tasks.length - 1]) {
-        setTimer(false);
+        if (challenge.stopTime) {
+          setTimer(false);
+        }
+
         if (challenge.bonusType === "timer") {
           setFormData({
             ...formData,
@@ -261,6 +264,7 @@ const CallengeScoreForm = ({
               <form onSubmit={handleSubmit}>
                 {!Object.keys(turn).length && (
                   <Fragment>
+                    {/* ************* Team Info ************* */}
                     <div className="form-group">
                       <label htmlFor="team">Equipo</label>
                       <div className="col-sm-4">
@@ -295,6 +299,7 @@ const CallengeScoreForm = ({
                       </div>
                     </div>
 
+                    {/************ Timer ************/}
                     <hr />
                     <div className="form-group row my-2 justify-content-center align-items-center">
                       <div className="display-4">
