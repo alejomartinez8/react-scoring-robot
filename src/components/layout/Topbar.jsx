@@ -38,6 +38,7 @@ const Topbar = ({ isAuth, role, logout, toggleSidenav, toggleSidenavAction }) =>
           {role === "Admin" && (
             <NavDropdown title="Admin" id="basic-nav-dropdown">
               <NavDropdown.Item href="/admin">Dashboard</NavDropdown.Item>
+              <NavDropdown.Divider />
               <NavDropdown.Item href="/admin/events">Eventos</NavDropdown.Item>
               <NavDropdown.Item href="/admin/challenges">Retos</NavDropdown.Item>
               <NavDropdown.Item href="/admin/users">Usuarios</NavDropdown.Item>

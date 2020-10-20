@@ -74,7 +74,7 @@ const Register = ({ isAuth, loading, register, setAlert }) => {
 
   return (
     <div className="d-flex justify-content-center align-items-center">
-      <div className="col-md-6">
+      <div className="col-md-6 p-0">
         <div className="card">
           <div className="card-header">
             <h2 className="text-primary">Registro Entrenadores</h2>

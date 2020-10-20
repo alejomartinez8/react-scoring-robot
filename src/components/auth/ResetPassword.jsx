@@ -61,7 +61,7 @@ const ResetPassword = ({ history, setAlert }) => {
   // return Component
   return (
     <div className="d-flex justify-content-center align-items-center">
-      <div className="col-lg-6">
+      <div className="col-lg-6 p-0">
         <div className="card">
           <div className="card-header">
             <h2 className="text-primary">Restablecer Contraseña</h2>

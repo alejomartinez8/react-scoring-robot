@@ -39,8 +39,8 @@ const Login = ({ login, loginGoogle, loginFacebook, loading }) => {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center m-0">
-      <div className="col-lg-6 col-sm-12">
+    <div className="d-flex justify-content-center align-items-center">
+      <div className="col-lg-6 col-sm-12 p-0">
         <div className="card">
           <div className="card-header">
             <h2 className="text-primary">Ingreso</h2>
@@ -52,7 +52,7 @@ const Login = ({ login, loginGoogle, loginFacebook, loading }) => {
                   clientId={process.env.REACT_APP_GOOGLE_ID}
                   render={(renderProps) => (
                     <button
-                      className="btn btn-google btn-user btn-block"
+                      className="btn btn-lg btn-block btn-google"
                       onClick={renderProps.onClick}
                       disabled={renderProps.disabled}
                     >
@@ -60,7 +60,7 @@ const Login = ({ login, loginGoogle, loginFacebook, loading }) => {
                     </button>
                   )}
                   onSuccess={responeGoogle}
-                  onFailure={handleGoogleFailure}
+                  // onFailure={handleGoogleFailure}
                   cookiePolicy={"single_host_origin"}
                   responseType="code,token"
                 />
@@ -70,7 +70,7 @@ const Login = ({ login, loginGoogle, loginFacebook, loading }) => {
                   callback={responseFacebook}
                   render={(renderProps) => (
                     <button
-                      className="btn btn-facebook btn-user btn-block"
+                      className="btn btn-lg btn-block btn-facebook "
                       onClick={renderProps.onClick}
                     >
                       <i className="fab fa-facebook-f fa-fw"></i> Ingresar con
