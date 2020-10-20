@@ -41,7 +41,7 @@ const UserPage = ({
       <div className="card  my-4">
         <div className="card-header">
           <h2 className="text-primary">
-            <i className="fas fa-user"></i> Perfil
+            <i className="fas fa-id-card"></i> Perfil
           </h2>
         </div>
         <div className="card-body">

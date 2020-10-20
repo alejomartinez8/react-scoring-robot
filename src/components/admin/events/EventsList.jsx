@@ -21,7 +21,6 @@ const EventsList = ({
 
   const handleToggleActiveEvent = (id) => {
     toggleActiveEvent(id);
-    getEvents();
   };
 
   const handleDeleteEvent = (id) => {

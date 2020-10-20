@@ -89,12 +89,10 @@ const deleteEvent = (id) => (dispatch) => {
 };
 
 const toggleActiveEvent = (id) => (dispatch) => {
-  dispatch({ type: EventTypes.TOGGLE_EVENT_ACTIVE });
-
   eventServices
     .toggleActiveEvent(id)
-    .then((event) => {
-      dispatch({ type: EventTypes.EVENT_ACTIVE_TOGGLE, payload: event });
+    .then(() => {
+      dispatch(getEvents());
     })
     .catch((error) => {
       dispatch({ type: EventTypes.EVENT_ERROR, payload: error });

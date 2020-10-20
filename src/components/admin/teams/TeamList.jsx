@@ -24,16 +24,15 @@ const TeamsList = ({
   }, [getTeams, getEvents]);
 
   useEffect(() => {
-    queryTeam();
-    // eslint-disable-next-line
-  }, [query]);
+    getTeams(getQueryTeam());
+  }, [query, getTeams]);
 
   const handleRegisterTeam = (id) => {
-    registerTeam(id);
-    queryTeam();
+    const teamQuery = getQueryTeam();
+    registerTeam(id, teamQuery);
   };
 
-  function queryTeam() {
+  function getQueryTeam() {
     const _query = {};
     if (query.event !== "") {
       _query.event = query.event;
@@ -42,7 +41,7 @@ const TeamsList = ({
       _query.challenge = query.challenge;
     }
 
-    getTeams(_query);
+    return _query;
   }
 
   const handleInputChange = (e) => {

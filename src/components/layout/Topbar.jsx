@@ -33,31 +33,61 @@ const Topbar = ({ isAuth, role, logout, toggleSidenav, toggleSidenavAction }) =>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="/">Inicio</Nav.Link>
-          <Nav.Link href="/events">Eventos</Nav.Link>
+          {/* <Nav.Link href="/">Inicio</Nav.Link> */}
+          <Nav.Link href="/events">
+            <i className="fas fa-calendar"></i> Eventos
+          </Nav.Link>
           {role === "Admin" && (
-            <NavDropdown title="Admin" id="basic-nav-dropdown">
-              <NavDropdown.Item href="/admin">Dashboard</NavDropdown.Item>
+            <NavDropdown
+              title={
+                <div style={{ display: "inline-block" }}>
+                  <i className="fas fa-cog"></i> Admin
+                </div>
+              }
+              id="basic-nav-dropdown"
+            >
+              <NavDropdown.Item href="/admin">
+                <i className="fas fa-tachometer"></i> Dashboard
+              </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="/admin/events">Eventos</NavDropdown.Item>
-              <NavDropdown.Item href="/admin/challenges">Retos</NavDropdown.Item>
-              <NavDropdown.Item href="/admin/users">Usuarios</NavDropdown.Item>
-              <NavDropdown.Item href="/admin/teams">Equipos</NavDropdown.Item>
+              <NavDropdown.Item href="/admin/events">
+                <i className="fas fa-calendar"></i> Eventos
+              </NavDropdown.Item>
+              <NavDropdown.Item href="/admin/challenges">
+                <i className="fas fa-trophy"></i> Retos
+              </NavDropdown.Item>
+              <NavDropdown.Item href="/admin/users">
+                <i className="fas fa-user"></i> Usuarios
+              </NavDropdown.Item>
+              <NavDropdown.Item href="/admin/teams">
+                <i className="fas fa-users"></i> Equipos
+              </NavDropdown.Item>
             </NavDropdown>
           )}
           {isAuth ? (
-            <NavDropdown title="Usuario" id="basic-nav-dropdown">
+            <NavDropdown
+              title={
+                <div style={{ display: "inline-block" }}>
+                  <i className="fas fa-user-circle"></i> Usuario
+                </div>
+              }
+              id="basic-nav-dropdown"
+            >
               {role === "User" && (
                 <NavDropdown.Item href="/user/teams">Mis Equipos</NavDropdown.Item>
               )}
-              <NavDropdown.Item href="/user">Perfil</NavDropdown.Item>
+              <NavDropdown.Item href="/user">
+                <i className="fas fa-id-card"></i> Perfil
+              </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#" onClick={handleLogout}>
-                Salir
+                <i className="fas fa-sign-out"></i> Salir
               </NavDropdown.Item>
             </NavDropdown>
           ) : (
-            <Nav.Link href="/auth/login">Ingreso</Nav.Link>
+            <Nav.Link href="/auth/login">
+              <i className="fas fa-sign-in"></i> Ingreso
+            </Nav.Link>
           )}
         </Nav>
       </Navbar.Collapse>

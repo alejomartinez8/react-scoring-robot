@@ -40,6 +40,13 @@ const EventListItem = ({ event, actionConfirm, handleToggleActiveEvent }) => {
       <td>{event.year}</td>
       <td>{getStage(event.stage)}</td>
       <td>
+        {/* <input
+          type="checkbox"
+          checked={event.active}
+          onChange={() => {
+            handleToggleActiveEvent(event._id);
+          }}
+        /> */}
         <ToggleButton
           toggle={event.active}
           toggleId={event._id}

@@ -34,13 +34,13 @@ const updateTeam = (id, team) => (dispatch) => {
     });
 };
 
-const registerTeam = (id) => (dispatch) => {
-  dispatch({ type: TeamTypes.REGISTER_TEAM });
+const registerTeam = (id, queryTeam) => (dispatch) => {
+  // dispatch({ type: TeamTypes.REGISTER_TEAM });
 
   teamServices
     .registerTeam(id)
-    .then((team) => {
-      dispatch({ type: TeamTypes.TEAM_REGISTERED, payload: team });
+    .then(() => {
+      dispatch(getTeams(queryTeam));
     })
     .catch((error) => {
       dispatch({ type: TeamTypes.TEAM_ERROR, payload: error });
