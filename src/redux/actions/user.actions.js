@@ -89,11 +89,18 @@ export const updateUser = (id, params) => (dispatch) => {
 
 // delete user action
 export const deleteUser = (id) => (dispatch) => {
+  dispatch({ type: UserTypes.USER_TYPE_RESPONSE, payload: "" });
   userServices
     .deleteUser(id)
     .then((res) => {
-      dispatch({ type: UserTypes.USER_DELETE, payload: id });
-      dispatch(alertActions.setAlert("Usuario Eliminado", "success"));
+      console.log(res);
+      if (res.type === "delete-success") {
+        dispatch({ type: UserTypes.USER_DELETE, payload: id });
+        dispatch(alertActions.setAlert("Usuario Eliminado", "success"));
+      } else {
+        dispatch({ type: UserTypes.USER_TYPE_RESPONSE, payload: res.type });
+        dispatch(alertActions.setAlert(res.message, "warning"));
+      }
     })
     .catch((error) => {
       dispatch({ type: UserTypes.AUTH_ERROR, payload: error });

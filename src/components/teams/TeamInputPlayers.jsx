@@ -1,15 +1,18 @@
 import React, { useState, Fragment, useEffect } from "react";
 import moment from "moment";
 
-// const initialState = {
-//   name: "",
-//   legalId: "",
-//   gender: "",
-//   birthday: "",
-// };
+const initialState = {
+  name: "",
+  legalId: "",
+  gender: "",
+  birthday: "",
+};
 
 const TeamInputPlayers = ({ addPlayer, index, player, required = false }) => {
-  const [playerData, setPlayerData] = useState(player);
+  console.log(player);
+  const [playerData, setPlayerData] = useState(
+    player !== undefined ? player : initialState
+  );
   const { name, legalId, gender, birthday } = playerData;
 
   useEffect(() => {
@@ -55,7 +58,7 @@ const TeamInputPlayers = ({ addPlayer, index, player, required = false }) => {
             className="form-control"
             id="birthday"
             name="birthday"
-            value={moment(birthday).format("YYYY-MM-DD")}
+            value={birthday}
             onChange={handleChange}
             required={required}
           />

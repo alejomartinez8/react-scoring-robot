@@ -5,12 +5,26 @@ import { getUsers, deleteUser } from "../../../redux/actions/user.actions";
 import { Spinner } from "react-bootstrap";
 import UserListItem from "./UserListItem";
 
-const UserList = ({ getUsers, users, loadingUsers, deleteUser, match }) => {
+const UserList = ({
+  getUsers,
+  user: { users, responseType },
+  loadingUsers,
+  deleteUser,
+  match,
+}) => {
   const { path } = match;
 
   useEffect(() => {
     getUsers();
   }, [getUsers]);
+
+  const handleDeleteUser = (id) => {
+    deleteUser(id);
+  };
+
+  if (responseType === "delete-success") {
+    getUsers();
+  }
 
   return (
     <Fragment>
@@ -42,7 +56,7 @@ const UserList = ({ getUsers, users, loadingUsers, deleteUser, match }) => {
                       <UserListItem
                         key={user._id}
                         user={user}
-                        actionConfirm={deleteUser}
+                        actionConfirm={handleDeleteUser}
                       />
                     ))}
                     {!users && (
@@ -64,7 +78,7 @@ const UserList = ({ getUsers, users, loadingUsers, deleteUser, match }) => {
 };
 
 const mapStateToProps = (state) => ({
-  users: state.user.users,
+  user: state.user,
   loadingUsers: state.user.loading,
 });
 

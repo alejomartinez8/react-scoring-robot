@@ -28,7 +28,7 @@ const Login = ({ login, loginGoogle, loginFacebook, loading }) => {
   };
 
   const handleGoogleFailure = (res) => {
-    alert("Failed to log in with Google", res);
+    console.log("Failed to log in with Google", res);
   };
 
   const responseFacebook = (res) => {
@@ -60,7 +60,7 @@ const Login = ({ login, loginGoogle, loginFacebook, loading }) => {
                     </button>
                   )}
                   onSuccess={responeGoogle}
-                  // onFailure={handleGoogleFailure}
+                  onFailure={handleGoogleFailure}
                   cookiePolicy={"single_host_origin"}
                   responseType="code,token"
                 />

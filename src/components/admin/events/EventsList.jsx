@@ -24,6 +24,10 @@ const EventsList = ({
     getEvents();
   };
 
+  const handleDeleteEvent = (id) => {
+    deleteEvent(id);
+  };
+
   return (
     <Fragment>
       {loading ? (
@@ -55,7 +59,7 @@ const EventsList = ({
                     <EventListItem
                       key={event._id}
                       event={event}
-                      actionConfirm={deleteEvent}
+                      actionConfirm={handleDeleteEvent}
                       handleToggleActiveEvent={handleToggleActiveEvent}
                     />
                   ))}

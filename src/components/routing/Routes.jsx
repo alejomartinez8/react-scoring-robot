@@ -13,7 +13,7 @@ const Routes = ({ isAuth }) => {
   return (
     <>
       <Alert />
-      <main className="container my-4">
+      <main className="container-lg my-4">
         <Switch>
           <Route path="/events" component={Events} />
           <Route path="/auth" component={Auth} />

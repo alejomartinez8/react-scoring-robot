@@ -73,10 +73,14 @@ const getEventBySlug = (slug) => (dispatch) => {
 const deleteEvent = (id) => (dispatch) => {
   eventServices
     .deleteEvent(id)
-    .then(() => {
-      dispatch({ type: EventTypes.EVENT_DELETE, payload: id });
-      dispatch(alertActions.setAlert("Evento Eliminado", "success"));
-      dispatch(getEvents());
+    .then((res) => {
+      if (res.type === "delete-success") {
+        dispatch({ type: EventTypes.EVENT_DELETE, payload: id });
+        dispatch(alertActions.setAlert("Evento Eliminado", "success"));
+        dispatch(getEvents());
+      } else {
+        dispatch(alertActions.setAlert(res.message, "warning"));
+      }
     })
     .catch((error) => {
       dispatch({ type: EventTypes.EVENT_ERROR, payload: error });

@@ -72,10 +72,14 @@ const getChallengeBySlug = (slug) => (dispatch) => {
 const deleteChallenge = (id) => (dispatch) => {
   challengeServices
     .deleteChallenge(id)
-    .then(() => {
-      dispatch({ type: ChallengeTypes.CHALLENGE_DELETE, payload: id });
-      dispatch(alertActions.setAlert("Reto Eliminado", "success"));
-      dispatch(getChallenges());
+    .then((res) => {
+      if (res.type === "delete-success") {
+        dispatch({ type: ChallengeTypes.CHALLENGE_DELETE, payload: id });
+        dispatch(alertActions.setAlert("Reto Eliminado", "success"));
+        dispatch(getChallenges());
+      } else {
+        dispatch(alertActions.setAlert(res.message, "warning"));
+      }
     })
     .catch((error) => {
       dispatch({ type: ChallengeTypes.CHALLENGE_ERROR, payload: error });

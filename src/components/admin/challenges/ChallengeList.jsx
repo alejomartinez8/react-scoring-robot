@@ -1,9 +1,9 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { challengeActions } from "../../../redux/actions";
 import { Spinner } from "react-bootstrap";
-import ConfirmModal from "../../layout/ConfirmModal";
+import ChallengeListItem from "./ChallengeListItem";
 
 const ChallengesList = ({
   challenge: { challenges, loading },
@@ -12,25 +12,10 @@ const ChallengesList = ({
   match,
 }) => {
   const { path } = match;
-  const [showConfirm, SetShowConfirm] = useState(false);
 
   useEffect(() => {
     getChallenges();
   }, [getChallenges]);
-
-  const handleDeleteChallenge = (e) => {
-    e.preventDefault();
-    SetShowConfirm(true);
-  };
-
-  const handleClose = () => {
-    SetShowConfirm(false);
-  };
-
-  const handleConfirm = (id) => {
-    SetShowConfirm(false);
-    deleteChallenge(id);
-  };
 
   return (
     <Fragment>
@@ -61,52 +46,12 @@ const ChallengesList = ({
                   <tbody>
                     {challenges &&
                       challenges.map((challenge) => (
-                        <tr key={challenge._id}>
-                          <td>{challenge.name}</td>
-                          <td>{challenge.slug}</td>
-                          <td>
-                            {challenge.available ? (
-                              <span className="badge badge-pill badge-success">
-                                Sí
-                              </span>
-                            ) : (
-                              <span className="badge badge-pill badge-danger">
-                                No
-                              </span>
-                            )}
-                          </td>
-                          <td>
-                            {challenge.categories.map((category, index) => (
-                              <span
-                                key={index}
-                                className="badge badge-pill badge-info mx-1"
-                              >
-                                {category}
-                              </span>
-                            ))}
-                          </td>
-                          <td style={{ whiteSpace: "nowrap" }}>
-                            <Link
-                              to={`${path}/edit/${challenge._id}`}
-                              className="btn btn-sm btn-primary mr-1"
-                            >
-                              Editar
-                            </Link>
-                            <button
-                              className="btn btn-sm btn-danger"
-                              onClick={handleDeleteChallenge}
-                            >
-                              Eliminar
-                            </button>
-                            <ConfirmModal
-                              show={showConfirm}
-                              msg="¿Deseas borrar este reto?"
-                              alertType="warning"
-                              onClose={handleClose}
-                              onConfirm={() => handleConfirm(challenge._id)}
-                            />
-                          </td>
-                        </tr>
+                        <ChallengeListItem
+                          key={challenge._id}
+                          challenge={challenge}
+                          actionConfirm={deleteChallenge}
+                          path={path}
+                        />
                       ))}
                   </tbody>
                 </table>

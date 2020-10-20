@@ -6,6 +6,7 @@ import ConfirmModal from "../layout/ConfirmModal";
 
 const UserPage = ({
   auth: { isAuth, userAuth, loading },
+  user,
   deleteUser,
   clearUser,
   logout,
@@ -24,9 +25,12 @@ const UserPage = ({
   const handleConfirm = (id) => {
     SetShowConfirm(false);
     deleteUser(id);
+  };
+
+  if (user.responseType === "delete-success") {
     clearUser();
     logout();
-  };
+  }
 
   if (isAuth) {
     Redirect("/auth/login");
@@ -113,6 +117,7 @@ const UserPage = ({
 
 const mapSateToProps = (state) => ({
   auth: state.auth,
+  user: state.user,
 });
 
 const actionCreator = {

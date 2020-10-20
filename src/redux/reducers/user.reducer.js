@@ -5,11 +5,12 @@ const initialState = {
   user: {},
   users: [],
   error: [],
+  responseType: "",
 };
 
 export function user(state = initialState, action) {
   const { type, payload } = action;
-  // console.log({ payload })
+
   switch (type) {
     case UserTypes.GET_USER:
     case UserTypes.GET_USERS:
@@ -55,8 +56,14 @@ export function user(state = initialState, action) {
         user: {},
         users: [],
         error: payload,
+        responseType: "",
       };
 
+    case UserTypes.USER_TYPE_RESPONSE:
+      return {
+        ...state,
+        responseType: payload,
+      };
     default:
       return state;
   }
