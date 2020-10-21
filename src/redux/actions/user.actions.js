@@ -97,6 +97,7 @@ export const deleteUser = (id) => (dispatch) => {
       if (res.type === "delete-success") {
         dispatch({ type: UserTypes.USER_DELETE, payload: id });
         dispatch(alertActions.setAlert("Usuario Eliminado", "success"));
+        dispatch(getUsers());
       } else {
         dispatch({ type: UserTypes.USER_TYPE_RESPONSE, payload: res.type });
         dispatch(alertActions.setAlert(res.message, "warning"));

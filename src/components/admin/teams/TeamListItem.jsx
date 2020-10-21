@@ -26,7 +26,7 @@ const TeamListItem = ({ team, actionConfirm, handleRegisterTeam }) => {
       <td>{"category" in team ? team.category : ""}</td>
       <td>{"event" in team && team.event.name}</td>
       <td>{"challenge" in team ? team.challenge.name : ""}</td>
-      <td>{"user" in team && "fullName" in team.user ? team.user.fullName : ""}</td>
+      <td>{team.user !== null ? team.user.fullName : ""}</td>
 
       <td className="text-center">
         <ToggleButton

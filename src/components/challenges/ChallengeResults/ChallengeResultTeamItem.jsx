@@ -32,6 +32,8 @@ const ChallengeResultTeamItem = ({
     setShowEdit(true);
   };
 
+  console.log(team);
+
   return (
     <Fragment key={team._id}>
       <tr key={`tr-${team._id}`} onClick={toggleExpander} className="tr-results">
@@ -45,11 +47,9 @@ const ChallengeResultTeamItem = ({
           ></i>
         </td>
         <td>{index + 1}</td>
-        <td>{"name" in team && team.name}</td>
-        <td>
-          {"user" in team && "institution" in team.user && team.user.institution}
-        </td>
-        <td>{"user" in team && "city" in team.user && team.user.city}</td>
+        <td>{"name" in team ? team.name : ""}</td>
+        <td>{team.user !== null ? team.user.institution : ""}</td>
+        <td>{team.user !== null ? team.user.city : ""}</td>
         <td className="text-center">{"topPoints" in team && team.topPoints}</td>
         <td className="text-center">{"totalPoints" in team && team.totalPoints}</td>
         <td>
