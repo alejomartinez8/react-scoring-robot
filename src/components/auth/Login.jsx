@@ -47,7 +47,7 @@ const Login = ({ login, loginGoogle, loginFacebook, loading }) => {
           </div>
           <div className="card-body">
             <form className="form user" onSubmit={handleSubmit}>
-              <div className="form-group">
+              {/* <div className="form-group">
                 <GoogleLogin
                   clientId={process.env.REACT_APP_GOOGLE_ID}
                   render={(renderProps) => (
@@ -79,8 +79,7 @@ const Login = ({ login, loginGoogle, loginFacebook, loading }) => {
                   )}
                 />
               </div>
-
-              <hr />
+              <hr /> */}
               <div className="form-group">
                 <label htmlFor="email">Email</label>
                 <input
@@ -122,11 +121,11 @@ const Login = ({ login, loginGoogle, loginFacebook, loading }) => {
                   )}
                   Ingresar
                 </button>
-                <p className="text-center">
+                {/* <p className="text-center">
                   <small className="text-muted">
                     ¿Todavía no tienes cuenta? <Link to="register">Registarse</Link>
                   </small>
-                </p>
+                </p> */}
               </div>
             </form>
           </div>

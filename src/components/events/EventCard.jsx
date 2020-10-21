@@ -41,7 +41,7 @@ const EventCard = ({
               </p>
               <p className="card-text">
                 <strong>Retos: </strong>
-                {challenges.lenght > 0 &&
+                {challenges.length > 0 &&
                   challenges.map((challenge) => (
                     <span className="badge badge-primary m-1" key={challenge._id}>
                       {challenge.name}
