@@ -25,6 +25,7 @@ const TeamsList = ({
 
   useEffect(() => {
     getTeams(getQueryTeam());
+    //react-hooks/exhaustive-deps
   }, [query, getTeams]);
 
   const handleRegisterTeam = (id) => {

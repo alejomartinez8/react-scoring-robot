@@ -4,12 +4,21 @@ import { authActions } from "../../redux/actions";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
-const Topbar = ({ isAuth, role, logout, toggleSidenav, toggleSidenavAction }) => {
+const Topbar = ({
+  isAuth,
+  userAuth,
+  role,
+  logout,
+  toggleSidenav,
+  toggleSidenavAction,
+}) => {
   let history = useHistory();
   const handleLogout = () => {
     logout();
     history.push("/auth/login");
   };
+
+  console.log(userAuth);
 
   return (
     // <nav className="topbar navbar navbar-expand navbar-light bg-light">
@@ -64,11 +73,15 @@ const Topbar = ({ isAuth, role, logout, toggleSidenav, toggleSidenavAction }) =>
               </NavDropdown.Item>
             </NavDropdown>
           )}
+        </Nav>
+        <Nav className="justify-content-end mr-4">
           {isAuth ? (
             <NavDropdown
               title={
                 <div style={{ display: "inline-block" }}>
-                  <i className="fas fa-user-circle"></i> Usuario
+                  <i className="fas fa-user-circle"></i>
+                  {" Usuario "}
+                  <strong>{isAuth && userAuth.firstName}</strong>
                 </div>
               }
               id="basic-nav-dropdown"
@@ -97,6 +110,7 @@ const Topbar = ({ isAuth, role, logout, toggleSidenav, toggleSidenavAction }) =>
 
 const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth,
+  userAuth: state.auth.userAuth,
   role: state.auth.userAuth.role,
 });
 

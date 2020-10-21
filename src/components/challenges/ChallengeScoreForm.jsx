@@ -22,9 +22,11 @@ const initalState = {
   taskPoints: 0,
   bonusPoints: 0,
   totalPoints: 0,
+  judgeName: "",
 };
 
 const CallengeScoreForm = ({
+  userAuth,
   event,
   eventLoading,
   challenge,
@@ -53,7 +55,14 @@ const CallengeScoreForm = ({
   const [formData, setFormData] = useState(initalState);
   const [penaltyFlag, setPenaltyFlag] = useState(false);
   const [team, setTeam] = useState("");
-  const { tasks, penalties, taskPoints, bonusPoints, totalPoints } = formData;
+  const {
+    tasks,
+    penalties,
+    taskPoints,
+    bonusPoints,
+    totalPoints,
+    judgeName,
+  } = formData;
 
   // get Event and Challenge by Slug
   useEffect(() => {
@@ -113,6 +122,7 @@ const CallengeScoreForm = ({
       taskPoints: 0,
       bonusPoints: 0,
       totalPoints: 0,
+      judgeName: userAuth.fullName,
     });
 
     setSeconds(challenge.maxTime);
@@ -460,6 +470,7 @@ const CallengeScoreForm = ({
 };
 
 const mapStateToProps = (state) => ({
+  userAuth: state.auth.userAuth,
   event: state.event.event,
   eventLoading: state.event.loading,
   challenge: state.challenge.challenge,

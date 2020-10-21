@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { authActions } from "../../redux/actions/";
-import GoogleLogin from "react-google-login";
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+// import GoogleLogin from "react-google-login";
+// import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
 const Login = ({ login, loginGoogle, loginFacebook, loading }) => {
   const [formData, setFormData] = useState({
@@ -22,21 +22,21 @@ const Login = ({ login, loginGoogle, loginFacebook, loading }) => {
     login(email, password);
   };
 
-  const responeGoogle = (res) => {
-    console.log(res.tokenObj);
-    loginGoogle(res.tokenObj.access_token);
-  };
+  // const responeGoogle = (res) => {
+  //   console.log(res.tokenObj);
+  //   loginGoogle(res.tokenObj.access_token);
+  // };
 
-  const handleGoogleFailure = (res) => {
-    console.log("Failed to log in with Google", res);
-  };
+  // const handleGoogleFailure = (res) => {
+  //   console.log("Failed to log in with Google", res);
+  // };
 
-  const responseFacebook = (res) => {
-    console.log(res);
-    if (res.accessToken) {
-      loginFacebook(res.accessToken);
-    }
-  };
+  // const responseFacebook = (res) => {
+  //   console.log(res);
+  //   if (res.accessToken) {
+  //     loginFacebook(res.accessToken);
+  //   }
+  // };
 
   return (
     <div className="d-flex justify-content-center align-items-center">
