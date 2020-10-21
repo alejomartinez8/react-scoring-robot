@@ -35,7 +35,7 @@ const UserListItem = ({ user, actionConfirm }) => {
         </button>
         <ConfirmModal
           show={showConfirm}
-          msg={`¿Deseas borrar el evento: ${user.firstName}?`}
+          msg={`¿Deseas borrar el evento: ${user.firstName} ${user.lastName}?`}
           alertType="warning"
           onClose={handleClose}
           onConfirm={() => handleConfirm(user._id)}

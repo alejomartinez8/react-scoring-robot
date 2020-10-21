@@ -5,7 +5,6 @@ const initialState = {
   user: {},
   users: [],
   error: [],
-  responseType: "",
 };
 
 export function user(state = initialState, action) {
@@ -56,14 +55,8 @@ export function user(state = initialState, action) {
         user: {},
         users: [],
         error: payload,
-        responseType: "",
       };
 
-    case UserTypes.USER_TYPE_RESPONSE:
-      return {
-        ...state,
-        responseType: payload,
-      };
     default:
       return state;
   }

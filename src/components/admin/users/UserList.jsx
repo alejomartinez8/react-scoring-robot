@@ -7,7 +7,7 @@ import UserListItem from "./UserListItem";
 
 const UserList = ({
   getUsers,
-  user: { users, responseType },
+  user: { users },
   loadingUsers,
   deleteUser,
   match,
@@ -21,10 +21,6 @@ const UserList = ({
   const handleDeleteUser = (id) => {
     deleteUser(id);
   };
-
-  if (responseType === "delete-success") {
-    getUsers();
-  }
 
   return (
     <Fragment>
