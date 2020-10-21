@@ -1,6 +1,6 @@
 import React, { useState, Fragment, useEffect } from "react";
 import { connect } from "react-redux";
-import { challengeActions } from "../../../redux/actions";
+import { challengeActions, alertActions } from "../../../redux/actions";
 import { CategoriesType } from "../../../helpers";
 import { Spinner } from "react-bootstrap";
 import ButtonBack from "../../layout/ButtonBack";
@@ -32,6 +32,7 @@ const ChallengeForm = ({
   getChallengeById,
   addChallenge,
   updateChallenge,
+  setAlert,
   match,
 }) => {
   useEffect(() => {
@@ -489,6 +490,7 @@ const actionCreators = {
   getChallengeById: challengeActions.getChallengeById,
   addChallenge: challengeActions.addChallenge,
   updateChallenge: challengeActions.updateChallenge,
+  setAlert: alertActions.setAlert,
 };
 
 export default connect(mapStateToProps, actionCreators)(ChallengeForm);

@@ -215,7 +215,11 @@ const CallengeScoreForm = ({
   // handle stop or start Timer
   const handleSetTimer = (e) => {
     e.preventDefault();
-    setTimer(!timer);
+    if (team) {
+      setTimer(!timer);
+    } else {
+      setAlert("Debes elegir un equipo", "warning");
+    }
   };
 
   // handle restart timer
