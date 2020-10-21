@@ -48,8 +48,8 @@ const ChallengeResultTeamItem = ({
         </td>
         <td>{index + 1}</td>
         <td>{"name" in team ? team.name : ""}</td>
-        <td>{team.user !== null ? team.user.institution : ""}</td>
-        <td>{team.user !== null ? team.user.city : ""}</td>
+        <td>{"institution" in team ? team.institution : ""}</td>
+        <td>{"city" in team ? team.city : ""}</td>
         <td className="text-center">{"topPoints" in team && team.topPoints}</td>
         <td className="text-center">{"totalPoints" in team && team.totalPoints}</td>
         <td>

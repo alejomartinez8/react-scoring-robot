@@ -31,7 +31,7 @@ const TeamForm = ({
   match,
 }) => {
   const [formData, setFormData] = useState(initialState);
-  const { user, event, challenge, name, category, players, registered } = formData;
+  const { event, challenge, name, category, players, registered } = formData;
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [challengeOptions, setChallengeOptions] = useState([]);
 
@@ -164,7 +164,7 @@ const TeamForm = ({
               addPlayer={addPlayer}
               index={index}
               player={players[index]}
-              required={index < eventSelected.minPlayersTeam}
+              // required={index < eventSelected.minPlayersTeam}
             />
           </Fragment>
         );
@@ -189,7 +189,7 @@ const TeamForm = ({
 
             <div className="card-body">
               <form className="form" onSubmit={handleSubmit}>
-                {auth.userAuth.role === "Admin" && (
+                {/*auth.userAuth.role === "Admin" && (
                   <div className="form-group row">
                     <label className="col-md-4 col-form-group" htmlFor="user">
                       Entrenador (*)
@@ -214,7 +214,7 @@ const TeamForm = ({
                       </select>
                     </div>
                   </div>
-                )}
+                          )*/}
 
                 <div className="form-group row">
                   <label className="col-md-4 col-form-group" htmlFor="name">

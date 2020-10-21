@@ -74,8 +74,9 @@ const deleteChallenge = (id) => (dispatch) => {
     .deleteChallenge(id)
     .then((res) => {
       if (res.type === "delete-success") {
-        dispatch({ type: ChallengeTypes.CHALLENGE_DELETE, payload: id });
-        dispatch(alertActions.setAlert("Reto Eliminado", "success"));
+        dispatch(
+          alertActions.setAlert(`Reto ${res.challenge.name} eliminado`, "success")
+        );
         dispatch(getChallenges());
       } else {
         dispatch(alertActions.setAlert(res.message, "warning"));

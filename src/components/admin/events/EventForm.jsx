@@ -183,7 +183,7 @@ const EventForm = ({
               {/* Form */}
               <form className="form">
                 <div className="form-group">
-                  <label htmlFor="name">Nombre Evento</label>
+                  <label htmlFor="name">Nombre Evento*</label>
                   <input
                     type="text"
                     className="form-control"
@@ -196,7 +196,7 @@ const EventForm = ({
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="slug">Nombre Corto(url)</label>
+                  <label htmlFor="slug">Nombre Corto(url)*</label>
                   <input
                     type="text"
                     className="form-control"
@@ -229,7 +229,6 @@ const EventForm = ({
                     name="year"
                     value={year}
                     onChange={handleChange}
-                    required
                   />
                 </div>
 
@@ -241,7 +240,6 @@ const EventForm = ({
                     name="description"
                     value={description}
                     onChange={handleChange}
-                    required
                   />
                 </div>
 

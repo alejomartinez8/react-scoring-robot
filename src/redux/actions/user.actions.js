@@ -94,7 +94,12 @@ export const deleteUser = (id) => (dispatch) => {
     .then((res) => {
       console.log(res);
       if (res.type === "delete-success") {
-        dispatch(alertActions.setAlert(res.message, "success"));
+        dispatch(
+          alertActions.setAlert(
+            `Usuario ${res.user.firstName} ${res.user.lastName} Eliminado`,
+            "success"
+          )
+        );
         dispatch(getUsers());
       } else {
         dispatch(alertActions.setAlert(res.message, "warning"));

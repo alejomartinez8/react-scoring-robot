@@ -125,11 +125,11 @@ const TeamsList = ({
                 <table className="table table-striped ">
                   <thead className="thead-dark">
                     <tr>
-                      <th>Nombre Equipos</th>
-                      <th>Categoría</th>
+                      <th>Nombre Equipo</th>
                       <th>Evento</th>
+                      <th>Categoría</th>
                       <th>Reto</th>
-                      <th>Entrenador</th>
+                      {/* <th>Entrenador</th> */}
                       <th>Registrado</th>
                       <th>Acciones</th>
                     </tr>
