@@ -258,7 +258,6 @@ const TeamForm = ({
                       name="institution"
                       value={institution}
                       onChange={handleChange}
-                      required
                     />
                   </div>
                 </div>
@@ -275,7 +274,7 @@ const TeamForm = ({
                       name="city"
                       value={city}
                       onChange={handleChange}
-                      required
+                      
                     />
                   </div>
                 </div>
@@ -292,7 +291,6 @@ const TeamForm = ({
                       name="country"
                       value={country}
                       onChange={handleChange}
-                      required
                     />
                   </div>
                 </div>
