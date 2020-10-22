@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { teamActions, challengeActions, eventActions } from "../../../redux/actions";
 import ButtonBack from "../../layout/ButtonBack";
@@ -6,7 +7,7 @@ import { Spinner } from "react-bootstrap";
 import ChallengeResultTeamItem from "./ChallengeResultTeamItem";
 
 const ChallengeResults = ({
-  userAuth,
+  auth,
   team: { teams, loading },
   getTeams,
   event,
@@ -102,6 +103,16 @@ const ChallengeResults = ({
       ) : (
         <Fragment>
           <ButtonBack className="btn btn-primary mr-1 my-2">Atrás</ButtonBack>
+          {auth.isAuth &&
+            (auth.userAuth.role === "Admin" || auth.userAuth.role === "Judge") && (
+              <Link
+                to={`/events/${match.params.eventSlug}/${match.params.challengeSlug}/score`}
+                className="btn btn-warning m-1"
+              >
+                <i className="fas fa-tasks"></i> Calificar
+              </Link>
+            )}
+
           <div className="card  mb-4">
             <div className="card-header">
               <h2 className="text-primary">
@@ -132,7 +143,7 @@ const ChallengeResults = ({
                         team={team}
                         challenge={challenge}
                         event={event}
-                        userAuth={userAuth}
+                        userAuth={auth.userAuth}
                         handleDeleteScore={handleDeleteScore}
                         handleUpdateScore={handleUpdateScore}
                       />
@@ -149,7 +160,7 @@ const ChallengeResults = ({
 };
 
 const mapStateToProps = (state) => ({
-  userAuth: state.auth.userAuth,
+  auth: state.auth,
   team: state.team,
   event: state.event.event,
   challenge: state.challenge.challenge,

@@ -55,14 +55,7 @@ const CallengeScoreForm = ({
   const [formData, setFormData] = useState(initalState);
   const [penaltyFlag, setPenaltyFlag] = useState(false);
   const [team, setTeam] = useState("");
-  const {
-    tasks,
-    penalties,
-    taskPoints,
-    bonusPoints,
-    totalPoints,
-    judgeName,
-  } = formData;
+  const { tasks, penalties, taskPoints, bonusPoints, totalPoints } = formData;
 
   // get Event and Challenge by Slug
   useEffect(() => {

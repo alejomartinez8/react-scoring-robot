@@ -9,18 +9,21 @@ import TeamSelectEvents from "./TeamSelectEvents";
 import TeamSelectChallenges from "./TeamSelectChallenges";
 
 const initialState = {
-  user: {},
+  // user: {},
   event: {},
   challenge: {},
   name: "",
+  institution: "",
   category: "",
+  city: "",
+  country: "",
   players: [],
   registered: false,
 };
 
 const TeamForm = ({
   auth,
-  users,
+  // users,
   team: { team, loading },
   events,
   getTeamById,
@@ -31,7 +34,17 @@ const TeamForm = ({
   match,
 }) => {
   const [formData, setFormData] = useState(initialState);
-  const { event, challenge, name, category, players, registered } = formData;
+  const {
+    event,
+    challenge,
+    name,
+    institution,
+    city,
+    country,
+    category,
+    players,
+    registered,
+  } = formData;
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [challengeOptions, setChallengeOptions] = useState([]);
 
@@ -233,6 +246,57 @@ const TeamForm = ({
                   </div>
                 </div>
 
+                <div className="form-group row">
+                  <label className="col-md-4 col-form-group" htmlFor="institution">
+                    Institución
+                  </label>
+                  <div className="col-md">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="institution"
+                      name="institution"
+                      value={institution}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group row">
+                  <label className="col-md-4 col-form-group" htmlFor="city">
+                    Ciudad
+                  </label>
+                  <div className="col-md">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="city"
+                      name="city"
+                      value={city}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group row">
+                  <label className="col-md-4 col-form-group" htmlFor="country">
+                    País
+                  </label>
+                  <div className="col-md">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="country"
+                      name="country"
+                      value={country}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+
                 <TeamSelectEvents
                   options={events.filter(
                     (event) => event.active && event.stage === "registration"
@@ -305,7 +369,7 @@ const TeamForm = ({
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  users: state.user.users,
+  // users: state.user.users,
   team: state.team,
   events: state.event.events,
 });
