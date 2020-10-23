@@ -5,9 +5,9 @@ import {
   challengeActions,
   teamActions,
   alertActions,
-} from "../../redux/actions";
+} from "../../../redux/actions";
 import styled from "styled-components";
-import ButtonBack from "../layout/ButtonBack";
+import ButtonBack from "../../layout/ButtonBack";
 import { Spinner } from "react-bootstrap";
 
 const Input = styled.input`
@@ -72,7 +72,6 @@ const CallengeScoreForm = ({
       if (Object.keys(turn).length > 0) {
         setFormData({ ...formData, ...turn });
         setTeam(turn.teamId);
-        console.log("LoadTurnScore", turn);
       } else {
         getTeams({
           challenge: challenge._id,
@@ -102,6 +101,7 @@ const CallengeScoreForm = ({
     // eslint-disable-next-line
   }, [teams]);
 
+  // reset Tasks Form
   function resetTaskToForm() {
     const _tasks = [];
     const _penalties = [];
@@ -167,7 +167,6 @@ const CallengeScoreForm = ({
 
   const handleTeams = (e) => {
     const verifyTeam = teams.find((team) => team._id === e.target.value);
-
     if (!!verifyTeam && verifyTeam.turnCounter >= challenge.maxTurns) {
       setAlert("Este equipo ha alcanzado el máximo de turnos posible", "danger");
     } else {
@@ -236,13 +235,13 @@ const CallengeScoreForm = ({
     e.preventDefault();
 
     if (Object.keys(turn).length === 0) {
-      // send Score turn
-      addScore(team, formData);
-      getTeams({
-        challenge: challenge._id,
-        event: event._id,
+      addScore(team, formData, () => {
+        getTeams({
+          challenge: challenge._id,
+          event: event._id,
+        });
+        resetTaskToForm();
       });
-      resetTaskToForm();
     } else {
       handleUpdateScore(turn._id, formData);
       console.log("acutalizar turno", formData);

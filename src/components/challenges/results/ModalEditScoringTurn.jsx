@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
-import ChallengeScoreForm from "../ChallengeScoreForm";
+import ChallengeScoreForm from "../score/ChallengeScoreForm";
 
 const ModalEditScoringTurn = ({
   showEdit,

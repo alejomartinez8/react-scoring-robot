@@ -25,7 +25,7 @@ const TeamsList = ({
 
   useEffect(() => {
     getTeams(getQueryTeam());
-    //react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [query, getTeams]);
 
   const handleRegisterTeam = (id) => {

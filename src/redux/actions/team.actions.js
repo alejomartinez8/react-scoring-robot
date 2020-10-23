@@ -90,7 +90,7 @@ const deleteTeam = (id) => (dispatch) => {
     });
 };
 
-const addScore = (id, params) => (dispatch) => {
+const addScore = (id, params, done) => (dispatch) => {
   dispatch({ type: TeamTypes.ADD_SCORE });
 
   teamServices
@@ -98,6 +98,7 @@ const addScore = (id, params) => (dispatch) => {
     .then(() => {
       dispatch({ type: TeamTypes.SCORE_SUCCESS });
       dispatch(alertActions.setAlert("Puntaje Recibido", "success"));
+      done();
     })
     .catch((error) => {
       dispatch({ type: TeamTypes.TEAM_ERROR, payload: error });
