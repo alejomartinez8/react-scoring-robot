@@ -1,13 +1,13 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import DashboardAdmin from "../admin/dashboard/DashboardAdmin";
-import UserList from "../admin/users/UserList";
-import UserForm from "../admin/users/UserForm";
-import EventsList from "../admin/events/EventsList";
-import EventForm from "../admin/events/EventForm";
-import ChallengesList from "../admin/challenges/ChallengeList";
-import ChallengeForm from "../admin/challenges/ChallengeForm";
-import TeamsList from "../admin/teams/TeamList";
+import UserList from "../users/admin/UserList";
+import UserForm from "../users/admin/UserForm";
+import EventsList from "../events/admin/EventsList";
+import EventForm from "../events/admin/EventForm";
+import ChallengesList from "../challenges/admin/ChallengeList";
+import ChallengeForm from "../challenges/admin/ChallengeForm";
+import TeamsList from "../teams/admin/TeamList";
 import TeamForm from "../teams/TeamForm";
 
 const Admin = ({ match }) => {

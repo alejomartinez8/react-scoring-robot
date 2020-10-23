@@ -1,8 +1,8 @@
 import React from "react";
 import { Switch } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
-import UserForm from "../admin/users/UserForm";
-import UserPage from "../user/UserPage";
+import UserForm from "../users/admin/UserForm";
+import UserPage from "../users/UserPage";
 import TeamForm from "../teams/TeamForm";
 import TeamsPage from "../teams/TeamsPage";
 

@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
-import { userActions, authActions } from "../../redux/actions/";
+import { userActions, authActions } from "../../redux/actions";
 import { Link, Redirect } from "react-router-dom";
 import ConfirmModal from "../layout/ConfirmModal";
 
