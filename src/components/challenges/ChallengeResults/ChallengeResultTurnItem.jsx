@@ -29,10 +29,10 @@ const ChallengeResultTurnItem = ({
     <div key={turn._id} className="d-flex justify-content-center">
       <span>
         <strong>Turno {index + 1}:</strong> {turn.totalPoints} pts{" "}
+        <strong>Juez: </strong>
+        {"judgeName" in turn ? turn.judgeName : ""}{" "}
         {userAuth.role === "Admin" && (
           <span>
-            <strong>Juez: </strong>
-            {"judgeName" in turn ? turn.judgeName : ""}{" "}
             <button
               className="btn btn-sm btn-primary m-1"
               onClick={() => handleShowEdit(turn._id)}
