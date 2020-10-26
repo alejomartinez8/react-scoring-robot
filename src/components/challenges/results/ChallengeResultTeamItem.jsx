@@ -66,8 +66,7 @@ const ChallengeResultTeamItem = ({
                   <div className="card-body">
                     <h5 className="text-primary">Turnos Calificados {team.name}</h5>
 
-                    {"turns" in team &&
-                      team.turns.length > 0 &&
+                    {"turns" in team && team.turns.length > 0 ? (
                       team.turns.map((turn, index) => (
                         <ChallengeResultTurnItem
                           team={team}
@@ -78,7 +77,10 @@ const ChallengeResultTeamItem = ({
                           handleShowEdit={handleShowEdit}
                           actionConfirm={handleDeleteScore}
                         />
-                      ))}
+                      ))
+                    ) : (
+                      <p>No hay turnos registrados</p>
+                    )}
                   </div>
                 </div>
               </div>
