@@ -60,7 +60,7 @@ const ChallengeResultTeamItem = ({
       <Fragment>
         {expanded && (
           <tr key={`expanded-${team._id}`}>
-            <td className="bg-light" colSpan={7}>
+            <td className="bg-light" colSpan={8}>
               <div className="container m-2 d-flex justify-content-md-center">
                 <div className="card w-75">
                   <div className="card-body">
