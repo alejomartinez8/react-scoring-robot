@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { teamActions, challengeActions, eventActions } from "../../../redux/actions";
@@ -95,23 +95,51 @@ const ChallengeResults = ({
     updateScore(scoreId, params, postQuery);
   };
 
+  const [seconds, setSeconds] = useState(30);
+
+  useEffect(() => {
+    if (seconds === 0) {
+      setSeconds(30);
+      if (Object.keys(challenge).length > 0 && Object.keys(event).length > 0) {
+        getTeams({
+          event: event._id,
+          challenge: challenge._id,
+          registered: true,
+        });
+      }
+    }
+    const interval = setInterval(() => {
+      setSeconds((seconds) => seconds - 1);
+    }, 1000);
+    return () => clearInterval(interval);
+    // eslint-disable-next-line
+  }, [seconds]);
+
   /** Return */
   return (
     <Fragment>
-      {loading || event.loading || challenge.loading ? (
+      {loading ? (
         <Spinner animation="border" variant="primary" />
       ) : (
         <Fragment>
-          <ButtonBack className="btn btn-primary mr-1 my-2">Atrás</ButtonBack>
-          {auth.isAuth &&
-            (auth.userAuth.role === "Admin" || auth.userAuth.role === "Judge") && (
-              <Link
-                to={`/events/${match.params.eventSlug}/${match.params.challengeSlug}/score`}
-                className="btn btn-warning m-1"
-              >
-                <i className="fas fa-tasks"></i> Calificar
-              </Link>
-            )}
+          <div className="d-flex d-flex justify-content-between align-items-center my-2">
+            <div>
+              <ButtonBack className="btn btn-primary mr-2">Atrás</ButtonBack>
+              {auth.isAuth &&
+                (auth.userAuth.role === "Admin" ||
+                  auth.userAuth.role === "Judge") && (
+                  <Link
+                    to={`/events/${match.params.eventSlug}/${match.params.challengeSlug}/score`}
+                    className="btn btn-warning mr-2"
+                  >
+                    <i className="fas fa-tasks"></i> Calificar
+                  </Link>
+                )}
+            </div>
+            <span class="text-white">
+              <i className="fas fa-hourglass-start"></i> {seconds}
+            </span>
+          </div>
 
           <div className="card  mb-4">
             <div className="card-header">
