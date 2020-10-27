@@ -136,7 +136,7 @@ const ChallengeResults = ({
                   </Link>
                 )}
             </div>
-            <span class="text-white">
+            <span className="text-white">
               <i className="fas fa-hourglass-start"></i> {seconds}
             </span>
           </div>

@@ -32,11 +32,25 @@ const ChallengeResultTeamItem = ({
     setShowEdit(true);
   };
 
-  console.log(team);
+  const setColor = (index) => {
+    // console.log(index);
+    if (index === 1) {
+      return "#C9B037";
+    } else if (index === 2) {
+      return "#B4B4B4";
+    } else if (index === 3) {
+      return "#AD8A56";
+    }
+  };
 
   return (
     <Fragment key={team._id}>
-      <tr key={`tr-${team._id}`} onClick={toggleExpander} className="tr-results">
+      <tr
+        key={`tr-${team._id}`}
+        onClick={toggleExpander}
+        className="tr-results"
+        style={{ backgroundColor: setColor(index + 1) }}
+      >
         <td>
           <i
             className={
