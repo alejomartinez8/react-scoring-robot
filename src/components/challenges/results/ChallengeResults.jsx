@@ -124,21 +124,21 @@ const ChallengeResults = ({
         <Fragment>
           <div className="d-flex d-flex justify-content-between align-items-center my-2">
             <div>
-              <ButtonBack className="btn btn-primary mr-2">Atrás</ButtonBack>
+              <ButtonBack className="btn btn-primary m-2">Atrás</ButtonBack>
               {auth.isAuth &&
                 (auth.userAuth.role === "Admin" ||
                   auth.userAuth.role === "Judge") && (
                   <Link
                     to={`/events/${match.params.eventSlug}/${match.params.challengeSlug}/score`}
-                    className="btn btn-warning mr-2"
+                    className="btn btn-warning m-2"
                   >
                     <i className="fas fa-tasks"></i> Calificar
                   </Link>
                 )}
             </div>
-            <span className="text-white">
-              <i className="fas fa-hourglass-start"></i> {seconds}
-            </span>
+            <button className="btn btn-info m-2" onClick={() => setSeconds(0)}>
+              Recargar ( <i className="fas fa-hourglass-start"></i> {seconds} )
+            </button>
           </div>
 
           <div className="card  mb-4">
